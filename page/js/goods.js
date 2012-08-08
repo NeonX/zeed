@@ -145,7 +145,6 @@ $(function () {
 self.setElementValue = function (mode, data) {
 //     console.debug([self.colNames, mode, data]);
     var style, text;
-    console.debug(mode);
     if (mode == 'new') {
         $('#deleteflag').show();
         $('#delflag').remove();

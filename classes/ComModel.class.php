@@ -111,27 +111,27 @@ class ComModel extends DBConnection
         switch ($table) {
             case 'goodsprice':
                 $fk = array(
-                    'goodstype' => array('goodstype_id', 'goodstype_eng'),
-                    'unit'      => array('unitid', 'unitcode'),
-                    'currency'  => array('currencyid', 'currcode')
+                    'goodstype_id' => array('goodstype_id', 'goodstype_eng'),
+                    'unit_id'      => array('unit_id', 'unitcode'),
+                    'currency_id'  => array('currency_id', 'currcode')
                 );
 
-                $result->goodstype = self::getChildAllById('tbm_goodstype', $fk['goodstype'], $this->id);
-                $result->unit = self::getChildAllById('tbm_unit', $fk['unit'], $id);
-                $result->currency = self::getChildAllById('tbm_currency', $fk['currency'], $this->id);
+                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $this->id);
+                $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
+                $result->currency = self::getChildAllById('currency', $fk['currency_id'], $this->id);
             break;
             case 'goods':
-                $columns = array(
-                    'goodstype' => array('goodstype_id', 'goodstype_eng')
+                $fk = array(
+                    'goodstype_id' => array('goodstype_id', 'goodstype_eng')
                 );
 
-                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype'], $this->id);
+                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $this->id);
             break;
         }
 
         $result->params = array(
             'table' => $table,
-            'id'    => $id
+            $colId  => $this->id
         );
         $result->stmt = $stmt;
 
@@ -145,7 +145,7 @@ class ComModel extends DBConnection
         $fTable = $this->prefix . $table;
 
         $sql = "SELECT {$columns[0]}, {$columns[1]} FROM {$fTable} WHERE 1=1";
-
+//         var_dump($sql);exit;
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);

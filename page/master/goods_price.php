@@ -1,5 +1,5 @@
 <div class="h_line"></div>
-<h1>M010 : COUNT UNIT</h1>
+<h1>M060 : GOODS PRICE</h1>
 <div style="float: right;"> <a class="goodsprice" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
 
 <div class="cleaner"></div>
@@ -15,7 +15,7 @@
 <div id="container" style="display:none">
     <form method="post" id="customForm" action="">
         <fieldset>
-            <h1>0M10 : COUNT UNIT</h1>
+            <h1>M060 : GOODS PRICE</h1>
             <p>
                 <label for="goods_id">Good ID: </label>
                 <select id="goods_id" name="goods_id">
@@ -71,8 +71,10 @@
                 <span id="deleteflag_info">Use Status is require!</span>
             </p>
             <p class="btn">
+                <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
+                <input id="by" name="create_by" type="hidden" value="1" />
                 <input id="table" name="table" type="hidden" value="goodsprice" />
-                <input id="goodsprice" name="goodsprice" type="hidden" value="0" />
+                <input id="goodsprice_id" name="goodsprice_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
                 <input id="save" name="save" type="submit" value="Save" />
                 <input id="cancle" name="cancle" type="reset" value="Cancle" />

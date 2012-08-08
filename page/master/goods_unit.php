@@ -1,5 +1,5 @@
 <div class="h_line"></div>
-<h1>M010 : COUNT UNIT</h1>
+<h1>M060 : GOODS PRICE</h1>
 <div style="float: right;"> <a class="goodsprice" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
 
 <div class="cleaner"></div>
@@ -15,13 +15,13 @@
 <div id="container" style="display:none">
     <form method="post" id="customForm" action="">
         <fieldset>
-            <h1>0M10 : COUNT UNIT</h1>
+            <h1>M060 : GOODS PRICE</h1>
             <p>
-                <label for="goodsid">Good ID: </label>
-                <select id="goodsid" name="goodsid">
+                <label for="goods_id">Good ID: </label>
+                <select id="goods_id" name="goods_id">
                     <option value="-1"> -- Please Select -- </option>
                 </select>
-                <span id="goodsid_info">Good ID Code is require!</span>
+                <span id="goods_id_info">Good ID Code is require!</span>
             </p>
             <p>
                 <label for="unit_id">Unit ID: </label>
@@ -31,11 +31,11 @@
                 <span id="unit_id_info">Unit ID is require!</span>
             </p>
                 <p>
-                <label for="currencyid">Currency ID: </label>
-                <select id="currencyid" name="currencyid">
+                <label for="currency_id">Currency ID: </label>
+                <select id="currency_id" name="currency_id">
                     <option value="-1"> -- Please Select -- </option>
                 </select>
-                <span id="currencyid_info">Currency ID is require!</span>
+                <span id="currency_id_info">Currency ID is require!</span>
             </p>
             </p>
                 <p>
@@ -53,13 +53,13 @@
                 <p>
                 <label for="discount">Discount: </label>
                 <input id="discount" name="discount" type="text" />
-                <span id="currencyid_info">Discount is require!</span>
+                <span id="discount_info">Discount is require!</span>
             </p>
             </p>
                 <p>
                 <label for="effective_date">Effective Date: </label>
                 <input id="effective_date" name="effective_date" type="text" />
-                <span id="currencyid_info">Effective Date is require!</span>
+                <span id="effective_info">Effective Date is require!</span>
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>
@@ -71,8 +71,10 @@
                 <span id="deleteflag_info">Use Status is require!</span>
             </p>
             <p class="btn">
+                <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
+                <input id="by" name="create_by" type="hidden" value="1" />
                 <input id="table" name="table" type="hidden" value="goodsprice" />
-                <input id="goodsprice" name="goodsprice" type="hidden" value="0" />
+                <input id="goodsprice_id" name="goodsprice_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
                 <input id="save" name="save" type="submit" value="Save" />
                 <input id="cancle" name="cancle" type="reset" value="Cancle" />

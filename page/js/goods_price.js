@@ -20,22 +20,25 @@ $(function () {
     self.getByIdURL =  '../page/common/getDataById.php',
     self.saveURL    =  '../page/common/saveData.php',
     self.table      = 'goodsprice',
-    self.colId      = 'goodsprice_id',
+    self.colId      = self.table + '_id',
     self.mode       = $('#mode'),
     self.grid       = $('#list-' + self.table),
     self.anchor     = $('a[class^="' + self.table + '"]'),
     self.custom     = $('#customForm'),
     self.recovery   = $('#recovery'),
-    self.del     = $('#delete'),
+    self.del        = $('#delete'),
     self.goodstype  = $('#goods_id'),
     self.unit       = $('#unit_id'),
     self.currency   = $('#currency_id'),
+    self.eff_date   = $('#effective_date'),
     self.options    = $('<option />');
 
     self.grid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
-        postData    : { columns : function() { return self.colNames }, table: function() { return self.table } },
+        postData    : {
+            columns: function() { return self.colNames },
+            table: function() { return self.table } },
         height      : 350,
         colNames    : self.colNames,
         colModel    : self.colModel,
@@ -47,9 +50,15 @@ $(function () {
         sortname    : self.colId,
         viewrecords : true,
         sortorder   : 'desc',
-        caption     : 'Count Unit List:'
+        caption     : 'Goods Price List:'
     })
-    .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
+    .navGrid('#pager', {
+        edit    : false,
+        add     :false,
+        del     : false,
+        search  : false,
+        refresh : true
+    });
 
     self.anchor.fancybox({
 
@@ -76,11 +85,14 @@ $(function () {
                     } else {
                         self.mode.val('update');
                     }
+
+                    self.eff_date.datepicker();
                 break;
 
                 case 'view':
                     $.each(buttons, function (index, value) {
                         $('#' + value).hide();
+                        self.eff_date.datepicker('destroy');
                     });
                 break;
 
@@ -88,18 +100,20 @@ $(function () {
                     console.debug('MODE NOT FOUND!!!');
             }
 
-//             if (mode != 'new') {
-                $.ajax({
-                    type        : 'GET',
-                    cache       : false,
-                    datatype    : 'json',
-                    url         : self.getByIdURL,
-                    data        : {table: self.table, column: self.colId, goodsprice_id: $(_self.element.innerHTML).get(0).getAttribute('value')},
-                    success     : function(data) {
-                        self.combobox(data, mode);
-                    }
-                });
-//             }
+            $.ajax({
+                type        : 'GET',
+                cache       : false,
+                datatype    : 'json',
+                url         : self.getByIdURL,
+                data        : {
+                    table: self.table,
+                    column: self.colId,
+                    goodsprice_id: $(_self.element.innerHTML).get(0).getAttribute('value')
+                },
+                success     : function(data) {
+                    self.setElementValue(data, mode);
+                }
+            });
         },
         afterClose: function () {
             self.custom.clearForm();
@@ -126,7 +140,11 @@ $(function () {
             type        : 'POST',
             cache       : false,
             url         : self.saveURL,
-            data        : {table: self.table, column: self.colId, goodsprice_id: $('#' + self.colId).val(), mode: 'delete', deleteflag: 1},
+            data        : {
+                table: self.table,
+                goodsprice_id: $('#' + self.colId).val(),
+                mode: 'delete', deleteflag: 1
+            },
             success     : function(data) {
                 $.fancybox(data);
                 self.grid.trigger('reloadGrid');
@@ -139,7 +157,12 @@ $(function () {
             type        : 'POST',
             cache       : false,
             url         : self.saveURL,
-            data        : {table: self.table, column: self.colId, goodsprice_id: $('#' + self.colId).val(), mode: 'delete', deleteflag: 0},
+            data        : {
+                table: self.table,
+                goodsprice_id: $('#' + self.colId).val(),
+                mode: 'delete',
+                deleteflag: 0
+            },
             success     : function(data) {
                 $.fancybox(data);
                 self.grid.trigger('reloadGrid');
@@ -148,45 +171,100 @@ $(function () {
     });
 });
 
-self.combobox = function(data, mode) {
-    var option, is_id;
-    $.each(self.colNames, function (index, column) {
-        is_id = column.substr(-2); 
-        if (column == 'goods_id') {
-            self.goodstype.empty();
-            self.goodstype.append(self.options.clone().val(-1).text('-- Please Select --'));
-            $.each(data.goodstype, function(k, obj) {
-                self.goodstype.append(self.options.clone().val(obj.goodstype_id).text(obj.goodstype_eng));
-            });
-        } else if (column == 'unit_id') {
-            self.unit.empty();
-            self.unit.append(self.options.clone().val(-1).text('-- Please Select --'));
-            $.each(data.unit, function(k, obj) {
-                self.unit.append(self.options.clone().val(obj.unit_id).text(obj.unitcode));
-            });
-        } else if (column == 'currency_id'){
-            self.currency.empty();
-            self.currency.append(self.options.clone().val(-1).text('-- Please Select --'));
-            $.each(data.currency, function(k, obj) {
-                self.currency.append(self.options.clone().val(obj.currency_id).text(obj.currcode));
-            });
-        }
-        console.debug([mode, is_id, column]);
-        if (mode == 'view') {
-            if (is_id == 'id' || column == 'deleteflag') {
-                $('#' + column).val(data[column]).attr('disabled','disabled');
+self.setElementValue = function(data, mode) {
+    var style, text;
+    if (mode == 'new') {
+        $('#deleteflag').show();
+        $('#textbox_deleteflag').remove();
+
+        self.goodstype.empty();
+        self.goodstype.append(self.options.clone().val(-1).text('-- Please Select --'));
+        $.each(data.goodstype, function(k, obj) {
+            self.goodstype.append(self.options.clone().val(obj.goodstype_id).text(obj.goodstype_eng));
+        });
+
+        self.unit.empty();
+        self.unit.append(self.options.clone().val(-1).text('-- Please Select --'));
+        $.each(data.unit, function(k, obj) {
+            self.unit.append(self.options.clone().val(obj.unit_id).text(obj.unitcode));
+        });
+
+        self.currency.empty();
+        self.currency.append(self.options.clone().val(-1).text('-- Please Select --'));
+        $.each(data.currency, function(k, obj) {
+            self.currency.append(self.options.clone().val(obj.currency_id).text(obj.currcode));
+        });
+    } else {
+        $.each(self.colNames, function (index, column) {
+            if (self.colId ==  column) {
+                $('#' + column).val(data[column]);
             } else {
-                $('#' + column).val(data[column]).attr('readonly','readonly');
+                if (column == 'deleteflag' || column == 'goods_id' || column == 'unit_id'  || column == 'currency_id') {
+                    if (column == 'deleteflag') {
+                        if (data[column] == 1) {
+                            style = 'color:red;font-weight:bold';
+                            text  = 'Unuse';
+                        } else {
+                            style = 'color:green;font-weight:bold';
+                            text  = 'Used';
+                        }
+                        $('#' + column).hide();
+                        $('#textbox_' + column).remove();
+                        $('<input />').attr({
+                            id: 'textbox_' + column,
+                            type: 'text',
+                            value: text,
+                            style: style,
+                            readonly: 'readonly'
+                        })
+                        .insertAfter('#' + column);
+                    } else {
+                        if (mode == 'view') {
+                            $('#' + column).hide();
+                            $('#textbox_' + column).remove();
+                            $('<input />').attr({
+                                id: 'textbox_' + column,
+                                type: 'text',
+                                value: data[column],
+                                readonly: 'readonly'
+                            })
+                            .insertAfter('#' + column);
+                        } else {
+                            $('#textbox_' + column).remove();
+                            
+                            if (column == 'goods_id') {
+                                self.goodstype.empty();
+                                self.goodstype.append(self.options.clone().val(-1).text('-- Please Select --'));
+                                $.each(data.goodstype, function(k, obj) {
+                                    self.goodstype.append(self.options.clone().val(obj.goodstype_id).text(obj.goodstype_eng));
+                                });
+                            } else if (column == 'unit_id') {
+                                self.unit.empty();
+                                self.unit.append(self.options.clone().val(-1).text('-- Please Select --'));
+                                $.each(data.unit, function(k, obj) {
+                                    self.unit.append(self.options.clone().val(obj.unit_id).text(obj.unitcode));
+                                });
+                            } else if (column == 'currency_id') {
+                                self.currency.empty();
+                                self.currency.append(self.options.clone().val(-1).text('-- Please Select --'));
+                                $.each(data.currency, function(k, obj) {
+                                    self.currency.append(self.options.clone().val(obj.currency_id).text(obj.currcode));
+                                });
+                            }
+
+                            $('#' + column).val(data[column]).show();
+                        }
+                    }
+                } else {
+                    if (mode == 'view') {
+                        $('#' + column).val(data[column]).attr('readonly','readonly');
+                    } else {
+                        $('#' + column).val(data[column]).removeAttr('readonly');
+                    }
+                }
             }
-            $('#' + column).val(data[column]).attr('readonly','readonly');
-        } else {
-            if (is_id == 'id' || column == 'deleteflag') {
-                $('#' + column).val(data[column]).removeAttr('disabled');
-            } else {
-                $('#' + column).val(data[column]).removeAttr('readonly');
-            }
-        }
-    });
+        });
+    }
 };
 
 $.fn.clearForm = function() {
