@@ -43,7 +43,7 @@
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>
-            <select id="deleteflag" name="deleteflag">
+                <select id="deleteflag" name="deleteflag">
                     <option value="-1"> -- Please Select -- </option>
                     <option value="0">Used</option>
                     <option value="1">Unuse</option>

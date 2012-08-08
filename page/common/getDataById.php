@@ -1,12 +1,13 @@
 <?php
-    header('Content-type: application/json');
 
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/includes/init.inc.php';
+header('Content-type: application/json');
 
-    $table = isset($_GET['table']) ? $_GET['table'] : null;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/includes/init.inc.php';
 
-    $id    = isset($_GET[$table . '_id']) ? $_GET[$table .'_id'] : null;
+$table = isset($_GET['table']) ? $_GET['table'] : null;
 
-    $model = new ComModel();
+$id = isset($_GET[$table . '_id']) ? $_GET[$table . '_id'] : null;
 
-    echo $model->getDataById($table, $id);
+$model = new ComModel();
+
+echo $model->getDataById($table, $id);

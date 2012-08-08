@@ -26,7 +26,7 @@
                 <input id="goodsname_eng" name="goodsname_eng" type="text" />
                 <span id="goodsname_eng_info">Goods Name (ENG) is require!</span>
             </p>
-                <p>
+            <p>
                 <label for="goodsname_th">Goods Name (TH): </label>
                 <input id="goodsname_th" name="goodsname_th" type="text" />
                 <span id="goodsname_th_info">Goods Name (TH) is require!</span>

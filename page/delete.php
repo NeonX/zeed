@@ -1,8 +1,9 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/includes/init.inc.php';
 
-    $post  = isset($_POST) ? $_POST : null;
+require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/includes/init.inc.php';
 
-    $model = new ComModel();
+$post = isset($_POST) ? $_POST : null;
 
-    echo $model->delete($post);
+$model = new ComModel();
+
+echo $model->delete($post);

@@ -6,7 +6,9 @@
     <binding id="ellipsis">
         <content>
             <xul:window><!-- xul:window tag required for FF2 -->
-                <xul:description crop="end" xbl:inherits="value=xbl:text"><children/></xul:description>
+                <xul:description crop="end" xbl:inherits="value=xbl:text">
+                    <children/>
+                </xul:description>
             </xul:window>
         </content>
     </binding>

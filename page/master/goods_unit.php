@@ -30,7 +30,7 @@
                 </select>
                 <span id="unit_id_info">Unit ID is require!</span>
             </p>
-                <p>
+            <p>
                 <label for="currency_id">Currency ID: </label>
                 <select id="currency_id" name="currency_id">
                     <option value="-1"> -- Please Select -- </option>
@@ -38,25 +38,25 @@
                 <span id="currency_id_info">Currency ID is require!</span>
             </p>
             </p>
-                <p>
+            <p>
                 <label for="cost">Cost: </label>
                 <input id="cost" name="cost" type="text" />
                 <span id="cost_info">Cost is require!</span>
             </p>
             </p>
-                <p>
+            <p>
                 <label for="price">Price: </label>
                 <input id="price" name="price" type="text" />
                 <span id="price_info">Price (TH) is require!</span>
             </p>
             </p>
-                <p>
+            <p>
                 <label for="discount">Discount: </label>
                 <input id="discount" name="discount" type="text" />
                 <span id="discount_info">Discount is require!</span>
             </p>
             </p>
-                <p>
+            <p>
                 <label for="effective_date">Effective Date: </label>
                 <input id="effective_date" name="effective_date" type="text" />
                 <span id="effective_info">Effective Date is require!</span>

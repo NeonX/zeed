@@ -26,7 +26,7 @@
                 <input id="unitnameeng" name="unitnameeng" type="text" />
                 <span id="unitnameeng_info">Count Unit (ENG) is require!</span>
             </p>
-                <p>
+            <p>
                 <label for="unitnameth">Count Unit (TH): </label>
                 <input id="unitnameth" name="unitnameth" type="text" />
                 <span id="unitnameth_info">Count Unit (TH) is require!</span>
