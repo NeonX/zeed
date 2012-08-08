@@ -1,4 +1,5 @@
 <?php
+
 /**
  * FileTransfer.class.php
  * Last Modify: Jul 2012
@@ -6,8 +7,8 @@
  */
 require_once dirname(__FILE__) . '/DBConnection.class.php';
 
-class FileTransfer extends DBConnection
-{
+class FileTransfer extends DBConnection {
+
     private $q_id;
     private $is_map;
     private $type;
@@ -20,33 +21,30 @@ class FileTransfer extends DBConnection
     private $encodeFilename;
     private $decodeFilename;
 
-    public function __construct($attach_dir=null, $dbo=null) 
-    {
+    public function __construct($attach_dir = null, $dbo = null) {
         parent::__construct();
 
         $this->attach_dir = $attach_dir;
 
-        $this->filetypes = array (
+        $this->filetypes = array(
             'image/pjpeg' => '.jpg',
             'image/jpeg' => '.jpg',
             'image/x-png' => '.png',
             'image/png' => '.png',
             'image/gif' => '.gif',
-            'application/pdf'  => '.pdf',
-            'application/vnd.ms-excel'  => '.xls',
+            'application/pdf' => '.pdf',
+            'application/vnd.ms-excel' => '.xls',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => '.xlsx',
             'application/vnd.ms-powerpoint' => '.ppt',
             'application/vnd.openxmlformats-officedocument.presentationml.presentation' => '.pptx',
-            'application/msword'  => '.doc',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document'  => '.docx'
+            'application/msword' => '.doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => '.docx'
         );
-
     }
 
-    public function doUpload($file=null, $post=null)
-    {
-        $this->q_id  = isset($post['q_id']) ? $post['q_id'] : null;
-        $this->is_map  = isset($post['is_map']) ? $post['is_map'] : null;
+    public function doUpload($file = null, $post = null) {
+        $this->q_id = isset($post['q_id']) ? $post['q_id'] : null;
+        $this->is_map = isset($post['is_map']) ? $post['is_map'] : null;
 
         $this->type = $file['uploadfile']['type'];
         $this->temp = $file['uploadfile']['tmp_name'];
@@ -55,7 +53,7 @@ class FileTransfer extends DBConnection
 
         $this->decodeFilename = urldecode(urlencode($this->name));
 
-        $data = array(); 
+        $data = array();
         if (array_key_exists($this->type, $this->filetypes)) {
             $this->filename = $this->q_id . '_lams_' . time() . $this->filetypes[$this->type];
             $this->path = $this->attach_dir . $this->filename;
@@ -70,14 +68,12 @@ class FileTransfer extends DBConnection
         } else {
             $data['success'] = false;
             $data['mime_type'] = $this->type;
-
         }
 
         return json_encode($data);
     }
 
-    public function insertAttachFile ()
-    {
+    public function insertAttachFile() {
         $strSQL = "
             INSERT INTO attach_file (
                 q_id,
@@ -101,24 +97,22 @@ class FileTransfer extends DBConnection
 
         try {
             $data = array(
-                ':q_id'             => $this->q_id,
+                ':q_id' => $this->q_id,
                 ':origin_file_name' => $this->decodeFilename,
-                ':new_file_name'    => $this->filename,
+                ':new_file_name' => $this->filename,
                 ':attach_file_size' => $this->size,
-                ':attach_file_by'   => $_SESSION["uname"],
-                ':is_map'           => $this->is_map
+                ':attach_file_by' => $_SESSION["uname"],
+                ':is_map' => $this->is_map
             );
 
             $sth->execute($data);
-
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
 
-    public function doDownload($origin_file_name, $new_file_name)
-    {
-        if(!file_exists($this->attach_dir . $new_file_name)) {
+    public function doDownload($origin_file_name, $new_file_name) {
+        if (!file_exists($this->attach_dir . $new_file_name)) {
             die('Error: File not found.');
         }
 
@@ -131,8 +125,8 @@ class FileTransfer extends DBConnection
         exit;
     }
 
-    public function __destruct() 
-    {
+    public function __destruct() {
         parent::__destruct();
     }
+
 }

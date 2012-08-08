@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DBConnection.class.php
  * Last Modify: May 2012
@@ -6,23 +7,23 @@
  */
 // Include database configuration
 require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/includes/dbconfig.inc.php';
-class DBConnection
-{
+
+class DBConnection {
+
     /**
      * Stores a database object
      * 
      * @var object A database object
      */
     public $db;
-    
+
     /**
      * __construct — Initialization connect to database. 
      * 
      * @param object $dbo a database object
      * @return No value is returned.
      */
-    public function __construct($dbo=null)
-    {
+    public function __construct($dbo = null) {
         // Checks for a DB object or creates one if one isn't found
         if (is_object($dbo)) {
             $this->db = $dbo;
@@ -39,15 +40,16 @@ class DBConnection
             }
         }
     }
-    
+
     /**
      * __destruct — Database close connection
      * 
      * @return No value is returned.
      */
-    public function __destruct() 
-    {
+    public function __destruct() {
         // database disconnect
-        if (!empty($this->db)) $this->db = null;
+        if (!empty($this->db))
+            $this->db = null;
     }
+
 }

@@ -1,22 +1,24 @@
 <?php
+
 require_once dirname(__FILE__) . '/DBConnection.class.php';
- 
-class ComModel extends DBConnection
-{
+
+class ComModel extends DBConnection {
+
     public $post;
     public $prefix = 'tbm_';
-    public $colId  = '_id';
+    public $colId = '_id';
+
     /**
      * 
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
-    } // End constructor
+    }
 
-    public function getAll($table, $columns, $page, $limit, $sidx, $sord)
-    {
+// End constructor
+
+    public function getAll($table, $columns, $page, $limit, $sidx, $sord) {
         $result = new stdClass();
 
         $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1";
@@ -35,8 +37,8 @@ class ComModel extends DBConnection
 
         $start = $limit * $page - $limit; // do not put $limit*($page - 1)
 
-        if($sidx) {
-            $sql .= " ORDER BY ".$sidx;
+        if ($sidx) {
+            $sql .= " ORDER BY " . $sidx;
             $sql .= strtoupper($sord) == 'ASC' ? ' ASC' : ' DESC';
         }
 
@@ -49,23 +51,23 @@ class ComModel extends DBConnection
 
         $stmt->execute();
 
-        $result->page    = $page;
-        $result->total   =  $total_pages;
+        $result->page = $page;
+        $result->total = $total_pages;
         $result->records = $count;
 
         $i = 0;
         $data = array();
         $columns = explode(',', $columns);
 
-        while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+        while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
             foreach ($columns as $key => $value) {
                 if ($value != 'action' && $value != 'deleteflag') {
                     $data[$key] = $row->$value;
                 } else if ($value == 'deleteflag') {
                     $data[$key] = $row->$value ? '<span class="red">Unuse</span>' : '<span class="green">Used</span>';
                 } else {
-                    $data[$key] = self::setActionIcon('view', '../page/images/icons/form-16x16.png', $table, $row->$columns[0]) . 
-                        self::setActionIcon('edit', '../page/images/icons/form-edit-16x16.png', $table, $row->$columns[0]);
+                    $data[$key] = self::setActionIcon('view', '../page/images/icons/form-16x16.png', $table, $row->$columns[0]) .
+                            self::setActionIcon('edit', '../page/images/icons/form-edit-16x16.png', $table, $row->$columns[0]);
                 }
             }
 
@@ -80,9 +82,8 @@ class ComModel extends DBConnection
         return json_encode($result);
     }
 
-    public function setActionIcon($mode, $src, $cls, $id)
-    {
-        $anchor  = '<a href="#customForm" class="' . $cls . '">';
+    public function setActionIcon($mode, $src, $cls, $id) {
+        $anchor = '<a href="#customForm" class="' . $cls . '">';
         $anchor .= '<img type="image" class="list-icon-view" src="' . $src . '"';
         $anchor .= ' title="' . $mode . '" alt="view" value="' . $id . '"">';
         $anchor .= '</a>';
@@ -90,12 +91,11 @@ class ComModel extends DBConnection
         return $anchor;
     }
 
-    public function getDataById($table, $id)
-    {
+    public function getDataById($table, $id) {
         $result = new stdClass();
 
-        $id     = (int) $id;
-        $colId  = $table . $this->colId;
+        $id = (int) $id;
+        $colId = $table . $this->colId;
         $fTable = $this->prefix . $table;
 
         $sql = "SELECT * FROM {$fTable} WHERE {$colId} = :id";
@@ -112,34 +112,33 @@ class ComModel extends DBConnection
             case 'goodsprice':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng'),
-                    'unit_id'      => array('unit_id', 'unitcode'),
-                    'currency_id'  => array('currency_id', 'currcode')
+                    'unit_id' => array('unit_id', 'unitcode'),
+                    'currency_id' => array('currency_id', 'currcode')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $this->id);
                 $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
                 $result->currency = self::getChildAllById('currency', $fk['currency_id'], $this->id);
-            break;
+                break;
             case 'goods':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $this->id);
-            break;
+                break;
         }
 
         $result->params = array(
             'table' => $table,
-            $colId  => $this->id
+            $colId => $this->id
         );
         $result->stmt = $stmt;
 
         return json_encode($result);
     }
 
-    public function getChildAllById ($table, $columns, $id)
-    {
+    public function getChildAllById($table, $columns, $id) {
         $result = new stdClass();
 
         $fTable = $this->prefix . $table;
@@ -157,18 +156,17 @@ class ComModel extends DBConnection
         return $result;
     }
 
-    public function save($post)
-    {
+    public function save($post) {
         $result = new stdClass();
-        $mode   = isset($post['mode']) ? $post['mode'] : null;
-        $table  = isset($post['table']) ? $post['table'] : null;
-        $colId  = $table . $this->colId;
-        $id     = isset($post[$colId]) ? (int) $post[$colId] : null;
+        $mode = isset($post['mode']) ? $post['mode'] : null;
+        $table = isset($post['table']) ? $post['table'] : null;
+        $colId = $table . $this->colId;
+        $id = isset($post[$colId]) ? (int) $post[$colId] : null;
         $fTable = $this->prefix . $table;
 
         $postKey = array_keys($post);
 
-        foreach (range(0,2) as $val) {
+        foreach (range(0, 2) as $val) {
             array_pop($postKey);
         }
 
@@ -181,28 +179,28 @@ class ComModel extends DBConnection
             case 'goodsprice':
                 if ($mode == 'insert') {
                     $addCols = array('create_by', 'create_date');
-                    $colArr  = array_merge($postKey, $addCols);
+                    $colArr = array_merge($postKey, $addCols);
                     $columns = join(',', $colArr);
 
                     $colLength = count($colArr);
-                    foreach($colArr as $key => $value) {
+                    foreach ($colArr as $key => $value) {
                         $paramArr[] = '?';
                     }
 
                     $params = join(',', $paramArr);
                 } else if ($mode == 'update') {
                     $addCols = array('lastupdate_by', 'lastupdate_date');
-                    $colArr  = array_merge($postKey, $addCols);
+                    $colArr = array_merge($postKey, $addCols);
                     $columns = join(',', $colArr);
 
                     $colLength = count($colArr);
-                    foreach($colArr as $key => $value) {
+                    foreach ($colArr as $key => $value) {
                         $paramArr[] = $value . ' = ' . '?';
                     }
 
                     $params = join(',', $paramArr);
                 }
-            break;
+                break;
         }
 
         $sql = array(
@@ -220,9 +218,8 @@ class ComModel extends DBConnection
                     foreach ($colArr as $key => $value) {
                         $index = $key + 1;
                         $stmt->bindValue($index, isset($post[$value]) ? trim($post[$value]) : null);
-                        
+
                         $tmp[$key] = $post[$value];
-                        
                     }
 
                     $stmt->bindValue($index, isset($post[$value]) ? trim($post[$value]) : null);
@@ -236,7 +233,7 @@ class ComModel extends DBConnection
                 }
 
                 $stmt->execute();
-            break;
+                break;
 
             case 'delete':
                 $stmt->bindValue(1, $post['deleteflag'] ? 1 : 0);
@@ -245,7 +242,7 @@ class ComModel extends DBConnection
 
                 $result->id = $id;
                 $result->deleteflag = $post['deleteflag'] ? 1 : 0;
-            break;
+                break;
 
             default:
                 $result->error_msg = 'CASE NOT FOUND!!!';
@@ -264,8 +261,8 @@ class ComModel extends DBConnection
      * 
      * @return No value is returned.
      */
-    public function __destruct() 
-    {
+    public function __destruct() {
         parent::__destruct();
     }
+
 }
