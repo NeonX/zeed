@@ -1,10 +1,11 @@
-<?php 
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/includes/init.inc.php';
+<?php
 
-    $module   = isset($_GET['module']) ? $_GET['module'] : null; 
-    $pagename = isset($_GET['page']) ? $module . '/' . $_GET['page'] . '.php' : "index.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/includes/init.inc.php';
 
-    $t = new Template();
-    $body = "../page/" . $pagename;
+$module = isset($_GET['module']) ? $_GET['module'] : null;
+$pagename = isset($_GET['page']) ? $module . '/' . $_GET['page'] . '.php' : "index.php";
 
-    $t->render($body);
+$t = new Template();
+$body = "../page/" . $pagename;
+
+$t->render($body);
