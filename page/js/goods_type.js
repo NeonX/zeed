@@ -1,8 +1,8 @@
 var self = this;
 $(function () {
     self.colNames = [
-        'goodstype_id', 'goodstype_eng','goodstype_th', 'goodstype_desc',
-        'deleteflag', 'action'
+        'goodstype_id', 'goodstype_eng','goodstype_th',
+        'goodstype_desc', 'deleteflag', 'action'
     ],
     self.colModel = [
         {name: 'goodstype_id', index:'goodstype_id', hidden: true},
@@ -23,6 +23,8 @@ $(function () {
     self.custom     = $('#customForm'),
     self.recovery   = $('#recovery'),
     self.del        = $('#delete');
+    self.date       = $('#date');
+    self.by         = $('#by');
 
     self.grid.jqGrid({
         url         : self.getAllURL,
