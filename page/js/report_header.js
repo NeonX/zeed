@@ -1,22 +1,22 @@
 var self = this;
 $(function () {
     self.colNames = [
-        'unit_id', 'unitcode','unitnameeng', 'unitnameth',
-        'unitdesc', 'deleteflag', 'action'
+        'screen_id', 'scr_code','scrname_eng', 'scrname_th',
+        'scr_type', 'deleteflag', 'action'
     ],
     self.colModel = [
-        {name: 'unit_id', index:'unit_id', hidden: true},
-        {name: 'unitcode', index: 'unitcode', width: 100, align: 'center'},
-        {name: 'unitnameeng', index: 'unitnameeng', width: 200, align: 'center'},
-        {name: 'unitnameth', index: 'unitnameth', width: 130, align: 'center'},
-        {name: 'unitdesc', index: 'unitdesc', hidden: true},
+        {name: 'screen_id', index:'screen_id', hidden: true},
+        {name: 'scr_code', index: 'scr_code', width: 100, align: 'center'},
+        {name: 'scrname_eng', index: 'scrname_eng', width: 200, align: 'center'},
+        {name: 'scrname_th', index: 'scrname_th', width: 130, align: 'center'},
+        {name: 'scr_type', index: 'scr_type', hidden: true},
         {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ],
     self.getAllURL  =  '../page/common/getDataAll.php',
     self.getByIdURL =  '../page/common/getDataById.php',
     self.saveURL    =  '../page/common/saveData.php',
-    self.table      = 'unit',
+    self.table      = 'screen',
     self.colId      = self.table + '_id',
     self.mode       = $('#mode'),
     self.grid       = $('#list-' + self.table),
@@ -42,7 +42,7 @@ $(function () {
         sortname    : self.colId,
         viewrecords : true,
         sortorder   : 'desc',
-        caption     : 'Count Unit List:'
+        caption     : 'Report Header List:'
     })
     .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
 

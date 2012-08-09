@@ -10,7 +10,7 @@ define('DB_USER', 'root');
 define('DB_NAME', 'smart_order_db');
 
 // Database password
-define('DB_PASS', 'mypteadmin');
+define('DB_PASS', 'admin');
 
 // // Database user name
 // define('DB_USER', 'goodness_udb');
