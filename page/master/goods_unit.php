@@ -7,7 +7,23 @@
 <link rel="stylesheet" href="../page/js/fancyBox/source/jquery.fancybox.css" type="text/css" media="screen" />
 
 <script type="text/javascript" src="../page/js/fancyBox/source/jquery.fancybox.js"></script>
-<script type="text/javascript" src="../page/js/goods_price.js"></script>
+<script type="text/javascript">
+    var self = this;
+    self.colNames = [
+        'customertype_id', 'custtype_eng','custtype_th',
+        'custtype_code', 'custtype_desc', 'deleteflag', 'action'
+    ],
+    self.colModel = [
+        {name: 'customertype_id', index:'customertype_id', hidden: true},
+        {name: 'custtype_eng', index: 'custtype_eng', width: 100, align: 'center'},
+        {name: 'custtype_th', index: 'custtype_th', width: 100, align: 'center'},
+        {name: 'custtype_code', index: 'custtype_code', width: 110, align: 'center'},
+        {name: 'custtype_desc', index: 'custtype_desc', width: 110, align: 'center'},
+        {name: 'deleteflag', index: 'deleteflag', width: 110, align: 'center'},
+        {name: 'action',index: 'action', width:80, align: 'center'}
+    ]
+</script>
+<script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
 
 <table id="list-goodsprice"></table>
 <div id="pager"></div>

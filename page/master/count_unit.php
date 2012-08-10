@@ -7,7 +7,27 @@
 <link rel="stylesheet" href="../page/js/fancyBox/source/jquery.fancybox.css" type="text/css" media="screen" />
 
 <script type="text/javascript" src="../page/js/fancyBox/source/jquery.fancybox.js"></script>
-<script type="text/javascript" src="../page/js/count_unit.js?_=<?php echo time(); ?>"></script>
+
+<script type="text/javascript">
+    var self = this;
+
+    self.table = 'unit';
+    self.caption = 'Count Unit List:';
+    self.colNames = [
+        'unit_id', 'unitcode','unitnameeng', 'unitnameth',
+        'unitdesc', 'deleteflag', 'action'
+    ];
+    self.colModel = [
+        {name: 'unit_id', index:'unit_id', hidden: true},
+        {name: 'unitcode', index: 'unitcode', width: 100, align: 'center'},
+        {name: 'unitnameeng', index: 'unitnameeng', width: 200, align: 'center'},
+        {name: 'unitnameth', index: 'unitnameth', width: 130, align: 'center'},
+        {name: 'unitdesc', index: 'unitdesc', hidden: true},
+        {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
+        {name: 'action',index: 'action', width:80, align: 'center'}
+    ];
+</script>
+<script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
 
 <table id="list-unit"></table>
 <div id="pager"></div>

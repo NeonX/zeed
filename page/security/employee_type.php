@@ -1,6 +1,6 @@
 <div class="h_line"></div>
-<h1>M020 : USER GROUP</h1>
-<div style="float: right;"> <a class="usergroup" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
+<h1>P030 : EMPLOYEE TYPE</h1>
+<div style="float: right;"> <a class="employeetype" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
 
 <div class="cleaner"></div>
 <link rel="stylesheet" href="../page/css/form.css" type="text/css" media="screen" />
@@ -10,43 +10,43 @@
 <script type="text/javascript">
     var self = this;
 
-    self.table = 'usergroup';
+    self.table = 'employeetype';
     self.caption = 'Goods Type List:';
     self.colNames = [
-        'usergroup_id', 'usergroup_code', 'usergroup_eng','usergroup_th', 'deleteflag', 'action'
+        'employeetype_id', 'emptype_code', 'emptype_th','emptype_eng', 'deleteflag', 'action'
     ];
     self.colModel = [
-        {name: 'usergroup_id', index:'usergroup_id', hidden: true},
-        {name: 'usergroup_code', index: 'usergroup_code', width: 115, align: 'center'},
-        {name: 'usergroup_eng', index: 'usergroup_eng', width: 165, align: 'center'},
-        {name: 'usergroup_th', index: 'usergroup_th', width: 165, align: 'center'},
+        {name: 'employeetype_id', index:'employeetype_id', hidden: true},
+        {name: 'emptype_code', index: 'emptype_code', width: 115, align: 'center'},
+        {name: 'emptype_th', index: 'emptype_th', width: 165, align: 'center'},
+        {name: 'emptype_eng', index: 'emptype_eng', width: 165, align: 'center'},
         {name: 'deleteflag', index: 'deleteflag', width: 115, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
 </script>
 <script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
 
-<table id="list-usergroup"></table>
+<table id="list-employeetype"></table>
 <div id="pager"></div>
 
 <div id="container" style="display:none">
     <form method="post" id="customForm" action="">
         <fieldset>
-            <h1>0M40 : CUSTOMER TYPE</h1>
+            <h1>P030 : EMPLOYEE TYPE</h1>
              <p>
-                <label for="usergroup_code">User Group Code: </label>
-                <input id="usergroup_code" name="usergroup_code" type="text" />
-                <span id="usergroup_code_info">User Group Code is require!</span>
+                <label for="emptype_code">Employee Type Code: </label>
+                <input id="emptype_code" name="emptype_code" type="text" />
+                <span id="emptype_code_info">Employee Type Code is require!</span>
             </p>
             <p>
-                <label for="usergroup_eng">User Group Name (ENG): </label>
-                <input id="usergroup_eng" name="usergroup_eng" type="text" />
-                <span id="usergroup_eng_info">User Group Name (ENG) is require!</span>
+                <label for="emptype_th">Employee Type Name (ENG): </label>
+                <input id="emptype_th" name="emptype_th" type="text" />
+                <span id="emptype_th_info">Employee Type Name (ENG) is require!</span>
             </p>
             <p>
-                <label for="usergroup_th">User Group Name (ENG): </label>
-                <input id="usergroup_th" name="usergroup_th" type="text" />
-                <span id="usergroup_th_info">User Group Name (ENG) is require!</span>
+                <label for="emptype_eng">Employee Type Name (ENG): </label>
+                <input id="emptype_eng" name="emptype_eng" type="text" />
+                <span id="emptype_eng_info">Employee Type Name (ENG) is require!</span>
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>
@@ -60,8 +60,8 @@
             <p class="btn">
                 <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
                 <input id="by" name="create_by" type="hidden" value="1" />
-                <input id="table" name="table" type="hidden" value="usergroup" />
-                <input id="usergroup_id" name="usergroup_id" type="hidden" value="0" />
+                <input id="table" name="table" type="hidden" value="employeetype" />
+                <input id="employeetype_id" name="employeetype_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
                 <input id="save" name="save" type="submit" value="Save" />
                 <input id="cancle" name="cancle" type="reset" value="Cancle" />

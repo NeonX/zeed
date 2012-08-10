@@ -116,22 +116,24 @@ class ComModel extends DBConnection
                     'currency_id'  => array('currency_id', 'currcode')
                 );
 
-                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $this->id);
+                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
                 $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
-                $result->currency = self::getChildAllById('currency', $fk['currency_id'], $this->id);
+                $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
             break;
             case 'goods':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng')
                 );
 
-                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $this->id);
+                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
             break;
         }
 
         $result->params = array(
             'table' => $table,
-            $colId  => $this->id
+            $colId  => $this->id,
+            'stmt' => $stmt,
+            'id'  => $id
         );
         $result->stmt = $stmt;
 
@@ -226,6 +228,7 @@ class ComModel extends DBConnection
             break;
 
             case 'delete':
+                $id = isset($post['id']) ? (int) $post['id'] : null;
                 $stmt->bindValue(1, $post['deleteflag'] ? 1 : 0);
                 $stmt->bindValue(2, $id, PDO::PARAM_INT);
                 $stmt->execute();

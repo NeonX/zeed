@@ -1,20 +1,15 @@
-var self = this;
+/**
+ * jQuery type1 Plugin
+ * Narong Rammanee
+ * ranarong@gmail.com
+ *
+ * Latest Release: Aug 2012
+ * 
+ */
 $(function () {
-    self.colNames = [
-        'usergroup_id', 'usergroup_code', 'usergroup_eng','usergroup_th', 'deleteflag', 'action'
-    ],
-    self.colModel = [
-        {name: 'usergroup_id', index:'usergroup_id', hidden: true},
-        {name: 'usergroup_code', index: 'usergroup_code', width: 115, align: 'center'},
-        {name: 'usergroup_eng', index: 'usergroup_eng', width: 165, align: 'center'},
-        {name: 'usergroup_th', index: 'usergroup_th', width: 165, align: 'center'},
-        {name: 'deleteflag', index: 'deleteflag', width: 115, align: 'center'},
-        {name: 'action',index: 'action', width:80, align: 'center'}
-    ],
     self.getAllURL  =  '../page/common/getDataAll.php',
     self.getByIdURL =  '../page/common/getDataById.php',
     self.saveURL    =  '../page/common/saveData.php',
-    self.table      = 'usergroup',
     self.colId      = self.table + '_id',
     self.mode       = $('#mode'),
     self.grid       = $('#list-' + self.table),
@@ -24,7 +19,6 @@ $(function () {
     self.del        = $('#delete'),
     self.date       = $('#date'),
     self.by         = $('#by');
-
     self.grid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
@@ -40,12 +34,11 @@ $(function () {
         sortname    : self.colId,
         viewrecords : true,
         sortorder   : 'desc',
-        caption     : 'Customer Type List:'
+        caption     : self.caption
     })
     .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
 
     self.anchor.fancybox({
-
         title: 'Registration process',
         helpers:  {
             title:  null
@@ -93,8 +86,9 @@ $(function () {
                     cache       : false,
                     datatype    : 'json',
                     url         : self.getByIdURL,
-                    data        : { table: self.table, usergroup_id: $(_self.element.innerHTML).get(0).getAttribute('value') },
+                    data        : { table: self.table, id: $(_self.element.innerHTML).get(0).getAttribute('value') },
                     success     : function (data) {
+                        console.debug(mode, data);
                         self.setElementValue(mode, data);
                     }
                 });
@@ -125,7 +119,7 @@ $(function () {
             type        : 'POST',
             cache       : false,
             url         : self.saveURL,
-            data        : {table: self.table, usergroup_id: $('#' + self.colId).val(), mode: 'delete', deleteflag: 1 },
+            data        : { table: self.table, id: $('#' + self.table + '_id').val(), mode: 'delete', deleteflag: 1 },
             success     : function (data) {
                 $.fancybox(data);
                 self.grid.trigger('reloadGrid');
@@ -138,7 +132,7 @@ $(function () {
             type        : 'POST',
             cache       : false,
             url         : self.saveURL,
-            data        : {table: self.table, usergroup_id: $('#' + self.colId).val(), mode: 'delete', deleteflag: 0 },
+            data        : { table: self.table, id: $('#' + self.table + '_id').val(), mode: 'delete', deleteflag: 0 },
             success     : function (data) {
                 $.fancybox(data);
                 self.grid.trigger('reloadGrid');

@@ -7,7 +7,27 @@
 <link rel="stylesheet" href="../page/js/fancyBox/source/jquery.fancybox.css" type="text/css" media="screen" />
 
 <script type="text/javascript" src="../page/js/fancyBox/source/jquery.fancybox.js"></script>
-<script type="text/javascript" src="../page/js/goods.js"></script>
+<script type="text/javascript">
+    var self = this;
+
+    self.table = 'goods';
+    self.caption = 'Goods Type List:';
+    self.colNames = [
+        'goods_id', 'goodstype_id','goodscode', 'goodsname_eng',
+        'goodsname_th', 'goodsdesc', 'goodspicture', 'deleteflag'
+    ],
+    self.colModel = [
+        {name: 'goods_id', index:'goods_id', hidden: true},
+        {name: 'goodstype_id', index: 'goodstype_id', width: 80, align: 'center'},
+        {name: 'goodscode', index: 'goodscode', width: 80, align: 'center'},
+        {name: 'goodsname_eng', index: 'goodsname_eng', width: 100, align: 'center'},
+        {name: 'goodsdesc', index: 'goodsdesc', width: 110, align: 'center'},
+        {name: 'goodsname_th', index: 'goodsname_th', width:100, align: 'center'},
+        {name: 'deleteflag', index: 'deleteflag', width: 80, align: 'center'},
+        {name: 'action',index: 'action', width:80, align: 'center'}
+    ]
+</script>
+<script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
 
 <table id="list-goods"></table>
 <div id="pager"></div>

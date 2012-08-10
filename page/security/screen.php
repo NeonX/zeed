@@ -1,6 +1,6 @@
 <div class="h_line"></div>
-<h1>M020 : USER GROUP</h1>
-<div style="float: right;"> <a class="usergroup" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
+<h1>P010 : SCREEN</h1>
+<div style="float: right;"> <a class="screen" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
 
 <div class="cleaner"></div>
 <link rel="stylesheet" href="../page/css/form.css" type="text/css" media="screen" />
@@ -10,43 +10,43 @@
 <script type="text/javascript">
     var self = this;
 
-    self.table = 'usergroup';
-    self.caption = 'Goods Type List:';
+    self.table = 'screen';
+    self.caption = 'Screen List:';
     self.colNames = [
-        'usergroup_id', 'usergroup_code', 'usergroup_eng','usergroup_th', 'deleteflag', 'action'
+        'screen_id', 'scr_code', 'scrname_eng','scrname_th', 'deleteflag', 'action'
     ];
     self.colModel = [
-        {name: 'usergroup_id', index:'usergroup_id', hidden: true},
-        {name: 'usergroup_code', index: 'usergroup_code', width: 115, align: 'center'},
-        {name: 'usergroup_eng', index: 'usergroup_eng', width: 165, align: 'center'},
-        {name: 'usergroup_th', index: 'usergroup_th', width: 165, align: 'center'},
+        {name: 'screen_id', index:'screen_id', hidden: true},
+        {name: 'scr_code', index: 'scr_code', width: 115, align: 'center'},
+        {name: 'scrname_eng', index: 'scrname_eng', width: 165, align: 'center'},
+        {name: 'scrname_th', index: 'scrname_th', width: 165, align: 'center'},
         {name: 'deleteflag', index: 'deleteflag', width: 115, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
 </script>
 <script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
 
-<table id="list-usergroup"></table>
+<table id="list-screen"></table>
 <div id="pager"></div>
 
 <div id="container" style="display:none">
     <form method="post" id="customForm" action="">
         <fieldset>
-            <h1>0M40 : CUSTOMER TYPE</h1>
+            <h1>P010 : SCREEN</h1>
              <p>
-                <label for="usergroup_code">User Group Code: </label>
-                <input id="usergroup_code" name="usergroup_code" type="text" />
-                <span id="usergroup_code_info">User Group Code is require!</span>
+                <label for="scr_code">Screen Code: </label>
+                <input id="scr_code" name="scr_code" type="text" />
+                <span id="scr_code_info">Screen Code is require!</span>
             </p>
             <p>
-                <label for="usergroup_eng">User Group Name (ENG): </label>
-                <input id="usergroup_eng" name="usergroup_eng" type="text" />
-                <span id="usergroup_eng_info">User Group Name (ENG) is require!</span>
+                <label for="scrname_eng">Screen Name (ENG): </label>
+                <input id="scrname_eng" name="scrname_eng" type="text" />
+                <span id="scrname_eng_info">Screen Name (ENG) is require!</span>
             </p>
             <p>
-                <label for="usergroup_th">User Group Name (ENG): </label>
-                <input id="usergroup_th" name="usergroup_th" type="text" />
-                <span id="usergroup_th_info">User Group Name (ENG) is require!</span>
+                <label for="scrname_th">Screen Name (ENG): </label>
+                <input id="scrname_th" name="scrname_th" type="text" />
+                <span id="scrname_th_info">Screen Name (ENG) is require!</span>
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>
@@ -60,8 +60,8 @@
             <p class="btn">
                 <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
                 <input id="by" name="create_by" type="hidden" value="1" />
-                <input id="table" name="table" type="hidden" value="usergroup" />
-                <input id="usergroup_id" name="usergroup_id" type="hidden" value="0" />
+                <input id="table" name="table" type="hidden" value="screen" />
+                <input id="screen_id" name="screen_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
                 <input id="save" name="save" type="submit" value="Save" />
                 <input id="cancle" name="cancle" type="reset" value="Cancle" />

@@ -7,26 +7,31 @@
 <link rel="stylesheet" href="../page/js/fancyBox/source/jquery.fancybox.css" type="text/css" media="screen" />
 
 <script type="text/javascript" src="../page/js/fancyBox/source/jquery.fancybox.js"></script>
+<script type="text/javascript" src="../page/js/jquery.type1.js?_"<?php echo time(); ?>></script>
 <script type="text/javascript">
-    var self = this;
-
-    self.table = 'goodstype';
-    self.caption = 'Goods Type List:';
-    self.colNames = [
-        'goodstype_id', 'goodstype_eng','goodstype_th',
-        'goodstype_desc', 'deleteflag', 'action'
-    ];
-    self.colModel = [
-        {name: 'goodstype_id', index:'goodstype_id', hidden: true},
-        {name: 'goodstype_eng', index: 'goodstype_eng', width: 100, align: 'center'},
-        {name: 'goodstype_th', index: 'goodstype_th', width: 200, align: 'center'},
-        {name: 'goodstype_desc', index: 'goodstype_desc', width: 130, align: 'center'},
-        {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
-        {name: 'action',index: 'action', width:80, align: 'center'}
-    ];
+    $(function () {
+        $('#customForm').type1({
+            table: 'goodstype',
+            colNames: [
+                'goodstype_id', 'goodstype_eng','goodstype_th',
+                'goodstype_desc', 'deleteflag', 'action'
+            ],
+            colModel: [
+                {name: 'goodstype_id', index:'goodstype_id', hidden: true},
+                {name: 'goodstype_eng', index: 'goodstype_eng', width: 100, align: 'center'},
+                {name: 'goodstype_th', index: 'goodstype_th', width: 200, align: 'center'},
+                {name: 'goodstype_desc', index: 'goodstype_desc', width: 130, align: 'center'},
+                {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
+                {name: 'action',index: 'action', width:80, align: 'center'}
+            ],
+            mode       : $('#mode'),
+            recovery   : $('#recovery'),
+            del        : $('#delete'),
+            date       : $('#date'),
+            by         : $('#by')
+        });
+    });
 </script>
-<script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
-
 <table id="list-goodstype"></table>
 <div id="pager"></div>
 
@@ -34,6 +39,11 @@
     <form method="post" id="customForm" action="">
         <fieldset>
             <h1>0M10 : COUNT UNIT</h1>
+            <p>
+                <label for="goodstype_id">Goods Type ID: </label>
+                <input id="goodstype_id" name="goodstype_id" type="text" readonly="readonly" />
+                <span id="goodstype_eng_info">Goods Type ID is require!</span>
+            </p>
             <p>
                 <label for="goodstype_eng">Goods Type (ENG): </label>
                 <input id="goodstype_eng" name="goodstype_eng" type="text" />
@@ -58,7 +68,7 @@
             </p>
             <p class="btn">
                 <input id="table" name="table" type="hidden" value="goodstype" />
-                <input id="goodstype_id" name="goodstype_id" type="hidden" value="0" />
+<!--                 <input id="goodstype_id" name="goodstype_id" type="hidden" value="0" /> -->
                 <input id="mode" name="mode" type="hidden" value="insert" />
                 <input id="save" name="save" type="submit" value="Save" />
                 <input id="cancle" name="cancle" type="reset" value="Cancle" />
