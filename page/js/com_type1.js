@@ -14,7 +14,7 @@ $(function () {
     self.mode       = $('#mode'),
     self.grid       = $('#list-' + self.table),
     self.anchor     = $('a[class^="' + self.table + '"]'),
-    self.custom     = $('#customForm'),
+    self.form     = $('#customForm'),
     self.recovery   = $('#recovery'),
     self.del        = $('#delete'),
     self.date       = $('#date'),
@@ -95,11 +95,11 @@ $(function () {
             }
         },
         afterClose: function () {
-            self.custom.clearForm();
+            self.form.clearForm();
         }
     });
 
-    self.custom.bind('submit', function () {
+    self.form.bind('submit', function () {
         $.ajax({
             type        : 'POST',
             cache       : false,
