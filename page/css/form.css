@@ -20,6 +20,21 @@ h1{
 img {
     border: none;
 }
+
+form {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    text-shadow: 1px 1px 1px white;
+}
+.modal-header {
+    padding: 2px 0 10px 15px !important;
+}
+.modal-footer {
+    padding: 8px 0 0 !important;
+    padding-right: 10px !important;
+    background-color: none !important;
+}
 /******* LOGO *******/
 #logo{
     margin-top: 1em;
@@ -32,21 +47,24 @@ img {
 }
 /******* /CONTAINER *******/
 /******* FORM *******/
-#customForm{
+#customForm {
     padding: 0 10px 10px;
     text-align: left;
 }
 #customForm label{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif !important;
+    font-size: 13px;
     display: block;
-    color: #797979;
+    color: #666666;
     font-weight: 700;
     line-height: 1.4em;
-    width: 160px;
+    min-width: 150px;
     float: left;
     text-align: right;
-    padding-right: 10px;
+    padding: 5px 10px;
 }
-#customForm  input[type="text"]{
+
+/*#customForm  input[type="text"]{
     width: 220px;
     padding: 6px;
     color: #333;
@@ -117,7 +135,7 @@ img {
 }
 #error.valid ul li strong{
     color: #93d72e;
-}
+}*/
 
 .align-right {
     text-align: right;
@@ -132,6 +150,16 @@ img {
 }
 .green {
     color: green;
+}
+
+.section-left {
+    width: 450px;
+    float: left;
+}
+.section-right {
+     width: 350px;
+     height: 370px;
+    float: left;
 }
 
 
