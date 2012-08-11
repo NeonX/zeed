@@ -1,5 +1,5 @@
 /**
- * jQuery type1 Plugin
+ * javacript file com_type1.js
  * Narong Rammanee
  * ranarong@gmail.com
  *
@@ -14,11 +14,17 @@ $(function () {
     self.mode       = $('#mode'),
     self.grid       = $('#list-' + self.table),
     self.anchor     = $('a[class^="' + self.table + '"]'),
-    self.form     = $('#customForm'),
+    self.form       = $('#customForm'),
     self.recovery   = $('#recovery'),
     self.del        = $('#delete'),
     self.date       = $('#date'),
-    self.by         = $('#by');
+    self.by         = $('#by'),
+    self.options    = $('<option />'),
+    self.picture    = $('.picture'),
+    self.img        = $('<img />'),
+    self.btnSumit   = $('button:submit'),
+    self.file       = $('#file');
+    self.fakeFile   = $('#ffile');
     self.grid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
@@ -78,7 +84,7 @@ $(function () {
                     console.debug('MODE NOT FOUND!!!');
             }
 
-            if (mode == 'new') {
+            if (mode == 'new' && self.table != 'goods') {
                 self.setElementValue(mode);
             } else {
                 $.ajax({
@@ -88,7 +94,6 @@ $(function () {
                     url         : self.getByIdURL,
                     data        : { table: self.table, id: $(_self.element.innerHTML).get(0).getAttribute('value') },
                     success     : function (data) {
-                        console.debug(mode, data);
                         self.setElementValue(mode, data);
                     }
                 });
@@ -99,20 +104,42 @@ $(function () {
         }
     });
 
+    self.btnSumit.click(function () {
+        self.btnClick = $(this).get(0).getAttribute('id')
+    });
+
+    self.file.bind('change', function () {
+        self.fakeFile.val($(this).val());
+    });
+
     self.form.bind('submit', function () {
-        $.ajax({
-            type        : 'POST',
-            cache       : false,
-            url         : self.saveURL,
-            data        : $(this).serializeArray(),
-            success     : function (data) {
-                $.fancybox(data);
-                self.grid.trigger('reloadGrid');
-            }
-        });
+        if (self.btnClick == 'save') {
+            $.ajax({
+                type        : 'POST',
+                cache       : false,
+                url         : self.saveURL,
+                data        : $(this).serializeArray(),
+                success     : function (data) {
+                    $.fancybox(data);
+                    self.grid.trigger('reloadGrid');
+                }
+            });
+        } else {
+            return self.clickupload();
+        }
 
         return false;
     });
+
+    self.clickupload = function () {
+        return true;
+    }
+
+    window.parent.uploadok = function (pathfile) {
+        pathfile = '../page/' + pathfile;
+        self.picture.empty().append(self.img.clone().attr({ src: pathfile }));
+        return true ;
+    }
 
      self.del.bind('click', function () {
         $.ajax({
@@ -148,7 +175,7 @@ self.setElementValue = function (mode, data) {
         $('#delflag').remove();
     } else {
         $.each(self.colNames, function (index, column) {
-            if (self.colId ==  column) {
+            if (self.colId == column) {
                 $('#' + column).val(data[column]);
             } else {
                 if (column == 'deleteflag') {
@@ -161,7 +188,38 @@ self.setElementValue = function (mode, data) {
                     }
                     $('#' + column).hide();
                     $('#delflag').remove();
-                    $('<input />').attr({id: 'delflag',type: 'text', value: text, style: style, readonly: 'readonly'}).insertAfter('#deleteflag');
+                    $('<input />').attr({
+                        id: 'delflag',
+                        type: 'text',
+                        value: text,
+                        style: style,
+                        readonly: 'readonly'
+                    }).insertAfter('#deleteflag');
+                } else if (column == 'goodstype_id') {
+                    if (mode == 'edit') {
+                        $('#text_goodstype_id').remove();
+                        $('#goodstype_id').show().empty().append(
+                            self.options.clone().val(-1).text('-- Please Select --')
+                        );
+                        $.each(data.goodstype, function(k, obj) {
+                            $('#goodstype_id').append(
+                                self.options.clone()
+                                    .val(obj.goodstype_id)
+                                    .text(obj.goodstype_eng)
+                            );
+                        });
+
+                        $('#goodstype_id').val(data.goodstype_id);
+                    } else {
+                        $('#text_goodstype_id').remove();
+                        $('#goodstype_id').hide();
+                        $('<input />').attr({
+                            id: 'text_goodstype_id',
+                            type: 'text',
+                            value: data.goodstype[parseInt(data['goodstype_id']) - 1 ].goodstype_th,
+                            readonly: 'readonly'
+                        }).insertAfter('#goodstype_id');
+                    }
                 } else {
                     if (mode == 'view') {
                         $('#' + column).val(data[column]).attr('readonly','readonly');
