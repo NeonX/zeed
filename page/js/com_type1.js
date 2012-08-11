@@ -169,10 +169,25 @@ $(function () {
 });
 
 self.setElementValue = function (mode, data) {
+    console.debug(mode, data);
     var style, text;
     if (mode == 'new') {
         $('#deleteflag').show();
         $('#delflag').remove();
+
+        $('#text_goodstype_id').remove();
+        $('#goodstype_id').show().empty().append(
+            self.options.clone().val(-1).text('-- Please Select --')
+        );
+        $.each(data.goodstype, function(k, obj) {
+            $('#goodstype_id').append(
+                self.options.clone()
+                    .val(obj.goodstype_id)
+                    .text(obj.goodstype_eng)
+            );
+        });
+
+        $('#goodstype_id').val(data.goodstype_id);
     } else {
         $.each(self.colNames, function (index, column) {
             if (self.colId == column) {
