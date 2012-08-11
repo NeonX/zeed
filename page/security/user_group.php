@@ -31,22 +31,21 @@
 
 <div id="container" style="display:none">
     <form method="post" id="customForm" action="">
-        <fieldset>
-            <h1>0M40 : CUSTOMER TYPE</h1>
+        <fieldset class="modal-header">
+            <h3 class="modal-title">M020 : USER GROUPE</h1>
+        </fieldset>
+        <fieldset class="modal-body">
              <p>
                 <label for="usergroup_code">User Group Code: </label>
                 <input id="usergroup_code" name="usergroup_code" type="text" />
-                <span id="usergroup_code_info">User Group Code is require!</span>
             </p>
             <p>
                 <label for="usergroup_eng">User Group Name (ENG): </label>
                 <input id="usergroup_eng" name="usergroup_eng" type="text" />
-                <span id="usergroup_eng_info">User Group Name (ENG) is require!</span>
             </p>
             <p>
                 <label for="usergroup_th">User Group Name (ENG): </label>
                 <input id="usergroup_th" name="usergroup_th" type="text" />
-                <span id="usergroup_th_info">User Group Name (ENG) is require!</span>
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>
@@ -55,18 +54,32 @@
                     <option value="0">Used</option>
                     <option value="1">Unuse</option>
                 </select>
-                <span id="deleteflag_info">Use Status is require!</span>
             </p>
-            <p class="btn">
+        </fieldset>
+        <fieldset class="modal-footer">
+            <p style="float: right;">
                 <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
                 <input id="by" name="create_by" type="hidden" value="1" />
                 <input id="table" name="table" type="hidden" value="usergroup" />
                 <input id="usergroup_id" name="usergroup_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
-                <input id="save" name="save" type="submit" value="Save" />
-                <input id="cancle" name="cancle" type="reset" value="Cancle" />
-                <input id="delete" name="delete" type="button" value="Delete" />
-                <input id="recovery" name="recovery" type="button" value="Recovery" />
+
+                <button type="submit" id="save" name="save" class="btn btn-success">
+                    <i class="icon-plus-sign icon-white"></i>
+                    <span>Save</span>
+                </button>
+                <button type="reset" id="cancle" name="cancle" class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" id="delete" name="delete" class="btn btn-danger delete">
+                    <i class="icon-minus-sign icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                 <button type="button" id="recovery" name="recovery" class="btn btn-primary save">
+                    <i class="icon-share-alt icon-white"></i>
+                    <span>Recovery</span>
+                </button>
             </p>
         </fieldset>
     </form>
