@@ -1,12 +1,7 @@
 <div class="h_line"></div>
 <h1>M030 : GOODS TYPE</h1>
 <div style="float: right;"> <a class="goodstype" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
-
 <div class="cleaner"></div>
-<link rel="stylesheet" href="../page/css/form.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../page/js/fancyBox/source/jquery.fancybox.css" type="text/css" media="screen" />
-
-<script type="text/javascript" src="../page/js/fancyBox/source/jquery.fancybox.js"></script>
 <script type="text/javascript">
     var self = this;
 
@@ -25,24 +20,24 @@
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
 </script>
-<script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
+<script type="text/javascript" src="../page/js/com_type1.js?_=<?php echo time(); ?>"></script>
 
 <table id="list-goodstype"></table>
 <div id="pager"></div>
 
 <div id="container" style="display:none">
     <form method="post" id="customForm" action="">
-        <fieldset>
-            <h1>0M10 : COUNT UNIT</h1>
+        <fieldset class="modal-header">
+            <h3 class="modal-title">M030 : GOODS TYP</h1>
+        </fieldset>
+        <fieldset class="modal-body">
             <p>
                 <label for="goodstype_eng">Goods Type (ENG): </label>
                 <input id="goodstype_eng" name="goodstype_eng" type="text" />
-                <span id="goodstype_eng_info">Goods Type (ENG) is require!</span>
             </p>
             <p>
                 <label for="goodstype_th">Goods Type (TH): </label>
                 <input id="goodstype_th" name="goodstype_th" type="text" />
-                <span id="goodstype_th_info">Goods Type (TH) is require!</span>
             <p>
                 <label for="deleteflag">Use Status: </label>
                 <select id="deleteflag" name="deleteflag">
@@ -50,20 +45,34 @@
                     <option value="0">Used</option>
                     <option value="1">Unuse</option>
                 </select>
-                <span id="deleteflag_info">Use Status is require!</span>
             </p>
             <p>
                 <label for="goodstype_desc">goodstype_desc: </label>
                 <textarea id="goodstype_desc" name="goodstype_desc" cols="" rows=""></textarea>
             </p>
-            <p class="btn">
+        </fieldset>
+        <fieldset class="modal-footer">
+            <p style="float: right; height: 20px;">
                 <input id="table" name="table" type="hidden" value="goodstype" />
                 <input id="goodstype_id" name="goodstype_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
-                <input id="save" name="save" type="submit" value="Save" />
-                <input id="cancle" name="cancle" type="reset" value="Cancle" />
-                <input id="delete" name="delete" type="button" value="Delete" />
-                <input id="recovery" name="recovery" type="button" value="Recovery" />
+
+                <button type="submit" id="save" name="save" class="btn btn-success">
+                    <i class="icon-plus-sign icon-white"></i>
+                    <span>Save</span>
+                </button>
+                <button type="reset" id="cancle" name="cancle" class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" id="delete" name="delete" class="btn btn-danger delete">
+                    <i class="icon-minus-sign icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                 <button type="button" id="recovery" name="recovery" class="btn btn-primary save">
+                    <i class="icon-share-alt icon-white"></i>
+                    <span>Recovery</span>
+                </button>
             </p>
         </fieldset>
     </form>

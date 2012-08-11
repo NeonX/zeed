@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../page/js/fancyBox/source/jquery.fancybox.css" type="text/css" media="screen" />
 
 <script type="text/javascript" src="../page/js/fancyBox/source/jquery.fancybox.js"></script>
-<script type="text/javascript" src="../page/js/jquery.type1.js?_"<?php echo time(); ?>></script>
+<script type="text/javascript" src="../page/js/jquery.type1.js?_=<?php echo time(); ?>"></script>
 <script type="text/javascript">
     $(function () {
         $('#customForm').type1({

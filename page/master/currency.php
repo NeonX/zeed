@@ -23,7 +23,7 @@
         {name: 'action',index: 'action', width:80, align: 'center'}
     ]
 </script>
-<script type="text/javascript" src="../page/js/com_type1.js?_"<?php echo time(); ?>></script>
+<script type="text/javascript" src="../page/js/com_type1.js?_=<?php echo time(); ?>"></script>
 
 <table id="list-currency"></table>
 <div id="pager"></div>
