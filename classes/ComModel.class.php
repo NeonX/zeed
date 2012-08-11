@@ -35,7 +35,7 @@ class ComModel extends DBConnection
 
         $start = $limit * $page - $limit; // do not put $limit*($page - 1)
 
-        if($sidx) {
+        if ($sidx) {
             $sql .= " ORDER BY ".$sidx;
             $sql .= strtoupper($sord) == 'ASC' ? ' ASC' : ' DESC';
         }
@@ -57,7 +57,7 @@ class ComModel extends DBConnection
         $data = array();
         $columns = explode(',', $columns);
 
-        while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+        while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
             foreach ($columns as $key => $value) {
                 if ($value != 'action' && $value != 'deleteflag') {
                     $data[$key] = $row->$value;
@@ -111,7 +111,7 @@ class ComModel extends DBConnection
         switch ($table) {
             case 'goodsprice':
                 $fk = array(
-                    'goodstype_id' => array('goodstype_id', 'goodstype_eng'),
+                    'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
                     'unit_id'      => array('unit_id', 'unitcode'),
                     'currency_id'  => array('currency_id', 'currcode')
                 );
@@ -122,7 +122,7 @@ class ComModel extends DBConnection
             break;
             case 'goods':
                 $fk = array(
-                    'goodstype_id' => array('goodstype_id', 'goodstype_eng')
+                    'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
@@ -146,7 +146,7 @@ class ComModel extends DBConnection
 
         $fTable = $this->prefix . $table;
 
-        $sql = "SELECT {$columns[0]}, {$columns[1]} FROM {$fTable} WHERE 1=1";
+        $sql = "SELECT {$columns[0]}, {$columns[1]}, {$columns[2]} FROM {$fTable} WHERE 1=1";
 
         $stmt = $this->db->prepare($sql);
 
