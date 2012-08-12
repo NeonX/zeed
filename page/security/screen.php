@@ -8,15 +8,18 @@
 
     self.table = 'screen';
     self.caption = 'Screen List:';
-    self.colNames = [
+    self.columns = [
         'screen_id', 'scr_code', 'scrname_eng','scrname_th', 'deleteflag', 'action'
+    ];
+    self.colNames = [
+        'Screen ID', 'Screen Code', 'Screen Name (ENG)','Screen Name (TH)', 'Status', 'Action'
     ];
     self.colModel = [
         {name: 'screen_id', index:'screen_id', hidden: true},
-        {name: 'scr_code', index: 'scr_code', width: 115, align: 'center'},
-        {name: 'scrname_eng', index: 'scrname_eng', width: 165, align: 'center'},
-        {name: 'scrname_th', index: 'scrname_th', width: 165, align: 'center'},
-        {name: 'deleteflag', index: 'deleteflag', width: 115, align: 'center'},
+        {name: 'scr_code', index: 'scr_code', width: 100, align: 'center'},
+        {name: 'scrname_eng', index: 'scrname_eng', width: 200, align: 'center'},
+        {name: 'scrname_th', index: 'scrname_th', width: 200, align: 'center'},
+        {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
 </script>
@@ -40,7 +43,7 @@
                 <input id="scrname_eng" name="scrname_eng" type="text" />
             </p>
             <p>
-                <label for="scrname_th">Screen Name (ENG): </label>
+                <label for="scrname_th">Screen Name (TH): </label>
                 <input id="scrname_th" name="scrname_th" type="text" />
             </p>
             <p>

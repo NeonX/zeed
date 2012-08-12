@@ -7,18 +7,22 @@
     var self = this;
 
     self.table = 'customertype';
-    self.caption = 'Goods Type List:';
+    self.caption = 'Customer Type List:';
+    self.columns = [
+        'customertype_id','custtype_code', 'custtype_eng','custtype_th',
+        'custtype_desc', 'deleteflag', 'action'
+    ];
     self.colNames = [
-        'customertype_id', 'custtype_eng','custtype_th',
-        'custtype_code', 'custtype_desc', 'deleteflag', 'action'
+        'Customer Type ID', 'Code (ENG Only)', 'Customer Type (ENG)','Customer Type (TH)',
+        'Description', 'Status', 'Action'
     ];
     self.colModel = [
         {name: 'customertype_id', index:'customertype_id', hidden: true},
-        {name: 'custtype_eng', index: 'custtype_eng', width: 100, align: 'center'},
-        {name: 'custtype_th', index: 'custtype_th', width: 100, align: 'center'},
-        {name: 'custtype_code', index: 'custtype_code', width: 110, align: 'center'},
-        {name: 'custtype_desc', index: 'custtype_desc', width: 110, align: 'center'},
-        {name: 'deleteflag', index: 'deleteflag', width: 110, align: 'center'},
+        {name: 'custtype_code', index: 'custtype_code', width: 100, align: 'center'},
+        {name: 'custtype_eng', index: 'custtype_eng', width: 200, align: 'center'},
+        {name: 'custtype_th', index: 'custtype_th', width: 200, align: 'center'},
+        {name: 'custtype_desc', index: 'custtype_desc', hidden: true},
+        {name: 'deleteflag', index: 'deleteflag', width:60, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
 </script>
@@ -34,7 +38,7 @@
         </fieldset>
         <fieldset class="modal-body">
             <p>
-                <label for="custtype_code">Customer Type (ENG): </label>
+                <label for="custtype_code">Code (ENG Only): </label>
                 <input id="custtype_code" name="custtype_code" type="text" />
             </p>
             <p>
@@ -54,7 +58,7 @@
                 </select>
             </p>
             <p>
-                <label for="custtype_desc">custtype_desc: </label>
+                <label for="custtype_desc">Description: </label>
                 <textarea id="custtype_desc" name="custtype_desc" cols="" rows=""></textarea>
             </p>
         </fieldset>

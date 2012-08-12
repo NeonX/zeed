@@ -8,18 +8,23 @@
 
     self.table = 'goods';
     self.caption = 'Goods Type List:';
-    self.colNames = [
+    self.columns = [
         'goods_id', 'goodstype_id','goodscode', 'goodsname_eng', 
-        'goodsname_th', 'goodspicture', 'deleteflag', 'action'
+        'goodsname_th', 'goodsdesc', 'goodspicture', 'deleteflag', 'action'
+    ]
+    self.colNames = [
+        'Goods ID', 'Goods Type ID','Goods Code', 'Goods Name (ENG)', 
+        'Goods Name (TH)', 'Description', 'Picture', 'Status', 'Action'
     ],
     self.colModel = [
         {name: 'goods_id', index:'goods_id', hidden: true},
         {name: 'goodstype_id', index:'goodstype_id', hidden: true},
-        {name: 'goodscode', index: 'goodscode', width: 120, align: 'center'},
-        {name: 'goodsname_eng', index: 'goodsname_eng', width: 180, align: 'center'},
-        {name: 'goodsname_th', index: 'goodsname_th', width:180, align: 'center'},
+        {name: 'goodscode', index: 'goodscode', width: 100, align: 'center'},
+        {name: 'goodsname_eng', index: 'goodsname_eng', width: 200, align: 'center'},
+        {name: 'goodsname_th', index: 'goodsname_th', width:200, align: 'center'},
+        {name: 'goodsdesc', index:'goodsdesc', hidden: true},
         {name: 'goodspicture', index:'goodspicture', hidden: true},
-        {name: 'deleteflag', index: 'deleteflag', width: 80, align: 'center'},
+        {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ]
 </script>
@@ -124,7 +129,7 @@ input.ffile {
                     </select>
                 </p>
                 <p>
-                    <label for="goodsdesc">Descrition: </label>
+                    <label for="goodsdesc">Description: </label>
                     <textarea id="goodsdesc" name="goodsdesc" cols="" rows=""></textarea>
                 </p>
             </fieldset>

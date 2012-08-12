@@ -28,7 +28,7 @@ $(function () {
     self.grid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
-        postData    : { columns : function () { return self.colNames }, table: function () { return self.table } },
+        postData    : { columns : function () { return self.columns }, table: function () { return self.table } },
         height      : 350,
         colNames    : self.colNames,
         colModel    : self.colModel,
@@ -107,16 +107,11 @@ $(function () {
         }
     });
 
-//     self.btnSumit.click(function () {
-//         self.btnClick = $(this).get(0).getAttribute('id')
-//     });
-// 
     self.file.bind('change', function () {
         self.fakeFile.val($(this).val());
     });
 
     self.form.bind('submit', function () {
-//         if (self.btnClick == 'save') {
         if (self.table == 'goods') {
             console.debug(self.fakeFile.val());
             var img_name = self.fakeFile.val().replace(/C:\\fakepath\\/i, '');
@@ -153,9 +148,6 @@ $(function () {
 
             return false;
         }
-//         } else {
-// 
-//         }
     });
 
     self.clickupload = function () {
@@ -204,7 +196,7 @@ self.setElementValue = function (mode, data) {
         $('#deleteflag').show();
         $('#delflag').remove();
 
-        $.each(self.colNames, function (index, column) {
+        $.each(self.columns, function (index, column) {
             $('#' + column).removeAttr('readonly');
         });
 
@@ -221,15 +213,12 @@ self.setElementValue = function (mode, data) {
                         .text(obj.goodstype_eng)
                 );
             });
-            
+
             $('#goodstype_id').val(data.goodstype_id);
         }
-        
 
-
-        
     } else {
-        $.each(self.colNames, function (index, column) {
+        $.each(self.columns, function (index, column) {
             if (self.colId == column) {
                 $('#' + column).val(data[column]);
             } else {

@@ -7,16 +7,21 @@
 
     self.table = 'goodstype';
     self.caption = 'Goods Type List:';
-    self.colNames = [
+    self.columns = [
         'goodstype_id', 'goodstype_eng','goodstype_th',
         'goodstype_desc', 'deleteflag', 'action'
     ];
+    self.colNames = [
+        'Goods Type ID', 'Goods Type (ENG)','Goods Type (TH)',
+        'Description', 'Status', 'Action'
+    ];
+
     self.colModel = [
         {name: 'goodstype_id', index:'goodstype_id', hidden: true},
-        {name: 'goodstype_eng', index: 'goodstype_eng', width: 100, align: 'center'},
-        {name: 'goodstype_th', index: 'goodstype_th', width: 200, align: 'center'},
-        {name: 'goodstype_desc', index: 'goodstype_desc', width: 130, align: 'center'},
-        {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
+        {name: 'goodstype_eng', index: 'goodstype_eng', width: 150, align: 'center'},
+        {name: 'goodstype_th', index: 'goodstype_th', width: 150, align: 'center'},
+        {name: 'goodstype_desc', index: 'goodstype_desc', width: 200, align: 'center'},
+        {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
 </script>
@@ -47,7 +52,7 @@
                 </select>
             </p>
             <p>
-                <label for="goodstype_desc">goodstype_desc: </label>
+                <label for="goodstype_desc">Description: </label>
                 <textarea id="goodstype_desc" name="goodstype_desc" cols="" rows=""></textarea>
             </p>
         </fieldset>

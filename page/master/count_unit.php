@@ -8,17 +8,21 @@
 
     self.table = 'unit';
     self.caption = 'Count Unit List:';
-    self.colNames = [
+    self.columns = [
         'unit_id', 'unitcode','unitnameeng', 'unitnameth',
         'unitdesc', 'deleteflag', 'action'
+    ];
+    self.colNames = [
+        'Count Unit ID', 'Count Unit Code','Count Unit (ENG)', 'Count Unit (TH)',
+        'Description', 'Status', 'Action'
     ];
     self.colModel = [
         {name: 'unit_id', index:'unit_id', hidden: true},
         {name: 'unitcode', index: 'unitcode', width: 100, align: 'center'},
         {name: 'unitnameeng', index: 'unitnameeng', width: 200, align: 'center'},
-        {name: 'unitnameth', index: 'unitnameth', width: 130, align: 'center'},
+        {name: 'unitnameth', index: 'unitnameth', width: 200, align: 'center'},
         {name: 'unitdesc', index: 'unitdesc', hidden: true},
-        {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
+        {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
 </script>
@@ -54,7 +58,7 @@
                 </select>
             </p>
             <p>
-                <label for="unitdesc">Descrition: </label>
+                <label for="unitdesc">Description: </label>
                 <textarea id="unitdesc" name="unitdesc" cols="" rows=""></textarea>
             </p>
         </fieldset>

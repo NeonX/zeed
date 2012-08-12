@@ -11,9 +11,12 @@
     var self = this;
 
     self.table = 'usergroup';
-    self.caption = 'Goods Type List:';
-    self.colNames = [
+    self.caption = 'User Group List:';
+    self.columns = [
         'usergroup_id', 'usergroup_code', 'usergroup_eng','usergroup_th', 'deleteflag', 'action'
+    ];
+    self.colNames = [
+        'User Group ID', 'User Group Code', 'User Group Name (ENG)','User Group Name (TH)', 'Status', 'Action'
     ];
     self.colModel = [
         {name: 'usergroup_id', index:'usergroup_id', hidden: true},
@@ -44,7 +47,7 @@
                 <input id="usergroup_eng" name="usergroup_eng" type="text" />
             </p>
             <p>
-                <label for="usergroup_th">User Group Name (ENG): </label>
+                <label for="usergroup_th">User Group Name (TH): </label>
                 <input id="usergroup_th" name="usergroup_th" type="text" />
             </p>
             <p>
