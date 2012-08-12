@@ -10,7 +10,7 @@
     self.caption = 'Goods Type List:';
     self.colNames = [
         'goods_id', 'goodstype_id','goodscode', 'goodsname_eng', 
-        'goodsname_th', 'deleteflag', 'action'
+        'goodsname_th', 'goodspicture', 'deleteflag', 'action'
     ],
     self.colModel = [
         {name: 'goods_id', index:'goods_id', hidden: true},
@@ -18,6 +18,7 @@
         {name: 'goodscode', index: 'goodscode', width: 120, align: 'center'},
         {name: 'goodsname_eng', index: 'goodsname_eng', width: 180, align: 'center'},
         {name: 'goodsname_th', index: 'goodsname_th', width:180, align: 'center'},
+        {name: 'goodspicture', index:'goodspicture', hidden: true},
         {name: 'deleteflag', index: 'deleteflag', width: 80, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ]
@@ -70,8 +71,8 @@ div.fakefile {
     top: 0px;
     left: 0px;
     z-index: 1;
-    width: 310px;
-    margin-left: 70px;
+    width: 240px;
+    margin-left: 135px;
 }
 
 input.file {
@@ -81,13 +82,17 @@ input.file {
     filter:alpha(opacity: 0);
     opacity: 0;
     z-index: 2;
+    cursor: pointer;
+}
+input.ffile {
+    width:160px;
 }
 </style>
 <table id="list-goods"></table>
 <div id="pager"></div>
 
 <div id="container" style="display:none">
-        <form id="customForm" action="../page/upload.php" method="post" enctype="multipart/form-data" target="uploadtarget">
+        <form id="customForm" action="../page/fileTransfer.php?action=upload" method="post" enctype="multipart/form-data" target="uploadtarget">
              <fieldset class="modal-header">
                 <h3 class="modal-title">M031 : GOODS</h1>
             </fieldset>
@@ -124,19 +129,19 @@ input.file {
                 </p>
             </fieldset>
             <fieldset class="col2">
-                    <label for="picture" style="min-width: 50px;">Picture: </label>
+                    <label for="picture" style="min-width: 115px;">Picture: </label>
                     <div class="fileinputs">
                         <input type="file" class="file" name="file" id="file" />
                         <div class="fakefile">
-                            <input id="ffile" style="width:160px;"/>
-                            <img src="../page/images/brows.png" style="vertical-align: middle;"/>
-                            <button type="submit" id="upload" name="upload" value="upload" class="btn btn-success" style="margin-left: 10px;">
+                            <input id="ffile" class="ffile" type="text"/>
+                            <img src="../page/images/brows.png" style="vertical-align: middle;" class="brows"/>
+                            <!--<button type="submit" id="upload" name="upload" value="upload" class="btn btn-success" style="margin-left: 10px;">
                                 <i class="icon-plus icon-white"></i>
                                 <span>Upload</span>
-                            </button>
+                            </button>-->
                         </div>
                     </div>
-                    <div class="picture"></div>
+                    <div class="picture"><!--<img src="../page/images/no_image.jpg" alt="no image" />--></div>
             </fieldset>
             <fieldset class="modal-footer" style="clear: both;">
                  <p style="float: right;">
