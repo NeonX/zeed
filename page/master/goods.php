@@ -43,7 +43,6 @@
 <link href="../css/ui-lightness/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css" />
 <link href="../css/jqgrid/ui.jqgrid.css" rel="stylesheet" type="text/css" />
 <link href="../css/leftmenu_orange.css" rel="stylesheet" type="text/css" />-->
-<link rel="stylesheet" href="../page/css/jquery.fileupload-ui.css" type="text/css" media="screen" />
 
 <script type="text/javascript" src="../page/js/com_type1.js?_=<?php echo time(); ?>"></script>
 </script>
