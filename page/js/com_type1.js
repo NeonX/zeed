@@ -50,9 +50,11 @@ $(function () {
             title:  null
         },
         beforeLoad: function () {
-            var _self = this,
+            _self = this;
+                var mode;
                 mode = $(_self.element.innerHTML).get(0).getAttribute('title'),
                 buttons = ['save', 'cancle', 'delete', 'recovery'];
+                fmode = mode;
 
             switch (mode) {
                 case 'new':
@@ -67,6 +69,7 @@ $(function () {
                         self.recovery.hide();
                         self.date.attr({ name: 'create_date'});
                         self.by.attr({ name: 'create_by'});
+                        self.picture.empty();
                     } else {
                         self.mode.val('update');
                         self.date.attr({ name: 'lastupdate_date'});
@@ -104,16 +107,39 @@ $(function () {
         }
     });
 
-    self.btnSumit.click(function () {
-        self.btnClick = $(this).get(0).getAttribute('id')
-    });
-
+//     self.btnSumit.click(function () {
+//         self.btnClick = $(this).get(0).getAttribute('id')
+//     });
+// 
     self.file.bind('change', function () {
         self.fakeFile.val($(this).val());
     });
 
     self.form.bind('submit', function () {
-        if (self.btnClick == 'save') {
+//         if (self.btnClick == 'save') {
+        if (self.table == 'goods') {
+            console.debug(self.fakeFile.val());
+            var img_name = self.fakeFile.val().replace(/C:\\fakepath\\/i, '');
+            if (self.fakeFile.val() != '') {
+                var gpic = [{ name: 'goodspicture', value: img_name }];
+                serialize = $.merge($(this).serializeArray(), gpic);
+                serialize.swap(6, 9)
+            } else {
+                serialize = $(this).serializeArray();
+            }
+            $.ajax({
+                type        : 'POST',
+                cache       : false,
+                url         : self.saveURL,
+                data        : serialize,
+                success     : function (data) {
+                    $.fancybox(data);
+                    self.grid.trigger('reloadGrid');
+                }
+            });
+
+            return self.clickupload();
+        } else {
             $.ajax({
                 type        : 'POST',
                 cache       : false,
@@ -124,20 +150,22 @@ $(function () {
                     self.grid.trigger('reloadGrid');
                 }
             });
-        } else {
-            return self.clickupload();
-        }
 
-        return false;
+            return false;
+        }
+//         } else {
+// 
+//         }
     });
 
     self.clickupload = function () {
+        $('#file').val();
         return true;
     }
 
     window.parent.uploadok = function (pathfile) {
         pathfile = '../page/' + pathfile;
-        self.picture.empty().append(self.img.clone().attr({ src: pathfile }));
+        self.picture.empty().append(self.img.clone().attr({ src: pathfile, width: 320, height: 250 }));
         return true ;
     }
 
@@ -170,24 +198,36 @@ $(function () {
 
 self.setElementValue = function (mode, data) {
     console.debug(mode, data);
+    dd = data;
     var style, text;
     if (mode == 'new') {
         $('#deleteflag').show();
         $('#delflag').remove();
 
-        $('#text_goodstype_id').remove();
-        $('#goodstype_id').show().empty().append(
-            self.options.clone().val(-1).text('-- Please Select --')
-        );
-        $.each(data.goodstype, function(k, obj) {
-            $('#goodstype_id').append(
-                self.options.clone()
-                    .val(obj.goodstype_id)
-                    .text(obj.goodstype_eng)
-            );
+        $.each(self.colNames, function (index, column) {
+            $('#' + column).removeAttr('readonly');
         });
 
-        $('#goodstype_id').val(data.goodstype_id);
+        if (typeof data !== 'undefined') {
+            $('#text_goodstype_id').remove();
+            $('#goodstype_id').show().empty().append(
+                self.options.clone().val(-1).text('-- Please Select --')
+            );
+
+            $.each(data.goodstype, function(k, obj) {
+                $('#goodstype_id').append(
+                    self.options.clone()
+                        .val(obj.goodstype_id)
+                        .text(obj.goodstype_eng)
+                );
+            });
+            
+            $('#goodstype_id').val(data.goodstype_id);
+        }
+        
+
+
+        
     } else {
         $.each(self.colNames, function (index, column) {
             if (self.colId == column) {
@@ -235,6 +275,8 @@ self.setElementValue = function (mode, data) {
                             readonly: 'readonly'
                         }).insertAfter('#goodstype_id');
                     }
+                } else if (column == 'goodspicture') {
+                    self.picture.append(self.img.attr({ src:'../page/images_upload/thumb/zeed_' + data.goodspicture, width: 320, height: 250 }));
                 } else {
                     if (mode == 'view') {
                         $('#' + column).val(data[column]).attr('readonly','readonly');
@@ -263,3 +305,10 @@ $.fn.clearForm = function () {
         }
     });
 };
+
+Array.prototype.swap = function (x,y) {
+    var t = this[x];
+    this[x] = this[y];
+    this[y] = t;
+    return this;
+}
