@@ -184,6 +184,7 @@ class ComModel extends DBConnection
 
             $params = join(',', $paramsArr);
         } else if ($mode == 'update') {
+
             $colLength = count($postKey);
             foreach($postKey as $key => $value) {
                 $paramsArr[] = $value . ' = ' . '?';
@@ -213,11 +214,11 @@ class ComModel extends DBConnection
                         $index = $key + 1;
                         if ($value == 'lastupdate_by') {
                             $stmt->bindValue($index, isset($post[$value]) ? (int) $post[$value] : null, PDO::PARAM_INT);
-                            $myparams['update'][] = (int) $post[$value];
+                            $myparams['update'][$index] = (int) $post[$value];
                             continue;
                         } else {
                             $stmt->bindValue($index, isset($post[$value]) ? trim($post[$value]) : null);
-                            $myparams['update'][] = $post[$value];
+                            $myparams['update'][$index] = $post[$value];
                         }
                     }
                     $myparams['update'][$colLength + 1] = $id;
