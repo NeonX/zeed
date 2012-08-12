@@ -113,7 +113,6 @@ $(function () {
 
     self.form.bind('submit', function () {
         if (self.table == 'goods') {
-            console.debug(self.fakeFile.val());
             var img_name = self.fakeFile.val().replace(/C:\\fakepath\\/i, '');
             if (self.fakeFile.val() != '') {
                 var gpic = [{ name: 'goodspicture', value: img_name }];
@@ -189,8 +188,6 @@ $(function () {
 });
 
 self.setElementValue = function (mode, data) {
-    console.debug(mode, data);
-    dd = data;
     var style, text;
     if (mode == 'new') {
         $('#deleteflag').show();
@@ -265,7 +262,7 @@ self.setElementValue = function (mode, data) {
                         }).insertAfter('#goodstype_id');
                     }
                 } else if (column == 'goodspicture') {
-                    self.picture.append(self.img.attr({ src:'../page/images_upload/thumb/zeed_' + data.goodspicture, width: 320, height: 250 }));
+                    self.picture.empty().append(self.img.attr({ src:'../page/images_upload/thumb/zeed_' + data.goodspicture, width: 320, height: 250 }));
                 } else {
                     if (mode == 'view') {
                         $('#' + column).val(data[column]).attr('readonly','readonly');
