@@ -5,28 +5,24 @@
  * By Narong Rammanee
  */
 require_once dirname(__FILE__) . '/DBConnection.class.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/page/common/phpthumb/ThumbLib.inc.php';
 
 class FileTransfer extends DBConnection
 {
-    private $q_id;
-    private $is_map;
-    private $type;
-    private $temp;
-    private $name;
-    private $size;
     private $attach_dir;
-    private $filetypes;
     private $filename;
-    private $encodeFilename;
     private $decodeFilename;
 
-    public function __construct($attach_dir=null, $dbo=null) 
+    public function __construct($attach_dir=null)
     {
         parent::__construct();
 
         $this->attach_dir = $attach_dir;
+    }
 
-        $this->filetypes = array (
+    public function doUpload($file=null, $action=null)
+    {
+        $mimes = array (
             'image/pjpeg' => '.jpg',
             'image/jpeg' => '.jpg',
             'image/x-png' => '.png',
@@ -34,74 +30,27 @@ class FileTransfer extends DBConnection
             'image/gif' => '.gif',
         );
 
-    }
+        $type = $file['file']['type'];
+        $temp = $file['file']['tmp_name'];
+        $name = $file['file']['name'];
+        $size = $file['file']['size'];
 
-    public function doUpload($file=null, $post=null)
-    {
-        $this->q_id  = isset($post['q_id']) ? $post['q_id'] : null;
-        $this->is_map  = isset($post['is_map']) ? $post['is_map'] : null;
+        $decodeFilename = urldecode(urlencode($name));
 
-        $this->type = $file['uploadfile']['type'];
-        $this->temp = $file['uploadfile']['tmp_name'];
-        $this->name = $file['uploadfile']['name'];
-        $this->size = $file['uploadfile']['size'];
+        if (array_key_exists($type, $mimes)) {
+            $this->filename = '/zeed_' . $name;
+            $original_file = $this->attach_dir . '/original' . $this->filename;
+            $thumb_file    =  $this->attach_dir . '/thumb' . $this->filename;
 
-        $this->decodeFilename = urldecode(urlencode($this->name));
+            if (move_uploaded_file($temp, $original_file)) {
+                $thumb = PhpThumbFactory::create($original_file);
+                $thumb->adaptiveResize(320, 250);
+                $thumb->save($thumb_file);
 
-        $data = array(); 
-        if (array_key_exists($this->type, $this->filetypes)) {
-            $this->filename = $this->q_id . '_zeed_' . time() . $this->filetypes[$this->type];
-            $this->path = $this->attach_dir . $this->filename;
-            if (move_uploaded_file($this->temp, $this->path)) {
-                self::insertAttachFile();
-                $data['success'] = true;
-            } else {
-                $data['errormsg'] = 'ไม่สามารถอัพโหลดไฟล์ได้';
-                $data['success'] = false;
+                echo '<script language="JavaScript">
+                        window.parent.uploadok("' . $thumb_file . '");
+                    </script>';
             }
-        } else {
-            $data['success'] = false;
-            $data['mime_type'] = $this->type;
-        }
-
-        return json_encode($data);
-    }
-
-    public function insertAttachFile ()
-    {
-        $strSQL = "
-            INSERT INTO attach_file (
-                q_id,
-                origin_file_name,
-                new_file_name,
-                attach_file_size,
-                attach_file_date,
-                attach_file_by,
-                is_map
-            ) VALUES (
-                :q_id,
-                :origin_file_name,
-                :new_file_name,
-                :attach_file_size,
-                now(),
-                :attach_file_by,
-                :is_map
-            )";
-
-        $sth = $this->db->prepare($strSQL);
-
-        try {
-            $data = array(
-                ':q_id'             => $this->q_id,
-                ':origin_file_name' => $this->decodeFilename,
-                ':new_file_name'    => $this->filename,
-                ':attach_file_size' => $this->size,
-                ':is_map'           => $this->is_map
-            );
-
-            $sth->execute($data);
-        } catch (PDOException $e) {
-            echo 'Error: ' . $e->getMessage();
         }
     }
 
