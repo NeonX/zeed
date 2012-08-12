@@ -5,7 +5,7 @@
  * By Narong Rammanee
  */
 require_once dirname(__FILE__) . '/DBConnection.class.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/libs/phpthumb/ThumbLib.inc.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/zeed/libs/phpthumb/ThumbLib.inc.php';
 
 class FileTransfer extends DBConnection
 {
