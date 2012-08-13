@@ -1,35 +1,53 @@
 <div class="h_line"></div>
 <h1>S042 : PAYMENT TERM</h1>
-<div style="float: right;"> <a class="unit" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
+<div style="float: right;"> <a class="paymentterm" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
 
 <div class="cleaner"></div>
-<link rel="stylesheet" href="../page/css/form.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="../page/js/fancyBox/source/jquery.fancybox.css" type="text/css" media="screen" />
+<script type="text/javascript">
+    var self = this;
 
-<script type="text/javascript" src="../page/js/fancyBox/source/jquery.fancybox.js"></script>
-<script type="text/javascript" src="../page/js/payment_term.js?_=<?php echo time(); ?>"></script>
+    self.table = 'paymentterm';
+    self.caption = 'Payment Term List:';
+    self.columns = [
+        'paymentterm_id', 'pmterm_code','pmterm_eng', 'pmterm_th',
+        'pmterm_day', 'deleteflag', 'action'
+    ];
+    self.colNames = [
+        'Payment Term ID', 'Payment Term Code','Payment Term (ENG)', 'Payment Term (TH)',
+        'Payment Term Day', 'Status', 'Action'
+    ];
+    self.colModel = [
+        {name: 'paymentterm_id', index:'paymentterm_id', hidden: true},
+        {name: 'pmterm_code', index: 'pmterm_code', width: 100, align: 'center'},
+        {name: 'pmterm_eng', index: 'pmterm_eng', width: 200, align: 'center'},
+        {name: 'pmterm_th', index: 'pmterm_th', hidden: true},
+        {name: 'pmterm_day', index: 'pmterm_day', width: 130, align: 'center'},        
+        {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
+        {name: 'action',index: 'action', width:80, align: 'center'}
+    ];
+</script>
+<script type="text/javascript" src="../page/js/com_type1.js?_=<?php echo time(); ?>"></script>
 
 <table id="list-paymentterm"></table>
 <div id="pager"></div>
 
 <div id="container" style="display:none">
     <form method="post" id="customForm" action="">
-        <fieldset>
-            <h1>S042 : PAYMENT TERM</h1>
+        <fieldset class="modal-header">
+            <h3 class="modal-title">S042 : PAYMENT TERM</h1>
+        </fieldset>
+        <fieldset class="modal-body">
             <p>
-                <label for="unitcode">Count Unit Code: </label>
-                <input id="unitcode" name="unitcode" type="text" />
-                <span id="unitcode_info">Count Unit Code is require!</span>
+                <label for="pmterm_code">Payment Term Code: </label>
+                <input id="pmterm_code" name="pmterm_code" type="text" />
             </p>
             <p>
-                <label for="unitnameeng">Count Unit (ENG): </label>
-                <input id="unitnameeng" name="unitnameeng" type="text" />
-                <span id="unitnameeng_info">Count Unit (ENG) is require!</span>
+                <label for="pmterm_eng">Payment Term (ENG): </label>
+                <input id="pmterm_eng" name="pmterm_eng" type="text" />
             </p>
             <p>
-                <label for="unitnameth">Count Unit (TH): </label>
-                <input id="unitnameth" name="unitnameth" type="text" />
-                <span id="unitnameth_info">Count Unit (TH) is require!</span>
+                <label for="pmterm_th">Payment Term (TH): </label>
+                <input id="pmterm_th" name="pmterm_th" type="text" />
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>
@@ -38,22 +56,36 @@
                     <option value="0">Used</option>
                     <option value="1">Unuse</option>
                 </select>
-                <span id="deleteflag_info">Use Status is require!</span>
             </p>
             <p>
-                <label for="unitdesc">Descrition: </label>
-                <textarea id="unitdesc" name="unitdesc" cols="" rows=""></textarea>
+                <label for="pmterm_day">Payment Term Day: </label>
+                <textarea id="pmterm_day" name="pmterm_day" cols="" rows=""></textarea>
             </p>
-            <p class="btn">
+        </fieldset>
+        <fieldset class="modal-footer">
+            <p style="float: right;">
                 <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
                 <input id="by" name="create_by" type="hidden" value="1" />
-                <input id="table" name="table" type="hidden" value="unit" />
-                <input id="unit_id" name="unit_id" type="hidden" value="0" />
+                <input id="table" name="table" type="hidden" value="paymentterm" />
+                <input id="paymentterm_id" name="paymentterm_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
-                <input id="save" name="save" type="submit" value="Save" />
-                <input id="cancle" name="cancle" type="reset" value="Cancle" />
-                <input id="delete" name="delete" type="button" value="Delete" />
-                <input id="recovery" name="recovery" type="button" value="Recovery" />
+
+                <button type="submit" id="save" name="save" class="btn btn-success">
+                    <i class="icon-plus-sign icon-white"></i>
+                    <span>Save</span>
+                </button>
+                <button type="reset" id="cancle" name="cancle" class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" id="delete" name="delete" class="btn btn-danger delete">
+                    <i class="icon-minus-sign icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                <button type="button" id="recovery" name="recovery" class="btn btn-primary save">
+                    <i class="icon-share-alt icon-white"></i>
+                    <span>Recovery</span>
+                </button>
             </p>
         </fieldset>
     </form>
