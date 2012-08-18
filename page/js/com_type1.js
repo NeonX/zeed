@@ -25,6 +25,7 @@ $(function () {
     self.btnSumit   = $('button:submit'),
     self.file       = $('#file');
     self.fakeFile   = $('#ffile');
+    
     self.grid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
@@ -39,7 +40,7 @@ $(function () {
         pager       : $('#pager'),
         sortname    : self.colId,
         viewrecords : true,
-        sortorder   : 'desc',
+        sortorder   : 'asc',
         caption     : self.caption
     })
     .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
@@ -117,7 +118,7 @@ $(function () {
             if (self.fakeFile.val() != '') {
                 var gpic = [{ name: 'goodspicture', value: img_name }];
                 serialize = $.merge($(this).serializeArray(), gpic);
-                serialize.swap(6, 9)
+                serialize.swap(8, 11);
             } else {
                 serialize = $(this).serializeArray();
             }
