@@ -40,28 +40,6 @@ class ComModelT2 extends DBConnection
         $stmt->execute();
 
         $result->record = $stmt->fetchAll(PDO::FETCH_OBJ);
-//         $i = 0;
-//         $data = array();
-
-//          while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-// //             foreach ($columns as $key => $value) {
-// //                 $data = $row->$value;
-// //             }
-//             $result->rows[$i]['id'] = $row->goodsprice_id;
-//             $result->rows[$i]['cell'] = array(
-//                 'goodsprice_id'  => $row->goodsprice_id,
-//                 'goods_id'       => $row->goods_id,
-//                 'unit_id'        => $row->unit_id,
-//                 'currency_id'    => $row->currency_id,
-//                 'cost'           => $row->cost,
-//                 'price'          => $row->price,
-//                 'discount'       => $row->discount,
-//                 'effective_date' => $row->effective_date,
-//                 'deleteflag'     => $row->deleteflag
-//             );
-// 
-//             $i++;
-//         }
 
         switch ($table) {
             case 'goodsprice':
@@ -139,12 +117,7 @@ class ComModelT2 extends DBConnection
 
         while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
             foreach ($columns as $key => $value) {
-//                 if ($value != 'action') {
-                    $data[$key] = $row->$value;
-//                 } else {
-//                     $data[$key] = self::setActionIcon('saveRow', $table, '../page/images/icons/disk-16x16.png', $table, $row->$columns[0]) .
-//                         self::setActionIcon('restoreRow', $table, '../page/images/icons/cancle-16x16.png', $table, $row->$columns[0]);
-//                 }
+                $data[$key] = $row->$value;
             }
 
             $result->rows[$i]['id'] = $row->$columns[0];
@@ -207,6 +180,8 @@ class ComModelT2 extends DBConnection
     {
         $result = new stdClass();
         $mode   = isset($post['mode']) ? $post['mode'] : null;
+        $oper   = isset($post['oper']) ? 'update' : null;
+        $mode   = !empty($mode) ? $mode : $oper;
         $table  = isset($post['table']) ? $post['table'] : null;
         $colId  = $table . $this->colId;
         $id     = isset($post['id']) ? (int) $post['id'] : null;
@@ -220,6 +195,8 @@ class ComModelT2 extends DBConnection
 
         $paramsArr = array();
         if ($mode == 'insert') {
+            array_push($postKey, 'create_by');
+            array_push($postKey, 'create_date');
             $columns = join(',', $postKey);
             $colLength = count($postKey);
             foreach($postKey as $key => $value) {
@@ -228,7 +205,8 @@ class ComModelT2 extends DBConnection
 
             $params = join(',', $paramsArr);
         } else if ($mode == 'update') {
-
+            array_push($postKey, 'lastupdate_by');
+            array_push($postKey, 'lastupdate_date');
             $colLength = count($postKey);
             foreach($postKey as $key => $value) {
                 $paramsArr[] = $value . ' = ' . '?';
@@ -251,19 +229,32 @@ class ComModelT2 extends DBConnection
                 if ($mode == 'insert') {
                     foreach ($postKey as $key => $value) {
                         $index = $key + 1;
-                        $stmt->bindValue($index, isset($post[$value]) ? trim($post[$value]) : null);
-                        $myparams['insert'][] =  trim($post[$value]);
+                        if ($value == 'create_by') {
+                            $stmt->bindValue($index, 1);
+                            $myparams['insert'][$index] = 1;
+                        } else if ($value == 'create_date') {
+                            $stmt->bindValue($index, date('Y-m-d'));
+                            $myparams['insert'][$index] = date('Y-m-d');
+                        } else {
+                            $stmt->bindValue($index, isset($post[$value]) ? trim($post[$value]) : null);
+                            $myparams['insert'][$index] =  trim($post[$value]);
+                        }
                     }
                 } else {
                     foreach ($postKey as $key => $value) {
                         $index = $key + 1;
-                        if ($value != 'effective_date') {
-                            $stmt->bindValue($index, isset($post[$value]) ? (int) $post[$value] : null, PDO::PARAM_INT);
-                            $myparams['update'][$index] = (int) $post[$value];
-                            continue;
-                        } else {
+                        if ($value == 'effective_date') {
                             $stmt->bindValue($index, isset($post[$value]) ? $post[$value] : null);
                             $myparams['update'][$index] = $post[$value];
+                        } else if ($value == 'lastupdate_date') {
+                            $stmt->bindValue($index, date('Y-m-d'));
+                            $myparams['update'][$index] = date('Y-m-d');
+                        } else if ($value == 'lastupdate_by') {
+                            $stmt->bindValue($index, 1);
+                            $myparams['update'][$index] = 1;
+                        } else {
+                            $stmt->bindValue($index, isset($post[$value]) ? (int) $post[$value] : null, PDO::PARAM_INT);
+                            $myparams['update'][$index] = (int) $post[$value];
                         }
                     }
                     $myparams['update'][$colLength + 1] = $id;
