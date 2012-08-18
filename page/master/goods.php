@@ -52,7 +52,6 @@
     float: left;
 }
 .col2 {
-    margin-top: 20px;
     width: 380px;
     float: left;
 }
@@ -132,7 +131,7 @@ input.ffile {
                     <textarea id="goodsdesc" name="goodsdesc" cols="" rows=""></textarea>
                 </p>
             </fieldset>
-            <fieldset class="col2">
+            <fieldset class="modal-body col2">
                     <label for="picture" style="min-width: 115px;">Picture: </label>
                     <div class="fileinputs">
                         <input type="file" class="file" name="file" id="file" />
@@ -149,6 +148,8 @@ input.ffile {
             </fieldset>
             <fieldset class="modal-footer" style="clear: both;">
                  <p style="float: right;">
+                    <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
+                    <input id="by" name="create_by" type="hidden" value="1" />
                     <iframe id="uploadtarget" name="uploadtarget" src="" style="width:0px;height:0px;border:0"></iframe>
                     <input id="table" name="table" type="hidden" value="goods" />
                     <input id="goods_id" name="goods_id" type="hidden" value="0" />
@@ -157,7 +158,7 @@ input.ffile {
                         <i class="icon-plus-sign icon-white"></i>
                         <span>Save</span>
                     </button>
-                    <button type="reset" id="cancle" name="cancle" class="btn btn-warning cancel">
+                    <button type="reset" id="cancel" name="cancel" class="btn btn-warning cancel">
                         <i class="icon-ban-circle icon-white"></i>
                         <span>Cancel</span>
                     </button>

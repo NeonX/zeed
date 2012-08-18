@@ -71,7 +71,7 @@
                 <input id="currency_id" name="currency_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
                 <input id="save" name="save" type="submit" value="Save" />
-                <input id="cancle" name="cancle" type="reset" value="Cancle" />
+                <input id="cancel" name="cancel" type="reset" value="Cancle" />
                 <input id="delete" name="delete" type="button" value="Delete" />
                 <input id="recovery" name="recovery" type="button" value="Recovery" />
             </p>

@@ -66,7 +66,7 @@
                     <i class="icon-plus-sign icon-white"></i>
                     <span>Save</span>
                 </button>
-                <button type="reset" id="cancle" name="cancle" class="btn btn-warning cancel">
+                <button type="reset" id="cancel" name="cancel" class="btn btn-warning cancel">
                     <i class="icon-ban-circle icon-white"></i>
                     <span>Cancel</span>
                 </button>
