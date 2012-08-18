@@ -18,6 +18,12 @@ body {
 	background: url(../images/template_bg.jpg) #fff repeat-x;
 }
 
+select {
+    width: 45px;
+    height: 22px !important;
+    padding: 0px 4px 2px !important
+}
+
 a:link, a:visited {	color: #42ac1f; text-decoration:none; }
 a:active, a:hover { color: #42ac1f; text-decoration: underline; }
 
