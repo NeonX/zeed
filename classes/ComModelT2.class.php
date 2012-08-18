@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/DBConnection.class.php';
  
-class ComModel extends DBConnection
+class ComModelT2 extends DBConnection
 {
     public $post;
     public $prefix = 'tbm_';
@@ -15,13 +15,93 @@ class ComModel extends DBConnection
         parent::__construct();
     } // End constructor
 
-    public function getAll($table, $columns, $page, $limit, $sidx, $sord)
+    public function getDataById($table, $columns, $id)
     {
         $result = new stdClass();
 
-        $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1";
+        $sql = "SELECT MAX(goodsprice_id) last_row FROM tbm_goodsprice";
 
         $stmt = $this->db->prepare($sql);
+
+        $stmt->execute();
+
+        $result->last_row = $stmt->fetch(PDO::FETCH_OBJ)->last_row;
+
+        $id     = (int) $id;
+        $colId  = $table . $this->colId;
+        $fTable = $this->prefix . $table;
+
+        $sql = "SELECT * FROM {$fTable} WHERE goods_id = :id";
+
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $result->record = $stmt->fetchAll(PDO::FETCH_OBJ);
+//         $i = 0;
+//         $data = array();
+
+//          while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+// //             foreach ($columns as $key => $value) {
+// //                 $data = $row->$value;
+// //             }
+//             $result->rows[$i]['id'] = $row->goodsprice_id;
+//             $result->rows[$i]['cell'] = array(
+//                 'goodsprice_id'  => $row->goodsprice_id,
+//                 'goods_id'       => $row->goods_id,
+//                 'unit_id'        => $row->unit_id,
+//                 'currency_id'    => $row->currency_id,
+//                 'cost'           => $row->cost,
+//                 'price'          => $row->price,
+//                 'discount'       => $row->discount,
+//                 'effective_date' => $row->effective_date,
+//                 'deleteflag'     => $row->deleteflag
+//             );
+// 
+//             $i++;
+//         }
+
+        switch ($table) {
+            case 'goodsprice':
+                $fk = array(
+                    'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
+                    'unit_id'      => array('unit_id', 'unitcode', ),
+                    'currency_id'  => array('currency_id', 'currabbveng')
+                );
+
+                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
+                $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
+                $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
+            break;
+            case 'goods':
+                $fk = array(
+                    'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th')
+                );
+
+                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
+            break;
+        }
+
+        $result->params = array(
+            'table' => $table,
+            'id'  => $id,
+        );
+
+        $result->stmt = $stmt;
+
+        return json_encode($result);
+    }
+
+    public function getDataSubGridAllById($table, $columns, $id, $page, $limit, $sidx, $sor) {
+        $result = new stdClass();
+
+        $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1 AND goods_id = {$id}";
+
+        $stmt = $this->db->prepare($sql);
+
+        $result->fstmt = $stmt;
 
         $stmt->execute();
 
@@ -59,14 +139,12 @@ class ComModel extends DBConnection
 
         while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
             foreach ($columns as $key => $value) {
-                if ($value != 'action' && $value != 'deleteflag') {
+//                 if ($value != 'action') {
                     $data[$key] = $row->$value;
-                } else if ($value == 'deleteflag') {
-                    $data[$key] = $row->$value ? '<span class="red">Unuse</span>' : '<span class="green">Used</span>';
-                } else {
-                    $data[$key] = self::setActionIcon('view', '../page/images/icons/form-16x16.png', $table, $row->$columns[0]) . 
-                        self::setActionIcon('edit', '../page/images/icons/form-edit-16x16.png', $table, $row->$columns[0]);
-                }
+//                 } else {
+//                     $data[$key] = self::setActionIcon('saveRow', $table, '../page/images/icons/disk-16x16.png', $table, $row->$columns[0]) .
+//                         self::setActionIcon('restoreRow', $table, '../page/images/icons/cancle-16x16.png', $table, $row->$columns[0]);
+//                 }
             }
 
             $result->rows[$i]['id'] = $row->$columns[0];
@@ -75,68 +153,33 @@ class ComModel extends DBConnection
             $i++;
         }
 
-        $result->columns = $columns;
-        $result->stmt = $stmt;
-        return json_encode($result);
-    }
-
-    public function setActionIcon($mode, $src, $cls, $id)
-    {
-        $anchor  = '<a href="#customForm" class="' . $cls . '">';
-        $anchor .= '<img type="image" class="list-icon-view" src="' . $src . '"';
-        $anchor .= ' title="' . $mode . '" alt="view" value="' . $id . '"">';
-        $anchor .= '</a>';
-
-        return $anchor;
-    }
-
-    public function getDataById($table, $id)
-    {
-        $result = new stdClass();
-
-        $id     = (int) $id;
-        $colId  = $table . $this->colId;
-        $fTable = $this->prefix . $table;
-
-        $sql = "SELECT * FROM {$fTable} WHERE {$colId} = :id";
-
-        $stmt = $this->db->prepare($sql);
-
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
-
         switch ($table) {
             case 'goodsprice':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
                     'unit_id'      => array('unit_id', 'unitcode', ),
-                    'currency_id'  => array('currency_id', 'currcode')
+                    'currency_id'  => array('currency_id', 'currabbveng')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
                 $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
                 $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
             break;
-            case 'goods':
-                $fk = array(
-                    'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th')
-                );
-
-                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
-            break;
         }
 
-        $result->params = array(
-            'table' => $table,
-            'id'  => $id,
-        );
-
+        $result->columns = $columns;
         $result->stmt = $stmt;
-
         return json_encode($result);
+    }
+    
+    public function setActionIcon($mode, $table, $src, $cls, $id)
+    {
+//          src='../page/images/icons/record-edit-16x16.gif' onclick=\"jQuery('#list-" + self.table.sub + "').editRow('"+cl+"');\"  />
+        $anchor .= '<input type="image" src="' . $src . '"';
+        $anchor .= 'onclick="jQuery(\'#list-' . $table . '\').jqGrid(\'' . $mode . '\', ' . $id. ');"';
+        $anchor .= ' style="width:16px" title="' . $mode . '" alt="view" value="' . $id . '">';
+
+        return $anchor;
     }
 
     public function getChildAllById ($table, $columns, $id)
@@ -166,12 +209,12 @@ class ComModel extends DBConnection
         $mode   = isset($post['mode']) ? $post['mode'] : null;
         $table  = isset($post['table']) ? $post['table'] : null;
         $colId  = $table . $this->colId;
-        $id     = isset($post[$colId]) ? (int) $post[$colId] : null;
+        $id     = isset($post['id']) ? (int) $post['id'] : null;
         $fTable = $this->prefix . $table;
 
         $postKey = array_keys($post);
 
-        foreach (range(0,2) as $val) {
+        foreach (range(0,3) as $val) {
             array_pop($postKey);
         }
 
@@ -201,6 +244,7 @@ class ComModel extends DBConnection
 
         $stmt = $this->db->prepare($sql[$mode]);
         $myparams = array();
+ 
         switch ($mode) {
             case 'insert':
             case 'update':
@@ -213,12 +257,12 @@ class ComModel extends DBConnection
                 } else {
                     foreach ($postKey as $key => $value) {
                         $index = $key + 1;
-                        if ($value == 'lastupdate_by') {
+                        if ($value != 'effective_date') {
                             $stmt->bindValue($index, isset($post[$value]) ? (int) $post[$value] : null, PDO::PARAM_INT);
                             $myparams['update'][$index] = (int) $post[$value];
                             continue;
                         } else {
-                            $stmt->bindValue($index, isset($post[$value]) ? trim($post[$value]) : null);
+                            $stmt->bindValue($index, isset($post[$value]) ? $post[$value] : null);
                             $myparams['update'][$index] = $post[$value];
                         }
                     }

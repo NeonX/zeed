@@ -36,7 +36,6 @@ class FileTransfer extends DBConnection
         $size = $file['file']['size'];
 
         $decodeFilename = urldecode(urlencode($name));
-
         if (array_key_exists($type, $mimes)) {
             $this->filename = '/zeed_' . $name;
             $original_file = $this->attach_dir . '/original' . $this->filename;
