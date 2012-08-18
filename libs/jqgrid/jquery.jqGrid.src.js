@@ -5698,7 +5698,7 @@ $.extend($.jgrid,{
 			case "textarea" :
 				elem = document.createElement("textarea");
 				if(autowidth) {
-					if(!options.cols) { $(elem).css({width:"98%"});}
+					if(!options.cols) { $(elem).css({width:"85%"});}
 				} else if (!options.cols) { options.cols = 20; }
 				if(!options.rows) { options.rows = 2; }
 				if(vl=='&nbsp;' || vl=='&#160;' || (vl.length==1 && vl.charCodeAt(0)==160)) {vl="";}
@@ -5841,7 +5841,7 @@ $.extend($.jgrid,{
 				options = bindEv(elem,options);
 				if(eltype != "button"){
 					if(autowidth) {
-						if(!options.size) { $(elem).css({width:"98%"}); }
+						if(!options.size) { $(elem).css({width:"85%"}); }
 					} else if (!options.size) { options.size = 20; }
 				}
 				$(elem).attr("role",role);
