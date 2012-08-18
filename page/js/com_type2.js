@@ -7,7 +7,6 @@
  * 
  */
 $(function () {
-    console.debug();
     self.getAllURL  =  '../page/common/getDataAll.php',
     self.getAllT2URL   =  '../page/common/getDataAllT2.php',
     self.getByIdT2URL =  '../page/common/getDataByIdT2.php',
@@ -158,7 +157,7 @@ $(function () {
                             self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency).toString() } });
 
                             $('.row-edit').bind('click', function () {
-                                console.debug('row-edit');
+                                
                                 self.smode = 'update';
                             });
 
@@ -179,7 +178,7 @@ $(function () {
             });
         },
         beforeClose: function () {
-            console.debug('beforeClose');
+//             console.debug('beforeClose');
         }
     });
 
