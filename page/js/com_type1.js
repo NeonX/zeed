@@ -54,7 +54,7 @@ $(function () {
             _self = this;
                 var mode;
                 mode = $(_self.element.innerHTML).get(0).getAttribute('title'),
-                buttons = ['save', 'cancle', 'delete', 'recovery'];
+                buttons = ['save', 'cancel', 'delete', 'recovery'];
                 fmode = mode;
 
             switch (mode) {

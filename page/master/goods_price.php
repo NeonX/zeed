@@ -52,7 +52,7 @@ $(function () {
             'Goods Name (TH)', 'Description', 'Picture', 'Status', 'Action'
         ], 
         sub: [
-            'Goods Price ID', 'Goods ID','Unit ID', 'Currency ID', 'Cost', 
+            'Goods Price ID', 'Goods ID','Count Unit', 'Currency', 'Cost', 
             'Price', 'Discount', 'Effective Date', 'Status', 'Table', 'Mode', 'Action'
         ]
     };
@@ -69,6 +69,44 @@ $(function () {
             {name: 'goodspicture', index:'goodspicture', hidden: true},
             {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
             {name: 'action',index: 'action', width:80, align: 'center'}
+        ],
+        sub: [
+            {name: 'goodsprice_id', index:'goodsprice_id', hidden: true},
+            {name: 'goods_id', index:'goods_id', editable: true, hidden: true,
+                editoptions: {
+                  dataInit: function(element) {
+                    $(element).val(formData.goods_id);
+                  }
+                }
+            },
+            {name: 'unit_id', index:'unit_id', width: 100, editable: true, edittype:"select", editoptions: {},editrules: { required: true }, align: 'center'},
+            {name: 'currency_id', index: 'currency_id', width: 100, editable: true, edittype:"select", editoptions: {}, align: 'center'},
+            {name: 'cost', index: 'cost', width: 100, editable: true, align: 'center' },
+            {name: 'price', index: 'price', width:100, editable: true, align: 'center'},
+            {name: 'discount', index:'discount', width: 100, editable: true, align: 'center'},
+            {name: 'effective_date', index:'effective_date', width: 100, editable: true, align: 'center',
+                editoptions: {
+                  dataInit: function(element) {
+                    $(element).datepicker({dateFormat: 'yy-mm-dd'});
+                  }
+                }
+            },
+            {name: 'deleteflag', index: 'deleteflag', width: 100, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
+            {name: 'table', index:'table', editable: true, hidden: true,
+                editoptions: {
+                  dataInit: function(element) {
+                    $(element).val(self.table.sub);
+                  }
+                }
+            },
+            {name: 'mode', index:'mode', editable: true, hidden: true,
+                editoptions: {
+                  dataInit: function(element) {
+                       $(element).val(self.smode);
+                  }
+                }
+            },
+            {name: 'action',index: 'action', width:70, align: 'center'}
         ]
     };
 });

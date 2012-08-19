@@ -18,7 +18,7 @@ body {
 	background: url(../images/template_bg.jpg) #fff repeat-x;
 }
 
-select {
+select.ui-pg-selbox {
     width: 45px;
     height: 22px !important;
     padding: 0px 4px 2px !important
