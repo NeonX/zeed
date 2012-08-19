@@ -118,7 +118,7 @@ $(function () {
                                 if (self.smode != 'insert') {
                                     eachRow = self.sGrid.jqGrid('getRowData', ids[i]);
 
-                                    if (self.table.main == 'goodsprice') {
+                                    if (self.table.sub == 'goodsprice') {
                                         self.sGrid.jqGrid('setRowData',ids[i],{currency_id: rec.currency[eachRow.currency_id - 1].currabbveng});
                                     } else if (self.table.sub == 'goodsunit') {
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_instock: eachRow.use_instock == '1' ? '<span class="red">Not Use</span>' : '<span class="green">Used</span>' });
