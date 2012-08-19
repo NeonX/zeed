@@ -151,13 +151,20 @@ $(function () {
                                 se = "<input style='margin-left: 5px;height:16px;width:16px;' type='image' src='../page/images/icons/disk-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').saveRow('"+cl+"');\"  />"; 
                                 ce = "<input style='margin-left: 5px;height:16px;width:16px;' type='image' src='../page/images/icons/cancel-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').restoreRow('"+cl+"');\" />";
                                 self.sGrid.jqGrid('setRowData',ids[i],{action:be+se+ce});
+
+                                if (self.smode != 'insert') {
+                                    var eachRow = self.sGrid.jqGrid('getRowData', ids[i]);
+                                    self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[eachRow.unit_id - 1].unitcode});
+                                    self.sGrid.jqGrid('setRowData',ids[i],{currency_id: rec.currency[eachRow.currency_id - 1].currabbveng});
+                                    self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? '<span class="red">Not Use</span>' : '<span class="green">Used</span>' });
+                                }
                             }
+
                             self.sGrid.setColProp('unit_id', { editoptions: { value: lookupUnit(data.unit).toString() } });
                             self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency).toString() } });
                             self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency).toString() } });
 
                             $('.row-edit').bind('click', function () {
-                                
                                 self.smode = 'update';
                             });
 
@@ -178,7 +185,7 @@ $(function () {
             });
         },
         beforeClose: function () {
-//             console.debug('beforeClose');
+            self.smode = 'update'
         }
     });
 
