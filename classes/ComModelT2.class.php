@@ -19,17 +19,17 @@ class ComModelT2 extends DBConnection
     {
         $result = new stdClass();
 
-        $sql = "SELECT MAX(goodsprice_id) last_row FROM tbm_goodsprice";
+        $id     = (int) $id;
+        $colId  = $table . $this->colId;
+        $fTable = $this->prefix . $table;
+
+        $sql = "SELECT MAX({$colId}) last_row FROM {$fTable}";
 
         $stmt = $this->db->prepare($sql);
 
         $stmt->execute();
 
         $result->last_row = $stmt->fetch(PDO::FETCH_OBJ)->last_row;
-
-        $id     = (int) $id;
-        $colId  = $table . $this->colId;
-        $fTable = $this->prefix . $table;
 
         $sql = "SELECT * FROM {$fTable} WHERE goods_id = :id";
 
@@ -43,9 +43,10 @@ class ComModelT2 extends DBConnection
 
         switch ($table) {
             case 'goodsprice':
+            case 'goodsunit':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
-                    'unit_id'      => array('unit_id', 'unitcode', ),
+                    'unit_id'      => array('unit_id', 'unitcode', 'unitnameeng'),
                     'currency_id'  => array('currency_id', 'currabbveng')
                 );
 
@@ -128,9 +129,10 @@ class ComModelT2 extends DBConnection
 
         switch ($table) {
             case 'goodsprice':
+            case 'goodsunit':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
-                    'unit_id'      => array('unit_id', 'unitcode', ),
+                    'unit_id'      => array('unit_id', 'unitcode', 'unitnameeng'),
                     'currency_id'  => array('currency_id', 'currabbveng')
                 );
 
