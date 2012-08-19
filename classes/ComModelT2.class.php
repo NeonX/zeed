@@ -31,7 +31,13 @@ class ComModelT2 extends DBConnection
 
         $result->last_row = $stmt->fetch(PDO::FETCH_OBJ)->last_row;
 
-        $sql = "SELECT * FROM {$fTable} WHERE goods_id = :id";
+        if ($table == 'goodsprice') {
+            $cId = 'goods_id';
+        } else if ($table == 'currency') {
+            $cId = 'exchange';
+        }
+        
+        $sql = "SELECT * FROM {$fTable} WHERE {$cId} = :id";
 
         $stmt = $this->db->prepare($sql);
 
@@ -76,7 +82,13 @@ class ComModelT2 extends DBConnection
     public function getDataSubGridAllById($table, $columns, $id, $page, $limit, $sidx, $sor) {
         $result = new stdClass();
 
-        $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1 AND goods_id = {$id}";
+        if ($table == 'goodsprice') {
+            $cId = 'goods_id';
+        } else if ($table == 'exchange') {
+            $cId = 'currency_id';
+        }
+
+        $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1 AND {$cId} = {$id}";
 
         $stmt = $this->db->prepare($sql);
 
@@ -127,29 +139,13 @@ class ComModelT2 extends DBConnection
             $i++;
         }
 
-        switch ($table) {
-            case 'goodsprice':
-            case 'goodsunit':
-                $fk = array(
-                    'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
-                    'unit_id'      => array('unit_id', 'unitcode', 'unitnameeng'),
-                    'currency_id'  => array('currency_id', 'currabbveng')
-                );
-
-                $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
-                $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
-                $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
-            break;
-        }
-
         $result->columns = $columns;
         $result->stmt = $stmt;
         return json_encode($result);
     }
-    
+
     public function setActionIcon($mode, $table, $src, $cls, $id)
     {
-//          src='../page/images/icons/record-edit-16x16.gif' onclick=\"jQuery('#list-" + self.table.sub + "').editRow('"+cl+"');\"  />
         $anchor .= '<input type="image" src="' . $src . '"';
         $anchor .= 'onclick="jQuery(\'#list-' . $table . '\').jqGrid(\'' . $mode . '\', ' . $id. ');"';
         $anchor .= ' style="width:16px" title="' . $mode . '" alt="view" value="' . $id . '">';
