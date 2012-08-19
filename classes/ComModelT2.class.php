@@ -31,12 +31,11 @@ class ComModelT2 extends DBConnection
 
         $result->last_row = $stmt->fetch(PDO::FETCH_OBJ)->last_row;
 
-        if ($table == 'goodsprice') {
-            $cId = 'goods_id';
-        } else if ($table == 'currency') {
+        $cId = 'goods_id';
+        if ($table == 'currency') {
             $cId = 'exchange';
         }
-        
+
         $sql = "SELECT * FROM {$fTable} WHERE {$cId} = :id";
 
         $stmt = $this->db->prepare($sql);
@@ -82,9 +81,8 @@ class ComModelT2 extends DBConnection
     public function getDataSubGridAllById($table, $columns, $id, $page, $limit, $sidx, $sor) {
         $result = new stdClass();
 
-        if ($table == 'goodsprice') {
-            $cId = 'goods_id';
-        } else if ($table == 'exchange') {
+        $cId = 'goods_id';
+        if ($table == 'exchange') {
             $cId = 'currency_id';
         }
 
