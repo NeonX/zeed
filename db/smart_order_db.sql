@@ -1,28 +1,30 @@
-/*
-Navicat MySQL Data Transfer
+-- MySQL dump 10.13  Distrib 5.5.24, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: smart_order_db
+-- ------------------------------------------------------
+-- Server version	5.5.24-0ubuntu0.12.04.1
 
-Source Server         : MySQL
-Source Server Version : 50508
-Source Host           : localhost:3306
-Source Database       : smart_order_db
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-Target Server Type    : MYSQL
-Target Server Version : 50508
-File Encoding         : 65001
+--
+-- Table structure for table `tbm_announce`
+--
 
-Date: 2012-08-09 09:07:41
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `tbm_announce`
--- ----------------------------
 DROP TABLE IF EXISTS `tbm_announce`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_announce` (
   `announce_id` int(10) NOT NULL AUTO_INCREMENT,
   `announce_no` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `announce_head` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `announce_detail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
@@ -33,17 +35,25 @@ CREATE TABLE `tbm_announce` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`announce_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_announce
--- ----------------------------
-INSERT INTO `tbm_announce` VALUES ('1', '55/7-1', 'ประกาศเปลี่ยนราคา 4803', 'ราคาเมล็ดพันธุ์ดาวเรือง 4803 ปรับจาก...', '2012-08-08', '2012-08-09', null, '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_announce`
+--
 
--- ----------------------------
--- Table structure for `tbm_bankaccount`
--- ----------------------------
+LOCK TABLES `tbm_announce` WRITE;
+/*!40000 ALTER TABLE `tbm_announce` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_announce` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_bankaccount`
+--
+
 DROP TABLE IF EXISTS `tbm_bankaccount`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_bankaccount` (
   `bankaccount_id` int(10) NOT NULL AUTO_INCREMENT,
   `bankname_eng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -59,20 +69,28 @@ CREATE TABLE `tbm_bankaccount` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`bankaccount_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_bankaccount
--- ----------------------------
-INSERT INTO `tbm_bankaccount` VALUES ('1', 'KTC', 'ธ.กรุงไทย', 'save up', 'ออมทรัพย์', '191-0-22357-3', 'SOMYOT', '2012-08-08', '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_bankaccount`
+--
 
--- ----------------------------
--- Table structure for `tbm_currency`
--- ----------------------------
+LOCK TABLES `tbm_bankaccount` WRITE;
+/*!40000 ALTER TABLE `tbm_bankaccount` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_bankaccount` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_currency`
+--
+
 DROP TABLE IF EXISTS `tbm_currency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_currency` (
   `currency_id` int(10) NOT NULL AUTO_INCREMENT,
-  `currcode` int(10) DEFAULT NULL,
+  `currcode` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `currdesceng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `currdescth` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `currabbveng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -84,17 +102,25 @@ CREATE TABLE `tbm_currency` (
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`currency_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_currency
--- ----------------------------
-INSERT INTO `tbm_currency` VALUES ('1', '1', 'Thai', 'ไทย', 'Thailand', 'ไทยแลนด์', '0', null, null, null, null);
-INSERT INTO `tbm_currency` VALUES ('2', '2', 'United State', 'สหรัฐ', 'United State of America', 'สหรัฐอเมริกา', '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_currency`
+--
 
--- ----------------------------
--- Table structure for `tbm_custaddress`
--- ----------------------------
+LOCK TABLES `tbm_currency` WRITE;
+/*!40000 ALTER TABLE `tbm_currency` DISABLE KEYS */;
+INSERT INTO `tbm_currency` VALUES (1,'BHT','Bath','บาท','THB','Thai Bath','0',NULL,NULL,NULL,NULL),(2,'USD','Dollar','ดอลลา','US','US Dolla','0',NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `tbm_currency` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_custaddress`
+--
+
 DROP TABLE IF EXISTS `tbm_custaddress`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_custaddress` (
   `custaddress_id` int(10) NOT NULL AUTO_INCREMENT,
   `customer_id` int(10) NOT NULL,
@@ -114,15 +140,24 @@ CREATE TABLE `tbm_custaddress` (
   KEY `FKtbm_custad743570` (`customer_id`),
   CONSTRAINT `FKtbm_custad743570` FOREIGN KEY (`customer_id`) REFERENCES `tbm_customer` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_custaddress
--- ----------------------------
+--
+-- Dumping data for table `tbm_custaddress`
+--
 
--- ----------------------------
--- Table structure for `tbm_customer`
--- ----------------------------
+LOCK TABLES `tbm_custaddress` WRITE;
+/*!40000 ALTER TABLE `tbm_custaddress` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_custaddress` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_customer`
+--
+
 DROP TABLE IF EXISTS `tbm_customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_customer` (
   `customer_id` int(10) NOT NULL AUTO_INCREMENT,
   `customertype_id` int(10) NOT NULL,
@@ -146,15 +181,24 @@ CREATE TABLE `tbm_customer` (
   KEY `FKtbm_custom369654` (`customertype_id`),
   CONSTRAINT `FKtbm_custom369654` FOREIGN KEY (`customertype_id`) REFERENCES `tbm_customertype` (`customertype_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_customer
--- ----------------------------
+--
+-- Dumping data for table `tbm_customer`
+--
 
--- ----------------------------
--- Table structure for `tbm_customerbonus`
--- ----------------------------
+LOCK TABLES `tbm_customer` WRITE;
+/*!40000 ALTER TABLE `tbm_customer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_customerbonus`
+--
+
 DROP TABLE IF EXISTS `tbm_customerbonus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_customerbonus` (
   `customerbonus_id` int(10) NOT NULL AUTO_INCREMENT,
   `customer_id` int(10) NOT NULL,
@@ -171,15 +215,24 @@ CREATE TABLE `tbm_customerbonus` (
   KEY `FKtbm_custom871645` (`customer_id`),
   CONSTRAINT `FKtbm_custom871645` FOREIGN KEY (`customer_id`) REFERENCES `tbm_customer` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_customerbonus
--- ----------------------------
+--
+-- Dumping data for table `tbm_customerbonus`
+--
 
--- ----------------------------
--- Table structure for `tbm_customerreward`
--- ----------------------------
+LOCK TABLES `tbm_customerbonus` WRITE;
+/*!40000 ALTER TABLE `tbm_customerbonus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_customerbonus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_customerreward`
+--
+
 DROP TABLE IF EXISTS `tbm_customerreward`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_customerreward` (
   `customerreward_id` int(10) NOT NULL AUTO_INCREMENT,
   `customer_id` int(10) NOT NULL,
@@ -197,15 +250,24 @@ CREATE TABLE `tbm_customerreward` (
   KEY `FKtbm_custom74896` (`customer_id`),
   CONSTRAINT `FKtbm_custom74896` FOREIGN KEY (`customer_id`) REFERENCES `tbm_customer` (`customer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_customerreward
--- ----------------------------
+--
+-- Dumping data for table `tbm_customerreward`
+--
 
--- ----------------------------
--- Table structure for `tbm_customertype`
--- ----------------------------
+LOCK TABLES `tbm_customerreward` WRITE;
+/*!40000 ALTER TABLE `tbm_customerreward` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_customerreward` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_customertype`
+--
+
 DROP TABLE IF EXISTS `tbm_customertype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_customertype` (
   `customertype_id` int(10) NOT NULL AUTO_INCREMENT,
   `custtype_eng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -218,16 +280,26 @@ CREATE TABLE `tbm_customertype` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`customertype_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_customertype
--- ----------------------------
+--
+-- Dumping data for table `tbm_customertype`
+--
 
--- ----------------------------
--- Table structure for `tbm_employeetype`
--- ----------------------------
+LOCK TABLES `tbm_customertype` WRITE;
+/*!40000 ALTER TABLE `tbm_customertype` DISABLE KEYS */;
+INSERT INTO `tbm_customertype` VALUES (1,'Agriculturist','เกษตรกรทั่วไป','A','Agriculturist เกษตรกรทั่วไป','0',1,'2012-08-12',NULL,NULL),(2,'Retail Agent','ร้านตัวแทนจำหน่าย','R','Retail Agent ร้านตัวแทนจำหน่าย','0',1,'2012-08-12',1,'2012-08-12');
+/*!40000 ALTER TABLE `tbm_customertype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_employeetype`
+--
+
 DROP TABLE IF EXISTS `tbm_employeetype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_employeetype` (
   `employeetype_id` int(10) NOT NULL AUTO_INCREMENT,
   `emptype_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -240,15 +312,24 @@ CREATE TABLE `tbm_employeetype` (
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`employeetype_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_employeetype
--- ----------------------------
+--
+-- Dumping data for table `tbm_employeetype`
+--
 
--- ----------------------------
--- Table structure for `tbm_exchange`
--- ----------------------------
+LOCK TABLES `tbm_employeetype` WRITE;
+/*!40000 ALTER TABLE `tbm_employeetype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_employeetype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_exchange`
+--
+
 DROP TABLE IF EXISTS `tbm_exchange`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_exchange` (
   `exchange_id` int(10) NOT NULL AUTO_INCREMENT,
   `exyear` int(10) NOT NULL,
@@ -273,16 +354,26 @@ CREATE TABLE `tbm_exchange` (
   PRIMARY KEY (`exchange_id`),
   KEY `FKtbm_exchan498376` (`currency_id`),
   CONSTRAINT `FKtbm_exchan498376` FOREIGN KEY (`currency_id`) REFERENCES `tbm_currency` (`currency_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_exchange
--- ----------------------------
+--
+-- Dumping data for table `tbm_exchange`
+--
 
--- ----------------------------
--- Table structure for `tbm_goods`
--- ----------------------------
+LOCK TABLES `tbm_exchange` WRITE;
+/*!40000 ALTER TABLE `tbm_exchange` DISABLE KEYS */;
+INSERT INTO `tbm_exchange` VALUES (1,2102,1,1.0000,2.0000,3.00,4.00,5.00,6.00,7.00,8.00,9.00,10.00,11.00,12.00,'1',1,'2012-08-19',1,'2012-08-19');
+/*!40000 ALTER TABLE `tbm_exchange` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_goods`
+--
+
 DROP TABLE IF EXISTS `tbm_goods`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_goods` (
   `goods_id` int(10) NOT NULL AUTO_INCREMENT,
   `goodstype_id` int(10) NOT NULL,
@@ -299,17 +390,26 @@ CREATE TABLE `tbm_goods` (
   PRIMARY KEY (`goods_id`),
   KEY `FKtbm_goods268265` (`goodstype_id`),
   CONSTRAINT `FKtbm_goods268265` FOREIGN KEY (`goodstype_id`) REFERENCES `tbm_goodstype` (`goodstype_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_goods
--- ----------------------------
-INSERT INTO `tbm_goods` VALUES ('1', '1', '001', 'Marigold Seed # 4809', 'เมล็ดพันธุ์ดาวเรือง # 4809', 'เมล็ดพันธุ์ดาวเรือง', null, '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_goods`
+--
 
--- ----------------------------
--- Table structure for `tbm_goodsbranch`
--- ----------------------------
+LOCK TABLES `tbm_goods` WRITE;
+/*!40000 ALTER TABLE `tbm_goods` DISABLE KEYS */;
+INSERT INTO `tbm_goods` VALUES (30,1,'001','Marigold Seed#4809@1000','ดาวเรือง 4809@1000','Marigold Seed#4809@1000 ดาวเรือง 4809@1000','IMG_2013_2.jpg','-1',1,'2012-08-13',1,'2012-08-19'),(31,1,'002','Marigold Seed#4809@500','ดาวเรือง 4809@500','Marigold Seed#4809@500 ดาวเรือง 4809@500','images.jpg','0',1,'2012-08-13',NULL,NULL),(32,1,'003','Marigold Seed#4809@100','ดาวเรือง 4809@100','Marigold Seed#4809@100 ดาวเรือง 4809@100','IMG_2013_2.jpg','0',1,'2012-08-13',NULL,NULL);
+/*!40000 ALTER TABLE `tbm_goods` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_goodsbranch`
+--
+
 DROP TABLE IF EXISTS `tbm_goodsbranch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_goodsbranch` (
   `goodsbranch_id` int(10) NOT NULL AUTO_INCREMENT,
   `goods_id` int(10) NOT NULL,
@@ -328,15 +428,24 @@ CREATE TABLE `tbm_goodsbranch` (
   KEY `FKtbm_goodsb100942` (`goods_id`),
   CONSTRAINT `tbm_goodsbranch_ibfk_1` FOREIGN KEY (`goods_id`) REFERENCES `tbm_goods` (`goods_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_goodsbranch
--- ----------------------------
+--
+-- Dumping data for table `tbm_goodsbranch`
+--
 
--- ----------------------------
--- Table structure for `tbm_goodsprice`
--- ----------------------------
+LOCK TABLES `tbm_goodsbranch` WRITE;
+/*!40000 ALTER TABLE `tbm_goodsbranch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_goodsbranch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_goodsprice`
+--
+
 DROP TABLE IF EXISTS `tbm_goodsprice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_goodsprice` (
   `goodsprice_id` int(10) NOT NULL AUTO_INCREMENT,
   `goods_id` int(10) NOT NULL,
@@ -358,16 +467,26 @@ CREATE TABLE `tbm_goodsprice` (
   CONSTRAINT `FKtbm_goodsp427793` FOREIGN KEY (`currency_id`) REFERENCES `tbm_currency` (`currency_id`),
   CONSTRAINT `FKtbm_goodsp46217` FOREIGN KEY (`goods_id`) REFERENCES `tbm_goods` (`goods_id`),
   CONSTRAINT `FKtbm_goodsp675208` FOREIGN KEY (`unit_id`) REFERENCES `tbm_unit` (`unit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_goodsprice
--- ----------------------------
+--
+-- Dumping data for table `tbm_goodsprice`
+--
 
--- ----------------------------
--- Table structure for `tbm_goodsprize`
--- ----------------------------
+LOCK TABLES `tbm_goodsprice` WRITE;
+/*!40000 ALTER TABLE `tbm_goodsprice` DISABLE KEYS */;
+INSERT INTO `tbm_goodsprice` VALUES (1,30,1,1,100.00,50.00,50.00,'2012-08-13','1',1,'2012-08-13',NULL,NULL),(2,30,4,2,5200.00,5100.00,51.00,'2012-08-05','0',1,'2012-08-13',NULL,'0000-00-00'),(3,30,5,2,300.00,150.00,60.00,'2012-08-13','0',NULL,NULL,NULL,NULL),(4,31,1,1,0.00,0.00,0.00,'0000-00-00','0',1,'2012-08-14',NULL,NULL),(5,31,2,2,500.00,600.00,80.00,'2012-08-14',NULL,1,'2012-08-07',NULL,NULL),(6,31,7,1,500.00,500.00,50.00,'2012-08-05','1',NULL,'2012-08-14',NULL,NULL),(26,30,1,1,1.00,1.00,1.00,'2012-08-18','0',NULL,NULL,NULL,NULL),(27,30,5,2,1.00,1.00,1.00,'2012-08-18','0',NULL,NULL,NULL,NULL),(28,32,7,2,1.00,1.00,1.00,'2012-08-18','0',NULL,NULL,NULL,NULL),(29,32,7,2,12.00,12.00,12.00,'2012-08-18','0',NULL,NULL,NULL,NULL),(30,32,1,1,3.00,3.00,3.00,'2012-08-18','0',NULL,NULL,NULL,NULL),(31,32,2,2,6.00,6.00,6.00,'2012-08-17','1',NULL,NULL,NULL,NULL),(32,30,1,1,99.00,99.00,99.00,'0000-00-00','0',NULL,NULL,NULL,NULL),(33,30,3,2,88.00,88.00,88.00,'2012-08-18','0',NULL,NULL,NULL,NULL),(34,30,1,1,5.00,5.00,5.00,'2012-08-18','0',NULL,NULL,NULL,NULL),(35,32,1,1,3.00,3.00,3.00,'2012-08-01','0',1,'2012-08-18',NULL,NULL),(36,32,1,1,33.00,33.00,33.00,'2012-08-03','1',1,'2012-08-18',1,'2012-08-19'),(37,30,3,2,200.00,300.00,400.00,'2012-08-19','1',1,'2012-08-19',NULL,NULL),(38,30,6,2,4.00,5.00,6.00,'2012-08-19','0',1,'2012-08-19',NULL,NULL),(39,30,5,2,2.00,2.00,2.00,'2012-08-19','1',1,'2012-08-19',1,'2012-08-19');
+/*!40000 ALTER TABLE `tbm_goodsprice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_goodsprize`
+--
+
 DROP TABLE IF EXISTS `tbm_goodsprize`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_goodsprize` (
   `goodsprize_id` int(10) NOT NULL AUTO_INCREMENT,
   `goods_id` int(10) NOT NULL,
@@ -385,15 +504,24 @@ CREATE TABLE `tbm_goodsprize` (
   KEY `FKtbm_goodsp46930` (`goods_id`),
   CONSTRAINT `FKtbm_goodsp46930` FOREIGN KEY (`goods_id`) REFERENCES `tbm_goods` (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_goodsprize
--- ----------------------------
+--
+-- Dumping data for table `tbm_goodsprize`
+--
 
--- ----------------------------
--- Table structure for `tbm_goodspromotion`
--- ----------------------------
+LOCK TABLES `tbm_goodsprize` WRITE;
+/*!40000 ALTER TABLE `tbm_goodsprize` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_goodsprize` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_goodspromotion`
+--
+
 DROP TABLE IF EXISTS `tbm_goodspromotion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_goodspromotion` (
   `goodspromotion_id` int(10) NOT NULL AUTO_INCREMENT,
   `goods_id` int(10) NOT NULL,
@@ -419,15 +547,24 @@ CREATE TABLE `tbm_goodspromotion` (
   CONSTRAINT `FKtbm_goodsp61181` FOREIGN KEY (`customer_id`) REFERENCES `tbm_customer` (`customer_id`),
   CONSTRAINT `FKtbm_goodsp803824` FOREIGN KEY (`goods_id`) REFERENCES `tbm_goods` (`goods_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_goodspromotion
--- ----------------------------
+--
+-- Dumping data for table `tbm_goodspromotion`
+--
 
--- ----------------------------
--- Table structure for `tbm_goodstype`
--- ----------------------------
+LOCK TABLES `tbm_goodspromotion` WRITE;
+/*!40000 ALTER TABLE `tbm_goodspromotion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_goodspromotion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_goodstype`
+--
+
 DROP TABLE IF EXISTS `tbm_goodstype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_goodstype` (
   `goodstype_id` int(10) NOT NULL AUTO_INCREMENT,
   `goodstype_eng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -439,17 +576,26 @@ CREATE TABLE `tbm_goodstype` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`goodstype_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_goodstype
--- ----------------------------
-INSERT INTO `tbm_goodstype` VALUES ('1', 'Marigold Seed', 'เมล็ดพันธุ์ดาวเรือง', 'เมล็ด', '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_goodstype`
+--
 
--- ----------------------------
--- Table structure for `tbm_goodsunit`
--- ----------------------------
+LOCK TABLES `tbm_goodstype` WRITE;
+/*!40000 ALTER TABLE `tbm_goodstype` DISABLE KEYS */;
+INSERT INTO `tbm_goodstype` VALUES (1,'Marigold Seed','เมล็ดพันธุ์ดาวเรือง','เมล็ด','0',NULL,NULL,NULL,NULL),(2,'Marigold Seed','เมล็ดพันธุ์แตงกวา','ซอง','0',NULL,NULL,NULL,NULL),(3,'Cultivate Plate','ถาดหอม','กระป๋อง','0',NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `tbm_goodstype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_goodsunit`
+--
+
 DROP TABLE IF EXISTS `tbm_goodsunit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_goodsunit` (
   `goodsunit_id` int(10) NOT NULL AUTO_INCREMENT,
   `goods_id` int(10) NOT NULL,
@@ -471,16 +617,26 @@ CREATE TABLE `tbm_goodsunit` (
   CONSTRAINT `FKtbm_goodsu502961` FOREIGN KEY (`goods_id`) REFERENCES `tbm_goods` (`goods_id`),
   CONSTRAINT `FKtbm_goodsu502962` FOREIGN KEY (`goods_id`) REFERENCES `tbm_goods` (`goods_id`),
   CONSTRAINT `FKtbm_goodsu97622` FOREIGN KEY (`unit_id`) REFERENCES `tbm_unit` (`unit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_goodsunit
--- ----------------------------
+--
+-- Dumping data for table `tbm_goodsunit`
+--
 
--- ----------------------------
--- Table structure for `tbm_paymentstatus`
--- ----------------------------
+LOCK TABLES `tbm_goodsunit` WRITE;
+/*!40000 ALTER TABLE `tbm_goodsunit` DISABLE KEYS */;
+INSERT INTO `tbm_goodsunit` VALUES (1,30,1,'888','1','1','1',1,'2012-08-19',1,'2012-08-19'),(2,30,3,'777','1','1','1',1,'2012-08-19',NULL,NULL),(3,31,7,'999','0','0','0',1,'2012-08-19',1,'2012-08-19');
+/*!40000 ALTER TABLE `tbm_goodsunit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_paymentstatus`
+--
+
 DROP TABLE IF EXISTS `tbm_paymentstatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_paymentstatus` (
   `paymentstatus_id` int(10) NOT NULL AUTO_INCREMENT,
   `paymenttype_id` int(10) NOT NULL,
@@ -496,15 +652,24 @@ CREATE TABLE `tbm_paymentstatus` (
   KEY `FKtbm_paymen880753` (`paymenttype_id`),
   CONSTRAINT `FKtbm_paymen880753` FOREIGN KEY (`paymenttype_id`) REFERENCES `tbm_paymenttype` (`paymenttype_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_paymentstatus
--- ----------------------------
+--
+-- Dumping data for table `tbm_paymentstatus`
+--
 
--- ----------------------------
--- Table structure for `tbm_paymentterm`
--- ----------------------------
+LOCK TABLES `tbm_paymentstatus` WRITE;
+/*!40000 ALTER TABLE `tbm_paymentstatus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_paymentstatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_paymentterm`
+--
+
 DROP TABLE IF EXISTS `tbm_paymentterm`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_paymentterm` (
   `paymentterm_id` int(10) NOT NULL AUTO_INCREMENT,
   `pmterm_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -517,17 +682,25 @@ CREATE TABLE `tbm_paymentterm` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`paymentterm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_paymentterm
--- ----------------------------
-INSERT INTO `tbm_paymentterm` VALUES ('1', 'D01', '10', '10 Days Term', '10 วัน', '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_paymentterm`
+--
 
--- ----------------------------
--- Table structure for `tbm_paymenttype`
--- ----------------------------
+LOCK TABLES `tbm_paymentterm` WRITE;
+/*!40000 ALTER TABLE `tbm_paymentterm` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_paymentterm` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_paymenttype`
+--
+
 DROP TABLE IF EXISTS `tbm_paymenttype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_paymenttype` (
   `paymenttype_id` int(10) NOT NULL AUTO_INCREMENT,
   `pmtype_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -540,15 +713,24 @@ CREATE TABLE `tbm_paymenttype` (
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`paymenttype_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_paymenttype
--- ----------------------------
+--
+-- Dumping data for table `tbm_paymenttype`
+--
 
--- ----------------------------
--- Table structure for `tbm_permission`
--- ----------------------------
+LOCK TABLES `tbm_paymenttype` WRITE;
+/*!40000 ALTER TABLE `tbm_paymenttype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_paymenttype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_permission`
+--
+
 DROP TABLE IF EXISTS `tbm_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_permission` (
   `permission_id` int(11) NOT NULL AUTO_INCREMENT,
   `screen_id` int(10) NOT NULL,
@@ -569,15 +751,24 @@ CREATE TABLE `tbm_permission` (
   CONSTRAINT `FKtbm_permis376428` FOREIGN KEY (`usergroup_id`) REFERENCES `tbm_usergroup` (`usergroup_id`),
   CONSTRAINT `FKtbm_permis987712` FOREIGN KEY (`screen_id`) REFERENCES `tbm_screen` (`screen_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_permission
--- ----------------------------
+--
+-- Dumping data for table `tbm_permission`
+--
 
--- ----------------------------
--- Table structure for `tbm_province`
--- ----------------------------
+LOCK TABLES `tbm_permission` WRITE;
+/*!40000 ALTER TABLE `tbm_permission` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_province`
+--
+
 DROP TABLE IF EXISTS `tbm_province`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_province` (
   `province_id` int(10) NOT NULL AUTO_INCREMENT,
   `zone_id` int(10) NOT NULL,
@@ -592,17 +783,25 @@ CREATE TABLE `tbm_province` (
   PRIMARY KEY (`province_id`),
   KEY `FKtbm_provin309784` (`zone_id`),
   CONSTRAINT `FKtbm_provin309784` FOREIGN KEY (`zone_id`) REFERENCES `tbm_zone` (`zone_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_province
--- ----------------------------
-INSERT INTO `tbm_province` VALUES ('1', '1', '01', 'Chiang Rai', 'เชียงราย', '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_province`
+--
 
--- ----------------------------
--- Table structure for `tbm_screen`
--- ----------------------------
+LOCK TABLES `tbm_province` WRITE;
+/*!40000 ALTER TABLE `tbm_province` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_province` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_screen`
+--
+
 DROP TABLE IF EXISTS `tbm_screen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_screen` (
   `screen_id` int(10) NOT NULL AUTO_INCREMENT,
   `scr_code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -615,16 +814,26 @@ CREATE TABLE `tbm_screen` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`screen_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_screen
--- ----------------------------
+--
+-- Dumping data for table `tbm_screen`
+--
 
--- ----------------------------
--- Table structure for `tbm_sendingtype`
--- ----------------------------
+LOCK TABLES `tbm_screen` WRITE;
+/*!40000 ALTER TABLE `tbm_screen` DISABLE KEYS */;
+INSERT INTO `tbm_screen` VALUES (1,'C010','Login','เข้าสู่ระบบ',NULL,'0',1,'2012-08-12',1,'2012-08-12'),(2,'C011','Change Password','เปลี่ยนรหัสผ่าน',NULL,'0',1,'2012-08-12',NULL,NULL);
+/*!40000 ALTER TABLE `tbm_screen` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_sendingtype`
+--
+
 DROP TABLE IF EXISTS `tbm_sendingtype`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_sendingtype` (
   `sendingtype_id` int(10) NOT NULL AUTO_INCREMENT,
   `sendtype_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -638,15 +847,24 @@ CREATE TABLE `tbm_sendingtype` (
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`sendingtype_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_sendingtype
--- ----------------------------
+--
+-- Dumping data for table `tbm_sendingtype`
+--
 
--- ----------------------------
--- Table structure for `tbm_sendstatus`
--- ----------------------------
+LOCK TABLES `tbm_sendingtype` WRITE;
+/*!40000 ALTER TABLE `tbm_sendingtype` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_sendingtype` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_sendstatus`
+--
+
 DROP TABLE IF EXISTS `tbm_sendstatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_sendstatus` (
   `sendstatus_id` int(10) NOT NULL AUTO_INCREMENT,
   `sendingtype_id` int(10) NOT NULL,
@@ -662,15 +880,24 @@ CREATE TABLE `tbm_sendstatus` (
   KEY `FKtbm_sendst988639` (`sendingtype_id`),
   CONSTRAINT `FKtbm_sendst988639` FOREIGN KEY (`sendingtype_id`) REFERENCES `tbm_sendingtype` (`sendingtype_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_sendstatus
--- ----------------------------
+--
+-- Dumping data for table `tbm_sendstatus`
+--
 
--- ----------------------------
--- Table structure for `tbm_unit`
--- ----------------------------
+LOCK TABLES `tbm_sendstatus` WRITE;
+/*!40000 ALTER TABLE `tbm_sendstatus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_sendstatus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_unit`
+--
+
 DROP TABLE IF EXISTS `tbm_unit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_unit` (
   `unit_id` int(10) NOT NULL AUTO_INCREMENT,
   `unitcode` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -683,22 +910,26 @@ CREATE TABLE `tbm_unit` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`unit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_unit
--- ----------------------------
-INSERT INTO `tbm_unit` VALUES ('1', 'Sd.', 'Seed', 'เมล็ด', 'Seed เมล็ด', '-1', null, null, '1', '2012-08-08');
-INSERT INTO `tbm_unit` VALUES ('2', 'E.', 'Envelop', 'ซอง', 'Envelop ซอง', '0', null, null, null, null);
-INSERT INTO `tbm_unit` VALUES ('3', 'C.', 'Can', 'กระป๋อง', 'Can กระป๋อง', '-1', null, null, '1', '2012-08-08');
-INSERT INTO `tbm_unit` VALUES ('4', 'P.', 'Plate', 'แผ่น', 'Plate แผ่น', '1', null, null, null, null);
-INSERT INTO `tbm_unit` VALUES ('5', 'B.', 'Bag', 'ถุง', 'Bag ถุง', '1', null, null, null, null);
-INSERT INTO `tbm_unit` VALUES ('6', 'Pck', 'Pack', 'แพ็ค', 'Pack แพ็ค', '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_unit`
+--
 
--- ----------------------------
--- Table structure for `tbm_usergroup`
--- ----------------------------
+LOCK TABLES `tbm_unit` WRITE;
+/*!40000 ALTER TABLE `tbm_unit` DISABLE KEYS */;
+INSERT INTO `tbm_unit` VALUES (1,'Sd.','Seed','เมล็ด','Seed เมล็ด','1',NULL,NULL,NULL,NULL),(2,'E.','Envelop','ซอง','Envelop ซอง','0',NULL,NULL,NULL,NULL),(3,'C.','Can','กระป๋อง','Can กระป๋อง','1',NULL,NULL,NULL,NULL),(4,'P.','Plate','แผ่น','Plate แผ่น','1',NULL,NULL,NULL,NULL),(5,'B.','Bag','ถุง','Bag ถุง','1',NULL,NULL,NULL,NULL),(6,'Pck','Pack','แพ็ค','Pack แพ็ค','0',NULL,NULL,NULL,NULL),(7,'Sdd.1','Seedd1','เมล็ดด1','Seedd เมล็ดด1','0',1,'2012-08-12',1,'2012-08-12');
+/*!40000 ALTER TABLE `tbm_unit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_usergroup`
+--
+
 DROP TABLE IF EXISTS `tbm_usergroup`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_usergroup` (
   `usergroup_id` int(10) NOT NULL AUTO_INCREMENT,
   `usergroup_eng` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -710,16 +941,26 @@ CREATE TABLE `tbm_usergroup` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`usergroup_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_usergroup
--- ----------------------------
+--
+-- Dumping data for table `tbm_usergroup`
+--
 
--- ----------------------------
--- Table structure for `tbm_userprofile`
--- ----------------------------
+LOCK TABLES `tbm_usergroup` WRITE;
+/*!40000 ALTER TABLE `tbm_usergroup` DISABLE KEYS */;
+INSERT INTO `tbm_usergroup` VALUES (1,'System Administrator','ผู้ดูแลระบบ','Admin','0',1,'2012-08-12',1,'2012-08-12'),(2,'Manager','ผู้จัดการ','Mng','0',1,'2012-08-12',NULL,NULL);
+/*!40000 ALTER TABLE `tbm_usergroup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_userprofile`
+--
+
 DROP TABLE IF EXISTS `tbm_userprofile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_userprofile` (
   `userprofile_id` int(10) NOT NULL AUTO_INCREMENT,
   `usergroup_id` int(10) NOT NULL,
@@ -742,15 +983,24 @@ CREATE TABLE `tbm_userprofile` (
   CONSTRAINT `FKtbm_userpr172779` FOREIGN KEY (`employeetype_id`) REFERENCES `tbm_employeetype` (`employeetype_id`),
   CONSTRAINT `FKtbm_userpr551132` FOREIGN KEY (`usergroup_id`) REFERENCES `tbm_usergroup` (`usergroup_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_userprofile
--- ----------------------------
+--
+-- Dumping data for table `tbm_userprofile`
+--
 
--- ----------------------------
--- Table structure for `tbm_zipcode`
--- ----------------------------
+LOCK TABLES `tbm_userprofile` WRITE;
+/*!40000 ALTER TABLE `tbm_userprofile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_userprofile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_zipcode`
+--
+
 DROP TABLE IF EXISTS `tbm_zipcode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_zipcode` (
   `zipcode_id` int(255) NOT NULL AUTO_INCREMENT,
   `province_id` int(10) NOT NULL,
@@ -772,15 +1022,24 @@ CREATE TABLE `tbm_zipcode` (
   KEY `FKtbm_zipcod776905` (`province_id`),
   CONSTRAINT `FKtbm_zipcod776905` FOREIGN KEY (`province_id`) REFERENCES `tbm_province` (`province_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_zipcode
--- ----------------------------
+--
+-- Dumping data for table `tbm_zipcode`
+--
 
--- ----------------------------
--- Table structure for `tbm_zone`
--- ----------------------------
+LOCK TABLES `tbm_zipcode` WRITE;
+/*!40000 ALTER TABLE `tbm_zipcode` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_zipcode` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbm_zone`
+--
+
 DROP TABLE IF EXISTS `tbm_zone`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tbm_zone` (
   `zone_id` int(10) NOT NULL AUTO_INCREMENT,
   `zone_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -793,9 +1052,25 @@ CREATE TABLE `tbm_zone` (
   `lastupdate_by` int(10) DEFAULT NULL,
   `lastupdate_date` date DEFAULT NULL,
   PRIMARY KEY (`zone_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ----------------------------
--- Records of tbm_zone
--- ----------------------------
-INSERT INTO `tbm_zone` VALUES ('1', 'N', 'North', 'ภาคเหนือ', 'ภาคเหนือนะ', '0', null, null, null, null);
+--
+-- Dumping data for table `tbm_zone`
+--
+
+LOCK TABLES `tbm_zone` WRITE;
+/*!40000 ALTER TABLE `tbm_zone` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbm_zone` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-08-20 12:44:18

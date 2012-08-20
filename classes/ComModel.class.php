@@ -50,7 +50,7 @@ class ComModel extends DBConnection
         $stmt->execute();
 
         $result->page    = $page;
-        $result->total   =  $total_pages;
+        $result->total   = $total_pages;
         $result->records = $count;
 
         $i = 0;
