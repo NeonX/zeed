@@ -53,7 +53,7 @@ $(function () {
         ], 
         sub: [
             'Goods Price ID', 'Goods ID','Count Unit', 'Currency', 'Cost', 
-            'Price', 'Discount', 'Effective Date', 'Status', 'Table', 'Mode', 'Action'
+            'Price', 'Discount', 'Effective Date', 'Status', 'Table', 'Mode'
         ]
     };
 
@@ -80,18 +80,12 @@ $(function () {
                 }
             },
             {name: 'unit_id', index:'unit_id', width: 100, editable: true, edittype:"select", editoptions: {},editrules: { required: true }, align: 'center'},
-            {name: 'currency_id', index: 'currency_id', width: 100, editable: true, edittype:"select", editoptions: {}, align: 'center'},
-            {name: 'cost', index: 'cost', width: 100, editable: true, align: 'center' },
-            {name: 'price', index: 'price', width:100, editable: true, align: 'center'},
-            {name: 'discount', index:'discount', width: 100, editable: true, align: 'center'},
-            {name: 'effective_date', index:'effective_date', width: 100, editable: true, align: 'center',
-                editoptions: {
-                  dataInit: function(element) {
-                    $(element).datepicker({dateFormat: 'yy-mm-dd'});
-                  }
-                }
-            },
-            {name: 'deleteflag', index: 'deleteflag', width: 100, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
+            {name: 'currency_id', index: 'currency_id', width: 120, editable: true, edittype:"select", editoptions: {}, align: 'center'},
+            {name: 'cost', index: 'cost', width: 120, editable: true, align: 'center' },
+            {name: 'price', index: 'price', width:105, editable: true, align: 'center'},
+            {name: 'discount', index:'discount', width: 105, editable: true, align: 'center'},
+            {name: 'effective_date', index:'effective_date', width: 105, editable: true,  sorttype:"date", align: 'center'},
+            {name: 'deleteflag', index: 'deleteflag', width: 110, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
             {name: 'table', index:'table', editable: true, hidden: true,
                 editoptions: {
                   dataInit: function(element) {
@@ -105,8 +99,7 @@ $(function () {
                        $(element).val(self.smode);
                   }
                 }
-            },
-            {name: 'action',index: 'action', width:70, align: 'center'}
+            }
         ]
     };
 });
@@ -172,6 +165,31 @@ input.editable {
             <div style="clear:both;"></div>
             <table id="list-goodsprice"></table>
         </fieldset>
-        <fieldset class="modal-footer" style="clear:both;"></fieldset>
+        <fieldset class="modal-footer" style="clear:both;">
+            <p style="float: right;">
+                <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
+                <input id="by" name="create_by" type="hidden" value="1" />
+                <input id="table" name="table" type="hidden" value="unit" />
+                <input id="unit_id" name="unit_id" type="hidden" value="0" />
+                <input id="mode" name="mode" type="hidden" value="insert" />
+
+                <button type="button" id="save" name="save" class="btn btn-success">
+                    <i class="icon-plus-sign icon-white"></i>
+                    <span>Save</span>
+                </button>
+                <button type="reset" id="cancel" name="cancel" class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" id="delete" name="delete" class="btn btn-danger delete">
+                    <i class="icon-minus-sign icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                 <button type="button" id="recovery" name="recovery" class="btn btn-primary save">
+                    <i class="icon-share-alt icon-white"></i>
+                    <span>Recovery</span>
+                </button>
+            </p>
+        </fieldset>
     </form>
 </div>

@@ -11,21 +11,24 @@ $(function () {
     self.getAllT2URL  =  '../page/common/getDataAllT2.php',
     self.getByIdT2URL =  '../page/common/getDataByIdT2.php',
     self.saveT2URL    =  '../page/common/saveDataT2.php',
-    self.mColId      = self.table.main + '_id',
-    self.sColId      = self.table.sub + '_id',
-    self.mGrid       = $('#list-' + self.table.main),
-    self.sGrid       = $('#list-' + self.table.sub),
+    self.mColId       = self.table.main + '_id',
+    self.sColId       = self.table.sub + '_id',
+    self.mGrid        = $('#list-' + self.table.main),
+    self.sGrid        = $('#list-' + self.table.sub),
 
-    self.mode       = $('#mode'),
-    self.anchor     = $('a[class^="' + self.table.main + '"]'),
-    self.form       = $('#customForm'),
-    self.recovery   = $('#recovery'),
-    self.del        = $('#delete'),
-    self.date       = $('#date'),
-    self.by         = $('#by'),
-    self.options    = $('<option />'),
-    self.lastsel2   = null,
-    self.rowCounter = 0;
+    self.mode         = $('#mode'),
+    self.anchor       = $('a[class^="' + self.table.main + '"]'),
+    self.form         = $('#customForm'),
+    self.recovery     = $('#recovery'),
+    self.del          = $('#delete'),
+    self.date         = $('#date'),
+    self.by           = $('#by'),
+    self.options      = $('<option />'),
+    self.addNewRowId  = 0,
+    self.lastsel      = 0,
+    self.arrSaveId    = new Array(),
+    self.newArr       = new Array(),
+    self.recordAdded  = false;
 
     self.mGrid.jqGrid({
         url         : self.getAllURL,
@@ -85,8 +88,12 @@ $(function () {
                             goodsTypeName = obj.goodstype_th;
                         }
                     });
+                    self.newArr = [];
+                    $.each(rec.record, function(index, obj) {
+                       self.newArr[index] = obj.goodsprice_id;
+                    });
 
-                    self.rowCounter = rec.last_row + 1;
+                    self.self.addNewRowId = newArr.max() + 1;
 
                     $('#goods_code').val(formData.goodscode).attr('disabled', 'disabled');
                     $('#goods_name_eng').val(formData.goodsname_eng).attr('disabled', 'disabled');
@@ -137,6 +144,11 @@ $(function () {
                             });
 
                         },
+                        ondblClickRow: function (id) {
+                            var arr_id = new Array();
+                            self.sGrid.jqGrid('editRow', id, true, pickdates);
+                            self.arrSaveId[self.lastsel++] = id;
+                        },
                         editurl     : self.saveT2URL,
                         rowNum      : 10,
                         autowidth   : true,
@@ -154,20 +166,38 @@ $(function () {
         },
         beforeClose: function () {
             self.smode = 'update';
+            self.recordAdded = false;
         }
     });
 
     $('#record_add').bind('click', function () {
-        self.smode = 'insert';
-        self.sGrid.addRowData(self.rowCounter, {});
-        self.sGrid.editRow(self.rowCounter);
-        self.rowCounter++;
+        if (!self.recordAdded) {
+            self.smode = 'insert';
+            self.sGrid.addRowData(self.addNewRowId, {});
+            self.sGrid.editRow(self.addNewRowId, true, pickdates);
+            self.arrSaveId[self.addNewRowId] = self.addNewRowId;
+            self.recordAdded = true;
+        } else {
+            alert('เพิ่มเรคคอร์ดแล้ว');
+        }
     });
 
     self.form.bind('submit', function () {
+        console.debug('submit');
         return false;
     });
+
+    $('#save').bind('click', function () {
+        $.each(self.arrSaveId, function (index, value) {
+            self.sGrid.jqGrid('saveRow', value);
+            $.fancybox('บันทีกเรียบร้อยแล้ว');
+        });
+    });
 });
+
+var pickdates = function (id) {
+    jQuery('#' + id + '_effective_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
+}
 
 var lookupUnit = function (data) {
     var tmp = [], str = '';
@@ -193,3 +223,7 @@ Array.prototype.swap = function (x,y) {
     this[y] = t;
     return this;
 }
+
+Array.prototype.max = function () {
+    return Math.max.apply(null, this);
+};

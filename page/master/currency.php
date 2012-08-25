@@ -74,7 +74,7 @@ $(function () {
             {name: 'currency_id', index:'currency_id', editable: true, hidden: true,
                 editoptions: {
                   dataInit: function(element) {
-//                     $(element).val(formData.goods_id);
+                    $(element).val(formData.currency_id);
                   }
                 }
             },

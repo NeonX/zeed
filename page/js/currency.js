@@ -8,6 +8,7 @@
  */
 $(function () {
     self.getAllURL    =  '../page/common/getDataAll.php',
+    self.saveURL      =  '../page/common/saveData.php',
     self.getAllT2URL  =  '../page/common/getDataAllT2.php',
     self.getByIdT2URL =  '../page/common/getDataByIdT2.php',
     self.saveT2URL    =  '../page/common/saveDataT2.php',
