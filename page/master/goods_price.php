@@ -79,13 +79,14 @@ $(function () {
                   }
                 }
             },
-            {name: 'unit_id', index:'unit_id', width: 100, editable: true, edittype:"select", editoptions: {},editrules: { required: true }, align: 'center'},
+
+            {name: 'unit_id', index: 'unit_id', width: 100, editable: true, edittype:"select", editoptions: {}, align: 'center'},
             {name: 'currency_id', index: 'currency_id', width: 120, editable: true, edittype:"select", editoptions: {}, align: 'center'},
             {name: 'cost', index: 'cost', width: 120, editable: true, align: 'center' },
             {name: 'price', index: 'price', width:105, editable: true, align: 'center'},
             {name: 'discount', index:'discount', width: 105, editable: true, align: 'center'},
             {name: 'effective_date', index:'effective_date', width: 105, editable: true,  sorttype:"date", align: 'center'},
-            {name: 'deleteflag', index: 'deleteflag', width: 110, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
+            {name: 'deleteflag', index: 'deleteflag', width: 110, editable: true, edittype:"select", editoptions: {}, align: 'center'},
             {name: 'table', index:'table', editable: true, hidden: true,
                 editoptions: {
                   dataInit: function(element) {

@@ -27,7 +27,6 @@ $(function () {
     self.addNewRowId  = 0,
     self.lastsel      = 0,
     self.arrSaveId    = new Array(),
-    self.newArr       = new Array(),
     self.recordAdded  = false;
 
     self.mGrid.jqGrid({
@@ -88,12 +87,13 @@ $(function () {
                             goodsTypeName = obj.goodstype_th;
                         }
                     });
-                    self.newArr = [];
+
+                    var newArr = [];
                     $.each(rec.record, function(index, obj) {
-                       self.newArr[index] = obj.goodsprice_id;
+                       newArr[index] = obj[self.sColId];
                     });
 
-                    self.self.addNewRowId = newArr.max() + 1;
+                    self.addNewRowId = newArr.max() + 1;
 
                     $('#goods_code').val(formData.goodscode).attr('disabled', 'disabled');
                     $('#goods_name_eng').val(formData.goodsname_eng).attr('disabled', 'disabled');
@@ -115,12 +115,7 @@ $(function () {
                         colModel    : self.colModel.sub,
                         gridComplete: function () {
                             var ids = self.sGrid.jqGrid('getDataIDs');
-                            for(var i=0;i < ids.length;i++){
-                                var cl = ids[i];
-                                be = "<input class='row-edit' style='height:16px;width:16px;' type='image' src='../page/images/icons/form-edit-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').editRow('"+cl+"');\"  />"; 
-                                se = "<input style='margin-left: 5px;height:16px;width:16px;' type='image' src='../page/images/icons/disk-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').saveRow('"+cl+"');\"  />"; 
-                                ce = "<input style='margin-left: 5px;height:16px;width:16px;' type='image' src='../page/images/icons/cancel-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').restoreRow('"+cl+"');\" />";
-                                self.sGrid.jqGrid('setRowData',ids[i],{action:be+se+ce});
+                            for (var i=0;i < ids.length;i++) {
 
                                 if (self.smode != 'insert') {
                                     eachRow = self.sGrid.jqGrid('getRowData', ids[i]);
@@ -128,16 +123,18 @@ $(function () {
                                     if (self.table.sub == 'goodsprice') {
                                         self.sGrid.jqGrid('setRowData',ids[i],{currency_id: rec.currency[eachRow.currency_id - 1].currabbveng});
                                     } else if (self.table.sub == 'goodsunit') {
-                                        self.sGrid.jqGrid('setRowData',ids[i],{use_instock: eachRow.use_instock == '1' ? '<span class="red">Not Use</span>' : '<span class="green">Used</span>' });
-                                        self.sGrid.jqGrid('setRowData',ids[i],{use_inorder: eachRow.use_inorder == '1' ? '<span class="red">Not Use</span>' : '<span class="green">Used</span>' });
+                                        self.sGrid.jqGrid('setRowData',ids[i],{use_instock: eachRow.use_instock == '1' ? 'Not Use' : 'Used' });
+                                        self.sGrid.jqGrid('setRowData',ids[i],{use_inorder: eachRow.use_inorder == '1' ? 'Not Use' : 'Used' });
                                     }
                                     self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[eachRow.unit_id - 1].unitnameeng});
-                                    self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? '<span class="red">Not Use</span>' : '<span class="green">Used</span>' });
+                                    self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? 'Not Use' : 'Used' });
                                 }
+                                self.sGrid.setColProp('unit_id', { editoptions: { value: lookupUnit(data.unit) } });
+                                self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency) } });
+                                self.sGrid.setColProp('deleteflag',  { editoptions: { value: "1:Not Use;0:Used"} });
+                                self.sGrid.setColProp('use_instock', { editoptions: { value: "1:Not Use;0:Used"} });
+                                self.sGrid.setColProp('use_inorder', { editoptions: { value: "1:Not Use;0:Used"} });
                             }
-
-                            self.sGrid.setColProp('unit_id', { editoptions: { value: lookupUnit(data.unit).toString() } });
-                            self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency).toString() } });
 
                             $('.row-edit').bind('click', function () {
                                 self.smode = 'update';
@@ -202,19 +199,19 @@ var pickdates = function (id) {
 var lookupUnit = function (data) {
     var tmp = [], str = '';
     $.each(data, function (index, obj) {
-        tmp.push(obj.unit_id + ':' + obj.unitnameeng)
+        tmp.push(obj.unit_id + ':' + obj.unitnameeng);
     });
 
-    return tmp.join(';');
+    return tmp.join(';').toString();
 };
 
 var lookupCurrency = function (data) {
     var tmp = [], str = '';
     $.each(data, function (index, obj) {
-        tmp.push(obj.currency_id + ':' + obj.currabbveng)
+        tmp.push(obj.currency_id + ':' + obj.currabbveng);
     });
 
-    return tmp.join(';');
+    return tmp.join(';').toString();
 };
 
 Array.prototype.swap = function (x,y) {

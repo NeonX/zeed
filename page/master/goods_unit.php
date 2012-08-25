@@ -52,8 +52,8 @@ $(function () {
             'Goods Name (TH)', 'Description', 'Picture', 'Status', 'Action'
         ], 
         sub: [
-            'Goods Price ID', 'Goods ID','Count Unit', 'Unit Side', 'Unit InStore',
-            'Unit InOrder', 'Status', 'Table', 'Mode', 'Action'
+            'Goods Price ID', 'Goods ID','Count Unit', 'Unit Side',
+            'Unit InStore', 'Unit InOrder', 'Status', 'Table', 'Mode'
         ]
     };
 
@@ -81,8 +81,8 @@ $(function () {
             },
             {name: 'unit_id', index:'unit_id', width: 145, editable: true, edittype:"select", editoptions: {},editrules: { required: true }, align: 'center'},
             {name: 'unitside', index: 'unitside', width: 145, editable: true, align: 'center' },
-            {name: 'use_instock', index: 'use_instock', width: 150, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
-            {name: 'use_inorder', index: 'use_inorder', width: 150, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
+            {name: 'use_instock', index: 'use_instock', width: 190, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
+            {name: 'use_inorder', index: 'use_inorder', width: 190, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
             {name: 'deleteflag', index: 'deleteflag', width: 100, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
             {name: 'table', index:'table', editable: true, hidden: true,
                 editoptions: {
@@ -97,8 +97,7 @@ $(function () {
                        $(element).val(self.smode);
                   }
                 }
-            },
-            {name: 'action',index: 'action', width:90, align: 'center'}
+            }
         ]
     };
 });
@@ -164,6 +163,31 @@ input.editable {
             <div style="clear:both;"></div>
             <table id="list-goodsunit"></table>
         </fieldset>
-        <fieldset class="modal-footer" style="clear:both;"></fieldset>
+        <fieldset class="modal-footer" style="clear:both;">
+            <p style="float: right;">
+                <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
+                <input id="by" name="create_by" type="hidden" value="1" />
+                <input id="table" name="table" type="hidden" value="unit" />
+                <input id="unit_id" name="unit_id" type="hidden" value="0" />
+                <input id="mode" name="mode" type="hidden" value="insert" />
+
+                <button type="button" id="save" name="save" class="btn btn-success">
+                    <i class="icon-plus-sign icon-white"></i>
+                    <span>Save</span>
+                </button>
+                <button type="reset" id="cancel" name="cancel" class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" id="delete" name="delete" class="btn btn-danger delete">
+                    <i class="icon-minus-sign icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                 <button type="button" id="recovery" name="recovery" class="btn btn-primary save">
+                    <i class="icon-share-alt icon-white"></i>
+                    <span>Recovery</span>
+                </button>
+            </p>
+        </fieldset>
     </form>
 </div>
