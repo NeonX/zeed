@@ -23,17 +23,9 @@ class ComModelT2 extends DBConnection
         $colId  = $table . $this->colId;
         $fTable = $this->prefix . $table;
 
-        $sql = "SELECT MAX({$colId}) last_row FROM {$fTable}";
-
-        $stmt = $this->db->prepare($sql);
-
-        $stmt->execute();
-
-        $result->last_row = $stmt->fetch(PDO::FETCH_OBJ)->last_row;
-
         $cId = 'goods_id';
-        if ($table == 'currency') {
-            $cId = 'exchange';
+        if ($table == 'exchange') {
+            $cId = 'currency_id';
         }
 
         $sql = "SELECT * FROM {$fTable} WHERE {$cId} = :id";
@@ -137,6 +129,7 @@ class ComModelT2 extends DBConnection
             $i++;
         }
 
+        $result->table = $table;
         $result->columns = $columns;
         $result->stmt = $stmt;
         return json_encode($result);

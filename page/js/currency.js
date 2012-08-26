@@ -28,7 +28,12 @@ $(function () {
     self.by         = $('#by'),
     self.options    = $('<option />'),
     self.lastsel2   = null,
-    self.rowCounter = 0;
+    self.rowCounter = 0,
+    self.addNewRowId  = 0,
+    self.addNewYear   = 0,
+    self.lastsel      = 0,
+    self.arrSaveId    = new Array(),
+    self.recordAdded  = false;
 
     self.mGrid.jqGrid({
         url         : self.getAllURL,
@@ -60,7 +65,27 @@ $(function () {
         },
         beforeLoad: function () {
             var _self = this,
-             _id = $(_self.element.innerHTML).get(0).getAttribute('value');
+             _id = $(_self.element.innerHTML).get(0).getAttribute('value'),
+             mode = $(_self.element.innerHTML).get(0).getAttribute('title');
+             buttons = ['save', 'cancel', 'delete', 'recovery'];
+
+             $.each(buttons, function (index, value) {
+                $('#' + value).show();
+            });
+
+             if (mode == 'new') {
+                self.mode.val('insert');
+                self.del.hide();
+                self.recovery.hide();
+                self.date.attr({ name: 'create_date'});
+                self.by.attr({ name: 'create_by'});
+            } else {
+                self.mode.val('update');
+                self.date.attr({ name: 'lastupdate_date'});
+                self.by.attr({ name: 'lastupdate_by'});
+                self.del.show();
+                self.recovery.show();
+            }
 
             $.ajax({
                 type        : 'GET',
@@ -77,14 +102,37 @@ $(function () {
                         }
                     });
 
-                    self.rowCounter = rec.last_row + 1;
-
-                    $('#currcode').val(self.formData.currcode);
-                    $('#currdesceng').val(self.formData.currdesceng);
-                    $('#currabbveng').val(self.formData.currabbveng);
-                    $('#deleteflag').val(self.formData.deleteflag);
-                    $('#currdescth').val(self.formData.currdescth);
-                    $('#currabbvth').val(self.formData.currabbvth);
+                    if (mode == 'new') {
+                        var newArr = [], newYear = [];
+                        $.each(rec.record, function(index, obj) {
+                           newArr[index] = obj[self.sColId];
+                           newYear[index] = obj['exyear'];
+                        });
+                        console.debug(self.addNewYear);
+                        if (self.addNewYear > 0) {
+                                                    self.addNewRowId = newArr.max() + 1;
+                            self.addNewYear  = newYear.max() + 1;
+                        } else {
+                            self.addNewRowId = 1;
+                            self.addNewYear  = new Date().getFullYear();
+                        }
+                        $('#currcode').val(null);
+                        $('#currdesceng').val(null);
+                        $('#currabbveng').val(null);
+                        $('#deleteflag').val(null);
+                        $('#currdescth').val(null);
+                        $('#currabbvth').val(null);
+                        $('#record_add').attr('disabled', 'disabled');
+                    } else {
+                        $('#currency_id').val(self.formData.currency_id);
+                        $('#currcode').val(self.formData.currcode);
+                        $('#currdesceng').val(self.formData.currdesceng);
+                        $('#currabbveng').val(self.formData.currabbveng);
+                        $('#deleteflag').val(self.formData.deleteflag);
+                        $('#currdescth').val(self.formData.currdescth);
+                        $('#currabbvth').val(self.formData.currabbvth);
+                        $('#record_add').removeAttr('disabled');
+                    }
 
                     self.sGrid.jqGrid('setGridParam', {
                         url         : self.getAllT2URL,
@@ -101,17 +149,17 @@ $(function () {
                         gridComplete: function () {
                             var ids = self.sGrid.jqGrid('getDataIDs');
                             for(var i=0;i < ids.length;i++){
-                                var cl = ids[i];
-                                be = "<input class='row-edit' style='height:16px;width:16px;' type='image' src='../page/images/icons/form-edit-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').editRow('"+cl+"');\"  />"; 
-                                se = "<input style='margin-left: 5px;height:16px;width:16px;' type='image' src='../page/images/icons/disk-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').saveRow('"+cl+"');\"  />"; 
-                                ce = "<input style='margin-left: 5px;height:16px;width:16px;' type='image' src='../page/images/icons/cancel-16x16.png' onclick=\"jQuery('#list-" + self.table.sub + "').restoreRow('"+cl+"');\" />";
-                                self.sGrid.jqGrid('setRowData',ids[i],{action:be+se+ce});
                             }
 
                             $('.row-edit').bind('click', function () {
                                 self.smode = 'update';
                             });
 
+                        },
+                        ondblClickRow: function (id) {
+                            var arr_id = new Array();
+                            self.sGrid.jqGrid('editRow', id);
+                            self.arrSaveId[self.lastsel++] = id;
                         },
                         editurl     : self.saveT2URL,
                         rowNum      : 10,
@@ -130,18 +178,58 @@ $(function () {
         },
         beforeClose: function () {
             self.smode = 'update';
+            self.recordAdded = false;
         }
     });
 
     $('#record_add').bind('click', function () {
-        self.smode = 'insert';
-        self.sGrid.addRowData(self.rowCounter, {});
-        self.sGrid.editRow(self.rowCounter);
-        self.rowCounter++;
+        if (!self.recordAdded) {
+            self.smode = 'insert';
+            self.sGrid.addRowData(self.addNewRowId, {});
+            self.sGrid.setColProp('exyear', { editoptions: { value: self.addNewYear } });
+            self.sGrid.editRow(self.addNewRowId);
+            self.arrSaveId[self.addNewRowId] = self.addNewRowId;
+            self.recordAdded = true;
+        } else {
+            alert('เพิ่มเรคคอร์ดแล้ว');
+        }
     });
 
     self.form.bind('submit', function () {
         return false;
+    });
+
+    $('#save').bind('click', function () {
+        $.ajax({
+            type        : 'POST',
+            cache       : false,
+            datatype    : 'json',
+            url         : self.saveURL,
+            data        : {
+                currcode: $('#currcode').val(),
+                currdesceng: $('#currdesceng').val(),
+                currabbveng: $('#currabbveng').val(),
+                deleteflag: $('#deleteflag').val(),
+                currdescth: $('#currdescth').val(),
+                currabbvth: $('#currabbvth').val(),
+                create_date: $('#date').val(),
+                create_by: $('#by').val(),
+                table: $('#table').val(),
+                currency_id: $('#currency_id').val(),
+                mode: $('#mode').val()
+            },
+            success     : function (data) {
+                self.mGrid.trigger('reloadGrid');
+            }
+        });
+
+        if (self.arrSaveId.length > 0) {
+            $.each(self.arrSaveId, function (index, value) {
+                self.sGrid.jqGrid('saveRow', value);
+            });
+        }
+
+        $.fancybox('บันทีกเรียบร้อยแล้ว');
     });
 });
 
@@ -169,3 +257,7 @@ Array.prototype.swap = function (x,y) {
     this[y] = t;
     return this;
 }
+
+Array.prototype.max = function () {
+    return Math.max.apply(null, this);
+};

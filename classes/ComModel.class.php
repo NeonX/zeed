@@ -247,6 +247,7 @@ class ComModel extends DBConnection
         $result->myparams = $myparams;
         $result->stmt = $stmt;
         $result->mode = $mode;
+        $result->lastinsertid =  $this->db->lastInsertId($colId);
         $result->row_count = $stmt->rowCount();
 
         return json_encode($result);

@@ -142,7 +142,6 @@ $(function () {
 
                         },
                         ondblClickRow: function (id) {
-                            var arr_id = new Array();
                             self.sGrid.jqGrid('editRow', id, true, pickdates);
                             self.arrSaveId[self.lastsel++] = id;
                         },
@@ -187,8 +186,8 @@ $(function () {
     $('#save').bind('click', function () {
         $.each(self.arrSaveId, function (index, value) {
             self.sGrid.jqGrid('saveRow', value);
-            $.fancybox('บันทีกเรียบร้อยแล้ว');
         });
+        $.fancybox('บันทีกเรียบร้อยแล้ว');
     });
 });
 

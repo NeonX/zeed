@@ -4,6 +4,7 @@ $ref = $_SERVER['HTTP_REFERER'] == 'http://' . $_SERVER['HTTP_HOST'] . '/zeed/pa
 
 <div class="h_line"></div>
 <h1>M020 : CURRENCY &amp; EXCHANGE RATE</h1>
+<div style="float: right;"> <a class="currency" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
 
 <div class="cleaner"></div>
 <?php
@@ -42,7 +43,7 @@ $(function () {
         ], 
         sub: [
             'exchange_id', 'exyear','currency_id', 'exm01', 'exm02', 'exm03', 'exm04', 'exm05', 'exm06',
-            'exm07', 'exm08', 'exm09', 'exm10', 'exm11', 'exm12','deleteflag', 'table', 'action'
+            'exm07', 'exm08', 'exm09', 'exm10', 'exm11', 'exm12','deleteflag', 'table'
         ]
     };
 
@@ -53,7 +54,7 @@ $(function () {
         ], 
         sub: [
             'Exchange ID', 'Year','Currency ID', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 
-            'M7', 'M8', 'M9', 'M10', 'M11', 'M2', 'Status', 'Table', 'Mode', 'Action'
+            'M7', 'M8', 'M9', 'M10', 'M11', 'M2', 'Status', 'Table', 'Mode'
         ]
     };
 
@@ -70,7 +71,7 @@ $(function () {
         ],
         sub: [
             {name: 'exchange_id', index:'exchange_id', hidden: true},
-            {name: 'exyear', index: 'exyear', width: 60, align: 'center', editable: true},
+            {name: 'exyear', index: 'exyear', width: 80, align: 'center', editable: true},
             {name: 'currency_id', index:'currency_id', editable: true, hidden: true,
                 editoptions: {
                   dataInit: function(element) {
@@ -78,18 +79,18 @@ $(function () {
                   }
                 }
             },
-            {name: 'exm01', index: 'exm01', width: 50, align: 'center', editable: true},
-            {name: 'exm02', index: 'exm02', width: 50, align: 'center', editable: true},
-            {name: 'exm03', index: 'exm03', width: 50, align: 'center', editable: true},
-            {name: 'exm04', index: 'exm04', width: 50, align: 'center', editable: true},
-            {name: 'exm05', index: 'exm05', width: 50, align: 'center', editable: true},
-            {name: 'exm06', index: 'exm06', width: 50, align: 'center', editable: true},
-            {name: 'exm07', index: 'exm07', width: 50, align: 'center', editable: true},
-            {name: 'exm08', index: 'exm08', width: 50, align: 'center', editable: true},
-            {name: 'exm09', index: 'exm09', width: 50, align: 'center', editable: true},
-            {name: 'exm10', index: 'exm10', width: 50, align: 'center', editable: true},
-            {name: 'exm11', index: 'exm11', width: 50, align: 'center', editable: true},
-            {name: 'exm12', index: 'exm12', width: 50, align: 'center', editable: true},
+            {name: 'exm01', index: 'exm01', width: 55, align: 'center', editable: true},
+            {name: 'exm02', index: 'exm02', width: 55, align: 'center', editable: true},
+            {name: 'exm03', index: 'exm03', width: 55, align: 'center', editable: true},
+            {name: 'exm04', index: 'exm04', width: 55, align: 'center', editable: true},
+            {name: 'exm05', index: 'exm05', width: 55, align: 'center', editable: true},
+            {name: 'exm06', index: 'exm06', width: 55, align: 'center', editable: true},
+            {name: 'exm07', index: 'exm07', width: 55, align: 'center', editable: true},
+            {name: 'exm08', index: 'exm08', width: 55, align: 'center', editable: true},
+            {name: 'exm09', index: 'exm09', width: 55, align: 'center', editable: true},
+            {name: 'exm10', index: 'exm10', width: 55, align: 'center', editable: true},
+            {name: 'exm11', index: 'exm11', width: 55, align: 'center', editable: true},
+            {name: 'exm12', index: 'exm12', width: 55, align: 'center', editable: true},
             {name: 'deleteflag', index: 'deleteflag', width: 80, hidden: true, align: 'center', editable: true},
             {name: 'table', index:'table', editable: true, hidden: true,
                 editoptions: {
@@ -104,8 +105,7 @@ $(function () {
                        $(element).val(self.smode);
                   }
                 }
-            },
-            {name: 'action',index: 'action', width:80, align: 'center'}
+            }
         ]
     };
 });
@@ -179,7 +179,7 @@ input.editable {
             </p>
         </fieldset>
         <fieldset class="modal-body grid">
-            <div style="float: right;"><input style="height:24px;width:24px;" id="record_add" type="image" src="../page/images/icons/record-add-24x24.png" /></div>
+            <div id="div_record_add" style="float: right;"><input style="height:24px;width:24px;" id="record_add" type="image" src="../page/images/icons/record-add-24x24.png" /></div>
             <div style="clear:both;"></div>
             <table id="list-exchange"></table>
         </fieldset>
@@ -187,11 +187,11 @@ input.editable {
             <p style="float: right;">
                 <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
                 <input id="by" name="create_by" type="hidden" value="1" />
-                <input id="table" name="table" type="hidden" value="unit" />
-                <input id="unit_id" name="unit_id" type="hidden" value="0" />
+                <input id="table" name="table" type="hidden" value="currency" />
+                <input id="currency_id" name="currency_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
 
-                <button type="submit" id="save" name="save" class="btn btn-success">
+                <button type="button" id="save" name="save" class="btn btn-success">
                     <i class="icon-plus-sign icon-white"></i>
                     <span>Save</span>
                 </button>
