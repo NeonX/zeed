@@ -26,6 +26,8 @@ class ComModelT2 extends DBConnection
         $cId = 'goods_id';
         if ($table == 'exchange') {
             $cId = 'currency_id';
+        } else if ($table == 'paymentstatus') {
+            $cId = 'paymenttype_id';
         }
 
         $sql = "SELECT * FROM {$fTable} WHERE {$cId} = :id";
@@ -76,6 +78,8 @@ class ComModelT2 extends DBConnection
         $cId = 'goods_id';
         if ($table == 'exchange') {
             $cId = 'currency_id';
+        } else if ($table == 'paymentstatus') {
+            $cId = 'paymenttype_id';
         }
 
         $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1 AND {$cId} = {$id}";
