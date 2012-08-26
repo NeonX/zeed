@@ -100,7 +100,7 @@ $(function () {
                     rec = data;
 
                     $.each(self.mData, function (index, obj) {
-                        if (_id == obj.currency_id) {
+                        if (_id == obj.paymenttype_id) {
                             self.formData = self.mData[index];
                         }
                     });
@@ -120,21 +120,17 @@ $(function () {
                     }
 
                     if (mode == 'new') {
-                        $('#currcode').val(null);
-                        $('#currdesceng').val(null);
-                        $('#currabbveng').val(null);
+                        $('#pmtype_code').val(null);
+                        $('#pmtype_eng').val(null);
+                        $('#pmtype_th').val(null);
                         $('#deleteflag').val(null);
-                        $('#currdescth').val(null);
-                        $('#currabbvth').val(null);
                         $('#record_add').attr('disabled', 'disabled');
                     } else {
-                        $('#currency_id').val(self.formData.currency_id);
-                        $('#currcode').val(self.formData.currcode);
-                        $('#currdesceng').val(self.formData.currdesceng);
-                        $('#currabbveng').val(self.formData.currabbveng);
+                        $('#paymenttype_id').val(self.formData.paymenttype_id);
+                        $('#pmtype_code').val(self.formData.pmtype_code);
+                        $('#pmtype_eng').val(self.formData.pmtype_eng);
+                        $('#pmtype_th').val(self.formData.pmtype_th);
                         $('#deleteflag').val(self.formData.deleteflag);
-                        $('#currdescth').val(self.formData.currdescth);
-                        $('#currabbvth').val(self.formData.currabbvth);
                         $('#record_add').removeAttr('disabled');
                     }
 
@@ -160,7 +156,8 @@ $(function () {
                         colModel    : self.colModel.sub,
                         gridComplete: function () {
                             var ids = self.sGrid.jqGrid('getDataIDs');
-                            for(var i=0;i < ids.length;i++){
+                            for (var i = 0; i < ids.length; i++) {
+                                self.sGrid.setColProp('deleteflag',  { editoptions: { value: "1:Not Use;0:Used"} });
                             }
 
                             $('.row-edit').bind('click', function () {
@@ -219,16 +216,16 @@ $(function () {
             datatype    : 'json',
             url         : self.saveURL,
             data        : {
-                currcode    : $('#currcode').val(),
-                currdesceng : $('#currdesceng').val(),
-                currabbveng : $('#currabbveng').val(),
+                pmtype_code    : $('#pmtype_code').val(),
+                pmtype_eng : $('#pmtype_eng').val(),
+                pmtype_th : $('#pmtype_th').val(),
                 deleteflag  : $('#deleteflag').val(),
                 currdescth  : $('#currdescth').val(),
                 currabbvth  : $('#currabbvth').val(),
                 create_date : $('#date').val(),
                 create_by   : $('#by').val(),
                 table       : $('#table').val(),
-                currency_id : $('#currency_id').val(),
+                paymenttype_id : $('#paymenttype_id').val(),
                 mode        : $('#mode').val()
             },
             success     : function (data) {
@@ -258,7 +255,7 @@ var lookupUnit = function (data) {
 var lookupCurrency = function (data) {
     var tmp = [], str = '';
     $.each(data, function (index, obj) {
-        tmp.push(obj.currency_id + ':' + obj.currabbveng)
+        tmp.push(obj.paymenttype_id + ':' + obj.pmtype_th)
     });
 
     return tmp.join(';');

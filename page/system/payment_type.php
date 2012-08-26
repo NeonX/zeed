@@ -3,8 +3,8 @@ $ref = $_SERVER['HTTP_REFERER'] == 'http://' . $_SERVER['HTTP_HOST'] . '/zeed/pa
 ?>
 
 <div class="h_line"></div>
-<h1>M020 : CURRENCY &amp; EXCHANGE RATE</h1>
-<div style="float: right;"> <a class="currency" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
+<h1>S041 : PAYMENT TYPE</h1>
+<div style="float: right;"> <a class="paymenttype" href="#customForm"><img type="image" src="../page/images/icons/new-form-24x24.png" title="new" alt="new" value="0" /></a></div>
 
 <div class="cleaner"></div>
 <?php
@@ -33,65 +33,52 @@ if ($ref) {
 <script type="text/javascript">
 var self = this;
 $(function () {
-    self.table = { main: 'currency', sub: 'exchange' };
-    self.caption = { main: 'Curren Type List:', sub: 'Exchange Rate List:' } ;
+    self.table = { main: 'paymenttype', sub: 'paymentstatus' };
+    self.caption = { main: 'Payment Type List:', sub: 'Exchange Rate List:' } ;
 
     self.columns = {
         main: [
-            'currency_id', 'currcode', 'currdesceng', 'currdescth', 
-            'currabbveng', 'currabbvth', 'deleteflag', 'action'
+            'paymenttype_id', 'pmtype_code', 'pmtype_eng', 'pmtype_th', 
+            'deleteflag', 'action'
         ], 
         sub: [
-            'exchange_id', 'exyear','currency_id', 'exm01', 'exm02', 'exm03', 'exm04', 'exm05', 'exm06',
-            'exm07', 'exm08', 'exm09', 'exm10', 'exm11', 'exm12','deleteflag', 'table'
+            'paymentstatus_id', 'paymenttype_id', 'pmstatus_seq', 'pmstatus_eng', 'pmstatus_th', 'deleteflag', 'table'
         ]
     };
 
     self.colNames = {
         main: [
-            'Currency ID', 'Currency Code', 'Currency (ENG)', 'Currency (TH)',
-            'Currency Abbv (ENG)', 'Currency Abbv (TH)', 'Status', 'Action'
+            'Payment Type ID', 'Payment Type Code', 'Payment Type (ENG)', 
+            'Payment Type (TH)', 'Status', 'Action'
         ], 
         sub: [
-            'Exchange ID', 'Year','Currency ID', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 
-            'M7', 'M8', 'M9', 'M10', 'M11', 'M12', 'Status', 'Table', 'Mode'
+            'Payment Status ID', 'Payment Type ID','Seq', 
+            'Payment Type (ENG)', 'Payment Type (TH)',  'Status', 'Table', 'Mode'
         ]
     };
 
     self.colModel = {
         main: [
-            {name: 'currency_id', index:'currency_id', hidden: true},
-            {name: 'currcode', index: 'currcode', width: 100, align: 'center'},
-            {name: 'currdesceng', index: 'currdesceng', width: 200, align: 'center'},
-            {name: 'currdescth', index: 'currdescth', width:200, align: 'center'},
-            {name: 'currabbveng', index:'currabbveng', hidden: true},
-            {name: 'currabbvth', index:'currabbvth', hidden: true},
+            {name: 'paymenttype_id', index:'paymenttype_id', hidden: true},
+            {name: 'pmtype_code', index: 'pmtype_code', width: 100, align: 'center'},
+            {name: 'pmtype_eng', index: 'pmtype_eng', width: 200, align: 'center'},
+            {name: 'pmtype_th', index: 'pmtype_th', width:200, align: 'center'},
             {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
             {name: 'action',index: 'action', width:80, align: 'center'}
         ],
         sub: [
-            {name: 'exchange_id', index:'exchange_id', hidden: true},
-            {name: 'exyear', index: 'exyear', width: 80, align: 'center', editable: true},
-            {name: 'currency_id', index:'currency_id', editable: true, hidden: true,
+            {name: 'paymentstatus_id', index:'paymentstatus_id', hidden: true},
+            {name: 'paymenttype_id', index:'paymenttype_id', editable: true, hidden: true,
                 editoptions: {
                   dataInit: function(element) {
-                    $(element).val(formData.currency_id);
+                    $(element).val(formData.paymenttype_id);
                   }
                 }
             },
-            {name: 'exm01', index: 'exm01', width: 55, align: 'center', editable: true},
-            {name: 'exm02', index: 'exm02', width: 55, align: 'center', editable: true},
-            {name: 'exm03', index: 'exm03', width: 55, align: 'center', editable: true},
-            {name: 'exm04', index: 'exm04', width: 55, align: 'center', editable: true},
-            {name: 'exm05', index: 'exm05', width: 55, align: 'center', editable: true},
-            {name: 'exm06', index: 'exm06', width: 55, align: 'center', editable: true},
-            {name: 'exm07', index: 'exm07', width: 55, align: 'center', editable: true},
-            {name: 'exm08', index: 'exm08', width: 55, align: 'center', editable: true},
-            {name: 'exm09', index: 'exm09', width: 55, align: 'center', editable: true},
-            {name: 'exm10', index: 'exm10', width: 55, align: 'center', editable: true},
-            {name: 'exm11', index: 'exm11', width: 55, align: 'center', editable: true},
-            {name: 'exm12', index: 'exm12', width: 55, align: 'center', editable: true},
-            {name: 'deleteflag', index: 'deleteflag', width: 80, hidden: true, align: 'center', editable: true},
+            {name: 'pmstatus_seq', index: 'pmstatus_seq', width: 200, align: 'center', editable: true},
+            {name: 'pmstatus_eng', index: 'pmstatus_eng', width: 250, align: 'center', editable: true},
+            {name: 'pmstatus_th', index: 'pmstatus_th', width: 250, align: 'center', editable: true},
+            {name: 'deleteflag', index: 'deleteflag', width: 110, editable: true, edittype:"select", editoptions: {}, align: 'center'},
             {name: 'table', index:'table', editable: true, hidden: true,
                 editoptions: {
                   dataInit: function(element) {
@@ -111,7 +98,7 @@ $(function () {
 });
 
 </script>
-<script type="text/javascript" src="../<?php echo !$ref ? 'page/' : ''; ?>js/currency.js?_=<?php echo time(); ?>"></script>
+<script type="text/javascript" src="../<?php echo !$ref ? 'page/' : ''; ?>js/payment_type.js?_=<?php echo time(); ?>"></script>
 <style type="text/css">
 
 select.editable {
@@ -138,26 +125,22 @@ input.editable {
 }
 </style>
 
-<table id="list-currency"></table>
+<table id="list-paymenttype"></table>
 <div id="pager"></div>
 
 <div id="container" style="display:<?php echo $display; ?>">
     <form method="post" id="customForm" action="">
         <fieldset class="modal-header">
-            <h3 class="modal-title">M032 : CURRENCY &amp; EXCHANGE RATE (ADD &amp; EDIT)</h1>
+            <h3 class="modal-title">S041 : PAYMENT TYPE &amp; STATUS (ADD &amp; EDIT)</h1>
         </fieldset>
         <fieldset class="modal-body col1">
             <p>
-                <label for="currcode">Currency Code: </label>
-                <input id="currcode" name="currcode" type="text" />
+                <label for="pmtype_code">Payment Type Code: </label>
+                <input id="pmtype_code" name="pmtype_code" type="text" />
             </p>
             <p>
-                <label for="currdesceng">Currency Desc (ENG): </label>
-                <input id="currdesceng" name="currdesceng" type="text" />
-            </p>
-            <p>
-                <label for="currabbveng">Currency Abbv (ENG): </label>
-                <input id="currabbveng" name="currabbveng" type="text" />
+                <label for="pmtype_eng">Payment Type (ENG): </label>
+                <input id="pmtype_eng" name="pmtype_eng" type="text" />
             </p>
             </fieldset>
             <fieldset class="modal-body col2">
@@ -170,25 +153,21 @@ input.editable {
                 </select>
             </p>
             <p>
-                <label for="currdescth">Currency Desc (TH): </label>
-                <input id="currdescth" name="currdescth" type="text" />
-            </p>
-            <p>
-                <label for="currabbvth">Currency Abbv (TH):: </label>
-                <input id="currabbvth" name="currabbvth" type="text" />
+                <label for="pmtype_th">Payment Type (TH): </label>
+                <input id="pmtype_th" name="pmtype_th" type="text" />
             </p>
         </fieldset>
         <fieldset class="modal-body grid">
             <div id="div_record_add" style="float: right;"><input style="height:24px;width:24px;" id="record_add" type="image" src="../page/images/icons/record-add-24x24.png" /></div>
             <div style="clear:both;"></div>
-            <table id="list-exchange"></table>
+            <table id="list-paymentstatus"></table>
         </fieldset>
         <fieldset class="modal-footer" style="clear:both;">
             <p style="float: right;">
                 <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
                 <input id="by" name="create_by" type="hidden" value="1" />
-                <input id="table" name="table" type="hidden" value="currency" />
-                <input id="currency_id" name="currency_id" type="hidden" value="0" />
+                <input id="table" name="table" type="hidden" value="paymenttype" />
+                <input id="paymenttype_id" name="paymenttype_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
 
                 <button type="button" id="save" name="save" class="btn btn-success">

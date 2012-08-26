@@ -88,12 +88,16 @@ $(function () {
                         }
                     });
 
-                    var newArr = [];
+                    var newArrId = [];
                     $.each(rec.record, function(index, obj) {
-                       newArr[index] = obj[self.sColId];
+                       newArrId[index] = obj[self.sColId];
                     });
 
-                    self.addNewRowId = newArr.max() + 1;
+                    if (newArrId.length > 0) {
+                        self.addNewRowId = newArrId.max() + 1;
+                    } else {
+                        self.addNewRowId = 1;
+                    }
 
                     $('#goods_code').val(formData.goodscode).attr('disabled', 'disabled');
                     $('#goods_name_eng').val(formData.goodsname_eng).attr('disabled', 'disabled');

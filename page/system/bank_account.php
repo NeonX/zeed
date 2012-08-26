@@ -28,6 +28,9 @@
         {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
+    $(function () {
+        $('#account_date').datepicker({dateFormat:'yy-mm-dd'});
+    });
 </script>
 <script type="text/javascript" src="../page/js/com_type1.js?_=<?php echo time(); ?>"></script>
 
