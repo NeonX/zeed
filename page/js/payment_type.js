@@ -157,6 +157,12 @@ $(function () {
                         gridComplete: function () {
                             var ids = self.sGrid.jqGrid('getDataIDs');
                             for (var i = 0; i < ids.length; i++) {
+                                if (self.smode != 'insert') {
+                                    eachRow = self.sGrid.jqGrid('getRowData', ids[i]);
+
+                                    self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? 'Not Use' : 'Used' });
+                                }
+
                                 self.sGrid.setColProp('deleteflag',  { editoptions: { value: "1:Not Use;0:Used"} });
                             }
 
