@@ -1,26 +1,28 @@
 <?php
+
 require_once dirname(__FILE__) . '/DBConnection.class.php';
- 
-class ComModelT2 extends DBConnection
-{
+
+class ComModelT2 extends DBConnection {
+
     public $post;
     public $prefix = 'tbm_';
-    public $colId  = '_id';
+    public $colId = '_id';
+
     /**
      * 
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
-    } // End constructor
+    }
 
-    public function getDataById($table, $columns, $id)
-    {
+// End constructor
+
+    public function getDataById($table, $columns, $id) {
         $result = new stdClass();
 
-        $id     = (int) $id;
-        $colId  = $table . $this->colId;
+        $id = (int) $id;
+        $colId = $table . $this->colId;
         $fTable = $this->prefix . $table;
 
         $cId = 'goods_id';
@@ -42,29 +44,30 @@ class ComModelT2 extends DBConnection
 
         switch ($table) {
             case 'goodsprice':
+            case 'goodspromotion':
             case 'goodsunit':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
-                    'unit_id'      => array('unit_id', 'unitcode', 'unitnameeng'),
-                    'currency_id'  => array('currency_id', 'currabbveng')
+                    'unit_id' => array('unit_id', 'unitcode', 'unitnameeng'),
+                    'currency_id' => array('currency_id', 'currabbveng')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
                 $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
                 $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
-            break;
+                break;
             case 'goods':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
-            break;
+                break;
         }
 
         $result->params = array(
             'table' => $table,
-            'id'  => $id,
+            'id' => $id,
         );
 
         $result->stmt = $stmt;
@@ -101,7 +104,7 @@ class ComModelT2 extends DBConnection
         $start = $limit * $page - $limit; // do not put $limit*($page - 1)
 
         if ($sidx) {
-            $sql .= " ORDER BY ".$sidx;
+            $sql .= " ORDER BY " . $sidx;
             $sql .= strtoupper($sord) == 'ASC' ? ' ASC' : ' DESC';
         }
 
@@ -114,8 +117,8 @@ class ComModelT2 extends DBConnection
 
         $stmt->execute();
 
-        $result->page    = $page;
-        $result->total   =  $total_pages;
+        $result->page = $page;
+        $result->total = $total_pages;
         $result->records = $count;
 
         $i = 0;
@@ -139,17 +142,15 @@ class ComModelT2 extends DBConnection
         return json_encode($result);
     }
 
-    public function setActionIcon($mode, $table, $src, $cls, $id)
-    {
+    public function setActionIcon($mode, $table, $src, $cls, $id) {
         $anchor .= '<input type="image" src="' . $src . '"';
-        $anchor .= 'onclick="jQuery(\'#list-' . $table . '\').jqGrid(\'' . $mode . '\', ' . $id. ');"';
+        $anchor .= 'onclick="jQuery(\'#list-' . $table . '\').jqGrid(\'' . $mode . '\', ' . $id . ');"';
         $anchor .= ' style="width:16px" title="' . $mode . '" alt="view" value="' . $id . '">';
 
         return $anchor;
     }
 
-    public function getChildAllById ($table, $columns, $id)
-    {
+    public function getChildAllById($table, $columns, $id) {
         $result = new stdClass();
 
         $columns = join(',', $columns);
@@ -169,20 +170,19 @@ class ComModelT2 extends DBConnection
         return $result;
     }
 
-    public function save($post)
-    {
+    public function save($post) {
         $result = new stdClass();
-        $mode   = isset($post['mode']) ? $post['mode'] : null;
-        $oper   = isset($post['oper']) ? 'update' : null;
-        $mode   = !empty($mode) ? $mode : $oper;
-        $table  = isset($post['table']) ? $post['table'] : null;
-        $colId  = $table . $this->colId;
-        $id     = isset($post['id']) ? (int) $post['id'] : null;
+        $mode = isset($post['mode']) ? $post['mode'] : null;
+        $oper = isset($post['oper']) ? 'update' : null;
+        $mode = !empty($mode) ? $mode : $oper;
+        $table = isset($post['table']) ? $post['table'] : null;
+        $colId = $table . $this->colId;
+        $id = isset($post['id']) ? (int) $post['id'] : null;
         $fTable = $this->prefix . $table;
 
         $postKey = array_keys($post);
 
-        foreach (range(0,3) as $val) {
+        foreach (range(0, 3) as $val) {
             array_pop($postKey);
         }
 
@@ -192,7 +192,7 @@ class ComModelT2 extends DBConnection
             array_push($postKey, 'create_date');
             $columns = join(',', $postKey);
             $colLength = count($postKey);
-            foreach($postKey as $key => $value) {
+            foreach ($postKey as $key => $value) {
                 $paramsArr[] = '?';
             }
 
@@ -201,7 +201,7 @@ class ComModelT2 extends DBConnection
             array_push($postKey, 'lastupdate_by');
             array_push($postKey, 'lastupdate_date');
             $colLength = count($postKey);
-            foreach($postKey as $key => $value) {
+            foreach ($postKey as $key => $value) {
                 $paramsArr[] = $value . ' = ' . '?';
             }
             $params = join(',', $paramsArr);
@@ -215,7 +215,7 @@ class ComModelT2 extends DBConnection
 
         $stmt = $this->db->prepare($sql[$mode]);
         $myparams = array();
- 
+
         switch ($mode) {
             case 'insert':
             case 'update':
@@ -230,7 +230,7 @@ class ComModelT2 extends DBConnection
                             $myparams['insert'][$index] = date('Y-m-d');
                         } else {
                             $stmt->bindValue($index, isset($post[$value]) ? trim($post[$value]) : null);
-                            $myparams['insert'][$index] =  trim($post[$value]);
+                            $myparams['insert'][$index] = trim($post[$value]);
                         }
                     }
                 } else {
@@ -255,7 +255,7 @@ class ComModelT2 extends DBConnection
                 }
 
                 $stmt->execute();
-            break;
+                break;
 
             case 'delete':
                 $id = isset($post['id']) ? (int) $post['id'] : null;
@@ -265,7 +265,7 @@ class ComModelT2 extends DBConnection
 
                 $result->id = $id;
                 $result->deleteflag = $post['deleteflag'] ? 1 : 0;
-            break;
+                break;
 
             default:
                 $result->error_msg = 'CASE NOT FOUND!!!';
@@ -285,8 +285,8 @@ class ComModelT2 extends DBConnection
      * 
      * @return No value is returned.
      */
-    public function __destruct() 
-    {
+    public function __destruct() {
         parent::__destruct();
     }
+
 }
