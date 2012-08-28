@@ -1,9 +1,9 @@
-<?php 
+<?php
 $ref = $_SERVER['HTTP_REFERER'] == 'http://' . $_SERVER['HTTP_HOST'] . '/zeed/page/master/';
 ?>
 
 <div class="h_line"></div>
-<h1>M032 : GOODS UNIT</h1>
+<h1>M034 : GOODS PROMOTION</h1>
 
 <div class="cleaner"></div>
 <?php
@@ -24,111 +24,115 @@ if ($ref) {
     <link href="../css/default.css" rel="stylesheet" type="text/css" />
     <link href="../css/leftmenu_orange.css" rel="stylesheet" type="text/css" />
     <link href="../css/form.css" rel="stylesheet" type="text/css" media="screen" />';
-    
-    $display = 'block';
 
+    $display = 'block';
 }
 ?>
 <script type="text/javascript">
-var self = this;
-$(function () {
-    self.table = { main: 'goods', sub: 'goodsunit' };
-    self.caption = { main: 'Goods Type List:', sub: 'Goods Price List:' } ;
+    var self = this;
+    $(function () {
+        self.table = { main: 'goods', sub: 'goodspromotion' };
+        self.caption = { main: 'Goods List:', sub: 'Goods Promotion List:' } ;
 
-    self.columns = {
-        main: [
-            'goods_id', 'goodstype_id', 'goodstype_th', 'goodscode', 'goodsname_eng', 
-            'goodsname_th', 'goodsdesc', 'goodspicture', 'deleteflag', 'action'
-        ], 
-        sub: [
-            'goodsunit_id', 'goods_id','unit_id', 'unitside', 
-            'use_instock', 'use_inorder',  'deleteflag', 'table', 'action'
-        ]
-    };
+        self.columns = {
+            main: [
+                'goods_id', 'goodstype_id', 'goodstype_th', 'goodscode', 'goodsname_eng', 
+                'goodsname_th', 'goodsdesc', 'goodspicture', 'deleteflag', 'action'
+            ], 
+            sub: [
+                'goodspromotion_id', 'goods_id','iscustomer_id','customer_id','unit_id', 'currency_id', 'price', 
+                'discount', 'promotioncode','effective_date','expired_date', 'deleteflag', 'table', 'action'
+            ]
+        };
 
-    self.colNames = {
-        main: [
-            'Goods ID', 'Goods Type ID', 'Goods Type Name', 'Goods Code', 'Goods Name (ENG)', 
-            'Goods Name (TH)', 'Description', 'Picture', 'Status', 'Action'
-        ], 
-        sub: [
-            'Goods Price ID', 'Goods ID','Count Unit', 'Unit Side', 'Unit InStore',
-            'Unit InOrder', 'Status', 'Table', 'Mode', 'Action'
-        ]
-    };
+        self.colNames = {
+            main: [
+                'Goods ID', 'Goods Type ID', 'Goods Type Name', 'Goods Code', 'Goods Name (ENG)', 
+                'Goods Name (TH)', 'Description', 'Picture', 'Status', 'Action'
+            ], 
+            sub: [
+                'Goods Promotion ID', 'Goods ID','Is Customer ID','Customer ID','Count Unit', 'Currency', 
+                'Price', 'Discount', 'Promotioncode','Effective Date','Expired Date', 'Status', 'Table', 'Mode'
+            ]
+        };
 
-    self.colModel = {
-        main: [
-            {name: 'goods_id', index:'goods_id', hidden: true},
-            {name: 'goodstype_id', index:'goodstype_id', hidden: true},
-            {name: 'goodstype_th', index:'goodstype_th', hidden: true},
-            {name: 'goodscode', index: 'goodscode', width: 100, align: 'center'},
-            {name: 'goodsname_eng', index: 'goodsname_eng', width: 200, align: 'center'},
-            {name: 'goodsname_th', index: 'goodsname_th', width:200, align: 'center'},
-            {name: 'goodsdesc', index:'goodsdesc', hidden: true},
-            {name: 'goodspicture', index:'goodspicture', hidden: true},
-            {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
-            {name: 'action',index: 'action', width:80, align: 'center'}
-        ],
-        sub: [
-            {name: 'goodsprice_id', index:'goodsprice_id', hidden: true},
-            {name: 'goods_id', index:'goods_id', editable: true, hidden: true,
-                editoptions: {
-                  dataInit: function(element) {
-                    $(element).val(formData.goods_id);
-                  }
+        self.colModel = {
+            main: [
+                {name: 'goods_id', index:'goods_id', hidden: true},
+                {name: 'goodstype_id', index:'goodstype_id', hidden: true},
+                {name: 'goodstype_th', index:'goodstype_th', hidden: true},
+                {name: 'goodscode', index: 'goodscode', width: 100, align: 'center'},
+                {name: 'goodsname_eng', index: 'goodsname_eng', width: 200, align: 'center'},
+                {name: 'goodsname_th', index: 'goodsname_th', width:200, align: 'center'},
+                {name: 'goodsdesc', index:'goodsdesc', hidden: true},
+                {name: 'goodspicture', index:'goodspicture', hidden: true},
+                {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
+                {name: 'action',index: 'action', width:80, align: 'center'}
+            ],
+            sub: [
+                {name: 'goodspromotion_id', index:'goodspromotion_id', hidden: true},
+                {name: 'goods_id', index:'goods_id', editable: true, hidden: true,
+                    editoptions: {
+                        dataInit: function(element) {
+                            $(element).val(formData.goods_id);
+                        }
+                    }
+                },
+
+                {name: 'iscustomer_id', index: 'iscustomer_id', width: 100, editable: true, align: 'center'},
+                {name: 'customer_id', index: 'customer_id', width: 100, editable: true, edittype:"select", editoptions: {}, align: 'center'},
+                {name: 'unit_id', index: 'unit_id', width: 100, editable: true, edittype:"select", editoptions: {}, align: 'center'},
+                {name: 'currency_id', index: 'currency_id', width: 120, editable: true, edittype:"select", editoptions: {}, align: 'center'},
+                {name: 'price', index: 'price', width:105, editable: true, align: 'center'},
+                {name: 'discount', index:'discount', width: 105, editable: true, align: 'center'},
+                {name: 'promotioncode', index:'promotioncode', width: 105, editable: true, align: 'center'},
+                {name: 'effective_date', index:'effective_date', width: 105, editable: true,  sorttype:"date", align: 'center'},
+                {name: 'expired_date', index:'expired_date', width: 105, editable: true,  sorttype:"date", align: 'center'},                
+                {name: 'deleteflag', index: 'deleteflag', width: 110, editable: true, edittype:"select", editoptions: {}, align: 'center'},
+                {name: 'table', index:'table', editable: true, hidden: true,
+                    editoptions: {
+                        dataInit: function(element) {
+                            $(element).val(self.table.sub);
+                        }
+                    }
+                },
+                {name: 'mode', index:'mode', editable: true, hidden: true,
+                    editoptions: {
+                        dataInit: function(element) {
+                            $(element).val(self.smode);
+                        }
+                    }
                 }
-            },
-            {name: 'unit_id', index:'unit_id', width: 145, editable: true, edittype:"select", editoptions: {},editrules: { required: true }, align: 'center'},
-            {name: 'unitside', index: 'unitside', width: 145, editable: true, align: 'center' },
-            {name: 'use_instock', index: 'use_instock', width: 150, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
-            {name: 'use_inorder', index: 'use_inorder', width: 150, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
-            {name: 'deleteflag', index: 'deleteflag', width: 100, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
-            {name: 'table', index:'table', editable: true, hidden: true,
-                editoptions: {
-                  dataInit: function(element) {
-                    $(element).val(self.table.sub);
-                  }
-                }
-            },
-            {name: 'mode', index:'mode', editable: true, hidden: true,
-                editoptions: {
-                  dataInit: function(element) {
-                       $(element).val(self.smode);
-                  }
-                }
-            },
-            {name: 'action',index: 'action', width:90, align: 'center'}
-        ]
-    };
-});
+            ]
+        };
+    });
 
 </script>
-<script type="text/javascript" src="../<?php echo !$ref ? 'page/' : ''; ?>js/com_type2.js?_=<?php echo time(); ?>"></script>
+<script type="text/javascript" src="../<?php echo!$ref ? 'page/' : ''; ?>js/com_type2.js?_=<?php echo time(); ?>"></script>
 <style type="text/css">
 
-select.editable {
-    width: 90px;
-    margin: 4px;
-}
-input.editable {
-    width: 80px;
-}
-.col1 {
-    width: 400px;
-    float: left;
-}
-.col2 {
-    width: 400px;
-    float: left;
-}
+    select.editable {
+        width: 90px;
+        margin: 4px;
+    }
+    input.editable {
+        width: 80px;
+    }
+    .col1 {
+        width: 400px;
+        float: left;
+    }
+    .col2 {
+        width: 400px;
+        float: left;
+    }
 
-.grid {
-    clear: both;
-    width: 820px;
-    float: left;
-    margin-top: -30px;
-}
+    .grid {
+        clear: both;
+        width: 820px;
+        float: left;
+        margin-top: -30px;
+    }
 </style>
 
 <table id="list-goods"></table>
@@ -137,7 +141,7 @@ input.editable {
 <div id="container" style="display:<?php echo $display; ?>">
     <form method="post" id="customForm" action="">
         <fieldset class="modal-header">
-            <h3 class="modal-title">M032 : GOODS UNIT (ADD &amp; EDIT)</h1>
+            <h3 class="modal-title">M034 : GOODS PROMOTION (ADD &amp; EDIT)</h1>
         </fieldset>
         <fieldset class="modal-body col1">
             <p>
@@ -148,8 +152,8 @@ input.editable {
                 <label for="goods_name_eng">Goods Name (ENG): </label>
                 <input id="goods_name_eng" name="goods_name_eng" type="text" />
             </p>
-            </fieldset>
-            <fieldset class="modal-body col2">
+        </fieldset>
+        <fieldset class="modal-body col2">
             <p>
                 <label for="goods_type">Goods Type: </label>
                 <input id="goods_type" name="goods_type" type="text" />
@@ -162,8 +166,33 @@ input.editable {
         <fieldset class="modal-body grid">
             <div style="float: right;"><input style="height:24px;width:24px;" id="record_add" type="image" src="../page/images/icons/record-add-24x24.png" /></div>
             <div style="clear:both;"></div>
-            <table id="list-goodsunit"></table>
+            <table id="list-goodspromotion"></table>
         </fieldset>
-        <fieldset class="modal-footer" style="clear:both;"></fieldset>
+        <fieldset class="modal-footer" style="clear:both;">
+            <p style="float: right;">
+                <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
+                <input id="by" name="create_by" type="hidden" value="1" />
+                <input id="table" name="table" type="hidden" value="unit" />
+                <input id="unit_id" name="unit_id" type="hidden" value="0" />
+                <input id="mode" name="mode" type="hidden" value="insert" />
+
+                <button type="button" id="save" name="save" class="btn btn-success">
+                    <i class="icon-plus-sign icon-white"></i>
+                    <span>Save</span>
+                </button>
+                <button type="reset" id="cancel" name="cancel" class="btn btn-warning cancel">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                <button type="button" id="delete" name="delete" class="btn btn-danger delete">
+                    <i class="icon-minus-sign icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                <button type="button" id="recovery" name="recovery" class="btn btn-primary save">
+                    <i class="icon-share-alt icon-white"></i>
+                    <span>Recovery</span>
+                </button>
+            </p>
+        </fieldset>
     </form>
 </div>
