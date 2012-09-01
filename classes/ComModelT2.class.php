@@ -49,7 +49,7 @@ class ComModelT2 extends DBConnection {
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
                     'unit_id' => array('unit_id', 'unitcode', 'unitnameeng'),
-                    'currency_id' => array('currency_id', 'currabbveng')
+                    'currency_id'  => array('currency_id', 'currcode')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
