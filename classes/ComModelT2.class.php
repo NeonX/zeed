@@ -246,8 +246,13 @@ class ComModelT2 extends DBConnection {
                             $stmt->bindValue($index, 1);
                             $myparams['update'][$index] = 1;
                         } else {
-                            $stmt->bindValue($index, isset($post[$value]) ? (int) $post[$value] : null, PDO::PARAM_INT);
-                            $myparams['update'][$index] = (int) $post[$value];
+                            if ($table == 'paymentstatus') {
+                                $stmt->bindValue($index, isset($post[$value]) ? $post[$value] : null, PDO::PARAM_INT);
+                                $myparams['update'][$index] = $post[$value];
+                            } else {
+                                $stmt->bindValue($index, isset($post[$value]) ? (int) $post[$value] : null, PDO::PARAM_INT);
+                                $myparams['update'][$index] = (int) $post[$value];
+                            }
                         }
                     }
                     $myparams['update'][$colLength + 1] = $id;
