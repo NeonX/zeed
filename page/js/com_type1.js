@@ -208,7 +208,7 @@ self.setElementValue = function (mode, data) {
                 $('#goodstype_id').append(
                     self.options.clone()
                         .val(obj.goodstype_id)
-                        .text(obj.goodstype_eng)
+                        .text(obj.goodstype_th)
                 );
             });
 

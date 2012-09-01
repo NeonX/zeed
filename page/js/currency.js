@@ -159,10 +159,6 @@ $(function () {
                         colNames    : self.colNames.sub,
                         colModel    : self.colModel.sub,
                         gridComplete: function () {
-                            var ids = self.sGrid.jqGrid('getDataIDs');
-                            for(var i=0;i < ids.length;i++){
-                            }
-
                             $('.row-edit').bind('click', function () {
                                 self.smode = 'update';
                             });

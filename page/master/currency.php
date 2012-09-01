@@ -34,7 +34,7 @@ if ($ref) {
 var self = this;
 $(function () {
     self.table = { main: 'currency', sub: 'exchange' };
-    self.caption = { main: 'Curren Type List:', sub: 'Exchange Rate List:' } ;
+    self.caption = { main: 'Curreny List:', sub: 'Exchange Rate List:' } ;
 
     self.columns = {
         main: [

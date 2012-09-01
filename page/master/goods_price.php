@@ -33,7 +33,7 @@ if ($ref) {
 var self = this;
 $(function () {
     self.table = { main: 'goods', sub: 'goodsprice' };
-    self.caption = { main: 'Goods Type List:', sub: 'Goods Price List:' } ;
+    self.caption = { main: 'Goods List:', sub: 'Goods Price List:' } ;
 
     self.columns = {
         main: [
