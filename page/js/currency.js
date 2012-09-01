@@ -69,14 +69,14 @@ $(function () {
         },
         beforeLoad: function () {
             var _self = this,
-             _id = $(_self.element.innerHTML).get(0).getAttribute('value'),
-             mode = $(_self.element.innerHTML).get(0).getAttribute('title');
-             buttons = ['save', 'cancel', 'delete', 'recovery'];
+                _id = $(_self.element.innerHTML).get(0).getAttribute('value'),
+                mode = $(_self.element.innerHTML).get(0).getAttribute('title');
+                buttons = ['save', 'cancel', 'delete', 'recovery'];
 
-             // clear arrSaveId
-             self.arrSaveId = [];
+            // clear arrSaveId
+            self.arrSaveId = [];
 
-             $.each(buttons, function (index, value) {
+            $.each(buttons, function (index, value) {
                 $('#' + value).show();
             });
 

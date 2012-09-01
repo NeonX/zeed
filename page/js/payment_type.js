@@ -68,11 +68,11 @@ $(function () {
         },
         beforeLoad: function () {
             var _self = this,
-             _id = $(_self.element.innerHTML).get(0).getAttribute('value'),
-             mode = $(_self.element.innerHTML).get(0).getAttribute('title');
-             buttons = ['save', 'cancel', 'delete', 'recovery'];
+                _id = $(_self.element.innerHTML).get(0).getAttribute('value'),
+                mode = $(_self.element.innerHTML).get(0).getAttribute('title');
+                buttons = ['save', 'cancel', 'delete', 'recovery'];
 
-             $.each(buttons, function (index, value) {
+            $.each(buttons, function (index, value) {
                 $('#' + value).show();
             });
 
@@ -104,20 +104,6 @@ $(function () {
                             self.formData = self.mData[index];
                         }
                     });
-
-                    var newArrId = [], newArrYear = [];
-                    $.each(rec.record, function(index, obj) {
-                       newArrId[index] = obj[self.sColId];
-                       newArrYear[index] = obj['exyear'];
-                    });
-
-                    if (newArrId.length > 0) {
-                        self.addNewRowId = newArrId.max() + 1;
-                        self.addNewYear  = newArrYear.max() + 1;
-                    } else {
-                        self.addNewRowId = 1;
-                        self.addNewYear  = new Date().getFullYear();
-                    }
 
                     if (mode == 'new') {
                         $('#pmtype_code').val(null);
@@ -171,10 +157,9 @@ $(function () {
                             });
                         },
                         ondblClickRow: function (id) {
-                            var arr_id = new Array();
-                            self.sGrid.setColProp('exyear', { editoptions: {} });
+                            self.smode = 'update';
                             self.sGrid.editRow(id);
-                            self.arrSaveId[self.lastsel++] = id;
+                            self.arrSaveId.push(parseInt(id));
                         },
                         editurl     : self.saveT2URL,
                         rowNum      : 10,
@@ -194,17 +179,15 @@ $(function () {
         beforeClose: function () {
             self.smode = 'update';
             self.recordAdded = false;
-            self.addNewYear = 0;
         }
     });
 
     $('#record_add').bind('click', function () {
         if (!self.recordAdded) {
             self.smode = 'insert';
-            self.sGrid.addRowData(self.addNewRowId, {});
-            self.sGrid.setColProp('exyear', { editoptions: { value: self.addNewYear } });
-            self.sGrid.editRow(self.addNewRowId);
-            self.arrSaveId[self.addNewRowId] = self.addNewRowId;
+            self.sGrid.addRowData(0, {});
+            self.sGrid.editRow(0);
+            self.arrSaveId.push(0);
             self.recordAdded = true;
         } else {
             alert('เพิ่มเรคคอร์ดแล้ว');
@@ -222,9 +205,9 @@ $(function () {
             datatype    : 'json',
             url         : self.saveURL,
             data        : {
-                pmtype_code    : $('#pmtype_code').val(),
-                pmtype_eng : $('#pmtype_eng').val(),
-                pmtype_th : $('#pmtype_th').val(),
+                pmtype_code : $('#pmtype_code').val(),
+                pmtype_eng  : $('#pmtype_eng').val(),
+                pmtype_th   : $('#pmtype_th').val(),
                 deleteflag  : $('#deleteflag').val(),
                 currdescth  : $('#currdescth').val(),
                 currabbvth  : $('#currabbvth').val(),
@@ -235,15 +218,18 @@ $(function () {
                 mode        : $('#mode').val()
             },
             success     : function (data) {
+//                 var rec = $.parseJSON(data);
+//                 console.debug(rec.lastinsertid);
+//                 $('#paymenttype_id').val(parseInt(rec.lastinsertid));
+                if (self.arrSaveId.length > 0) {
+                    $.each(self.arrSaveId, function (index, id) {
+                        self.sGrid.jqGrid('saveRow', id);
+                    });
+                }
                 self.mGrid.trigger('reloadGrid');
             }
         });
 
-        if (self.arrSaveId.length > 0) {
-            $.each(self.arrSaveId, function (index, value) {
-                self.sGrid.jqGrid('saveRow', value);
-            });
-        }
 
         $.fancybox('บันทีกเรียบร้อยแล้ว');
     });
