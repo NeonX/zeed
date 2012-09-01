@@ -70,14 +70,16 @@ $(function () {
             {name: 'paymentstatus_id', index:'paymentstatus_id', hidden: true},
             {name: 'paymenttype_id', index:'paymenttype_id', editable: true, hidden: true,
                 editoptions: {
-                  dataInit: function(element) {
-                    $(element).val(formData.paymenttype_id);
-                  }
+                    dataInit: function(element) {
+                        if (formData != null) {
+                            $(element).val(formData.paymenttype_id);
+                        }
+                    }
                 }
             },
             {name: 'pmstatus_seq', index: 'pmstatus_seq', width: 200, align: 'center', editable: true},
-            {name: 'pmstatus_eng', index: 'pmstatus_eng', width: 250, align: 'center', editable: true},
-            {name: 'pmstatus_th', index: 'pmstatus_th', width: 250, align: 'center', editable: true},
+            {name: 'pmstatus_eng', index: 'pmstatus_eng', width: 240, align: 'center', editable: true},
+            {name: 'pmstatus_th', index: 'pmstatus_th', width: 240, align: 'center', editable: true},
             {name: 'deleteflag', index: 'deleteflag', width: 110, editable: true, edittype:"select", editoptions: {}, align: 'center'},
             {name: 'table', index:'table', editable: true, hidden: true,
                 editoptions: {
