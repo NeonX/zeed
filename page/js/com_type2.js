@@ -88,17 +88,6 @@ $(function () {
                         }
                     });
 
-                    var newArrId = [];
-                    $.each(rec.record, function(index, obj) {
-                       newArrId[index] = obj[self.sColId];
-                    });
-
-                    if (newArrId.length > 0) {
-                        self.addNewRowId = newArrId.max() + 1;
-                    } else {
-                        self.addNewRowId = 1;
-                    }
-
                     $('#goods_code').val(formData.goodscode).attr('disabled', 'disabled');
                     $('#goods_name_eng').val(formData.goodsname_eng).attr('disabled', 'disabled');
                     $('#goods_type').val(goodsTypeName).attr('disabled', 'disabled');
@@ -118,19 +107,37 @@ $(function () {
                         colNames    : self.colNames.sub,
                         colModel    : self.colModel.sub,
                         gridComplete: function () {
-                            var ids = self.sGrid.jqGrid('getDataIDs');
+                            var ids = self.sGrid.jqGrid('getDataIDs'),
+                                cidx,
+                                uidx;
                             for (var i=0;i < ids.length;i++) {
 
                                 if (self.smode != 'insert') {
                                     eachRow = self.sGrid.jqGrid('getRowData', ids[i]);
-
                                     if (self.table.sub == 'goodsprice') {
-                                        self.sGrid.jqGrid('setRowData',ids[i],{currency_id: rec.currency[eachRow.currency_id - 1].currabbveng});
+                                        $.each(rec.currency, function (index, obj) {
+                                            if (eachRow.currency_id == obj.currency_id) {
+                                                cidx = index; 
+                                            }
+                                        });
+                                        $.each(rec.unit, function (index, obj) {
+                                            if (eachRow.unit_id == obj.unit_id) {
+                                                uidx = index; 
+                                            }
+                                        });
+
+                                        self.sGrid.jqGrid('setRowData',ids[i],{currency_id: rec.currency[cidx].currcode});
                                     } else if (self.table.sub == 'goodsunit') {
+                                        $.each(rec.unit, function (index, obj) {
+                                            if (eachRow.unit_id == obj.unit_id) {
+                                                uidx = index; 
+                                            }
+                                        });
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_instock: eachRow.use_instock == '1' ? 'Not Use' : 'Used' });
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_inorder: eachRow.use_inorder == '1' ? 'Not Use' : 'Used' });
                                     }
-                                    self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[eachRow.unit_id - 1].unitnameeng});
+                                    console.debug(uidx);
+                                    self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[uidx].unitnameeng});
                                     self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? 'Not Use' : 'Used' });
                                 }
                                 self.sGrid.setColProp('unit_id', { editoptions: { value: lookupUnit(data.unit) } });
@@ -146,8 +153,9 @@ $(function () {
 
                         },
                         ondblClickRow: function (id) {
+                            self.smode = 'update';
                             self.sGrid.jqGrid('editRow', id, true, pickdates);
-                            self.arrSaveId[self.lastsel++] = id;
+                            self.arrSaveId.push(parseInt(id));
                         },
                         editurl     : self.saveT2URL,
                         rowNum      : 10,
@@ -173,9 +181,9 @@ $(function () {
     $('#record_add').bind('click', function () {
         if (!self.recordAdded) {
             self.smode = 'insert';
-            self.sGrid.addRowData(self.addNewRowId, {});
-            self.sGrid.editRow(self.addNewRowId, true, pickdates);
-            self.arrSaveId[self.addNewRowId] = self.addNewRowId;
+            self.sGrid.addRowData(0, {});
+            self.sGrid.editRow(0, true, pickdates);
+            self.arrSaveId.push(0);
             self.recordAdded = true;
         } else {
             alert('เพิ่มเรคคอร์ดแล้ว');
@@ -211,7 +219,7 @@ var lookupUnit = function (data) {
 var lookupCurrency = function (data) {
     var tmp = [], str = '';
     $.each(data, function (index, obj) {
-        tmp.push(obj.currency_id + ':' + obj.currabbveng);
+        tmp.push(obj.currency_id + ':' + obj.currcode);
     });
 
     return tmp.join(';').toString();
