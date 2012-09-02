@@ -208,6 +208,11 @@ $(function () {
         return false;
     });
 
+    self.form.bind('reset', function () {
+        $.fancybox.close();
+        return false;
+    });
+
     $('#save').bind('click', function () {
         $.ajax({
             type        : 'POST',

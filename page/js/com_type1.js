@@ -150,6 +150,11 @@ $(function () {
         }
     });
 
+    self.form.bind('reset', function () {
+        $.fancybox.close();
+        return false;
+    });
+
     self.clickupload = function () {
         $('#file').val();
         return true;

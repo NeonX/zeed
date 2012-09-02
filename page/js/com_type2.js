@@ -211,6 +211,11 @@ $(function () {
         return false;
     });
 
+    self.form.bind('reset', function () {
+        $.fancybox.close();
+        return false;
+    });
+
     $('#save').bind('click', function () {
         $.each(self.arrSaveId, function (index, value) {
             self.sGrid.jqGrid('saveRow', value);
