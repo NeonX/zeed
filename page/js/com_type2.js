@@ -76,7 +76,7 @@ $(function () {
                 success     : function (data) {
                     rec = data;
 
-                    if (typeof rec.goodstype !== 'undefined') {
+                    if (self.table.main == 'goods') {
                         $.each(mData, function (index, obj) {
                             if (_id == obj.goods_id) {
                                 formData = mData[index];
@@ -94,11 +94,7 @@ $(function () {
                         $('#goods_type').val(goodsTypeName).attr('disabled', 'disabled');
                         $('#goods_name_th').val(formData.goodsname_th).attr('disabled', 'disabled');
                         $('#goods_name_th').val(formData.goodsname_th).attr('disabled', 'disabled');
-                    }
-
-//                     if (typeof rec.customer !== 'undefined') {
-                    // Customer type must be true.
-                    if (true) {
+                    } else if (self.table.main == 'customer') {
                         $.each(mData, function (index, obj) {
                             if (_id == obj.customer_id) {
                                 formData = mData[index];
