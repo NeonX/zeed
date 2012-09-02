@@ -72,7 +72,6 @@ $(function () {
                 _id = $(_self.element.innerHTML).get(0).getAttribute('value'),
                 mode = $(_self.element.innerHTML).get(0).getAttribute('title');
                 buttons = ['save', 'cancel', 'delete', 'recovery'];
-                console.debug(mode);
 
             // clear arrSaveId
             self.arrSaveId = [];
