@@ -30,6 +30,8 @@ class ComModelT2 extends DBConnection {
             $cId = 'currency_id';
         } else if ($table == 'paymentstatus') {
             $cId = 'paymenttype_id';
+        }  else if ($table == 'customerbonus') {
+            $cId = 'customer_id';
         }
 
         $sql = "SELECT * FROM {$fTable} WHERE {$cId} = :id";
@@ -83,6 +85,8 @@ class ComModelT2 extends DBConnection {
             $cId = 'currency_id';
         } else if ($table == 'paymentstatus') {
             $cId = 'paymenttype_id';
+        }  else if ($table == 'customerbonus') {
+            $cId = 'customer_id';
         }
 
         $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1 AND {$cId} = {$id}";
@@ -246,8 +250,8 @@ class ComModelT2 extends DBConnection {
                             $stmt->bindValue($index, 1);
                             $myparams['update'][$index] = 1;
                         } else {
-                            if ($table == 'paymentstatus') {
-                                $stmt->bindValue($index, isset($post[$value]) ? $post[$value] : null, PDO::PARAM_INT);
+                            if ($table == 'paymentstatus' || $table == 'customerbonus') {
+                                $stmt->bindValue($index, isset($post[$value]) ? $post[$value] : null);
                                 $myparams['update'][$index] = $post[$value];
                             } else {
                                 $stmt->bindValue($index, isset($post[$value]) ? (int) $post[$value] : null, PDO::PARAM_INT);
