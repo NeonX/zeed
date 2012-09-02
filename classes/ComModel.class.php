@@ -120,12 +120,23 @@ class ComModel extends DBConnection
                 $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
                 $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
             break;
+
             case 'goods':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
+            break;
+
+            case 'userprofile':
+                $fk = array(
+                    'usergroup_id' => array('usergroup_id', 'usergroup_eng'),
+                    'employeetype_id'      => array('employeetype_id', 'emptype_eng')
+                );
+
+                $result->usergroup = self::getChildAllById('usergroup', $fk['usergroup_id'], $id);
+                $result->employeetype = self::getChildAllById('employeetype', $fk['employeetype_id'], $id);
             break;
         }
 
