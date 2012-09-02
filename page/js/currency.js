@@ -72,6 +72,7 @@ $(function () {
                 _id = $(_self.element.innerHTML).get(0).getAttribute('value'),
                 mode = $(_self.element.innerHTML).get(0).getAttribute('title');
                 buttons = ['save', 'cancel', 'delete', 'recovery'];
+                console.debug(mode);
 
             // clear arrSaveId
             self.arrSaveId = [];
@@ -126,16 +127,26 @@ $(function () {
                         $('#deleteflag').val(null);
                         $('#currdescth').val(null);
                         $('#currabbvth').val(null);
-                        $('#record_add').attr('disabled', 'disabled');
-                    } else {
-                        $('#currency_id').val(self.formData.currency_id);
-                        $('#currcode').val(self.formData.currcode);
-                        $('#currdesceng').val(self.formData.currdesceng);
-                        $('#currabbveng').val(self.formData.currabbveng);
+                        $('#record_add').hide();
+                    } else if (mode == 'edit') {
+                        $('#currency_id').val(self.formData.currency_id).removeAttr('disabled');
+                        $('#currcode').val(self.formData.currcode).removeAttr('disabled');
+                        $('#currdesceng').val(self.formData.currdesceng).removeAttr('disabled');
+                        $('#currabbveng').val(self.formData.currabbveng).removeAttr('disabled');
                         $('#deleteflag').val(self.formData.deleteflag);
-                        $('#currdescth').val(self.formData.currdescth);
-                        $('#currabbvth').val(self.formData.currabbvth);
+                        $('#currdescth').val(self.formData.currdescth).removeAttr('disabled');
+                        $('#currabbvth').val(self.formData.currabbvth).removeAttr('disabled');
+                        $('#record_add').show();
+                    }  else {
+                        $('#currency_id').val(self.formData.currency_id).attr('disabled', 'disabled');
+                        $('#currcode').val(self.formData.currcode).attr('disabled', 'disabled');
+                        $('#currdesceng').val(self.formData.currdesceng).attr('disabled', 'disabled');
+                        $('#currabbveng').val(self.formData.currabbveng).attr('disabled', 'disabled');
+                        $('#deleteflag').val(self.formData.deleteflag);
+                        $('#currdescth').val(self.formData.currdescth).attr('disabled', 'disabled');
+                        $('#currabbvth').val(self.formData.currabbvth).attr('disabled', 'disabled');
                         $('#record_add').removeAttr('disabled');
+                        $('#record_add').hide();
                     }
 
                     self.sGrid.jqGrid('setGridParam', {
