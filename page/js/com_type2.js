@@ -76,23 +76,40 @@ $(function () {
                 success     : function (data) {
                     rec = data;
 
-                    $.each(mData, function (index, obj) {
-                        if (_id == obj.goods_id) {
-                            formData = mData[index];
-                        }
-                    });
+                    if (typeof rec.goodstype !== 'undefined') {
+                        $.each(mData, function (index, obj) {
+                            if (_id == obj.goods_id) {
+                                formData = mData[index];
+                            }
+                        });
 
-                    $.each(rec.goodstype, function (index, obj) {
-                        if (formData.goodstype_id == obj.goodstype_id) {
-                            goodsTypeName = obj.goodstype_th;
-                        }
-                    });
+                        $.each(rec.goodstype, function (index, obj) {
+                            if (formData.goodstype_id == obj.goodstype_id) {
+                                goodsTypeName = obj.goodstype_th;
+                            }
+                        });
 
-                    $('#goods_code').val(formData.goodscode).attr('disabled', 'disabled');
-                    $('#goods_name_eng').val(formData.goodsname_eng).attr('disabled', 'disabled');
-                    $('#goods_type').val(goodsTypeName).attr('disabled', 'disabled');
-                    $('#goods_name_th').val(formData.goodsname_th).attr('disabled', 'disabled');
-                    $('#goods_name_th').val(formData.goodsname_th).attr('disabled', 'disabled');
+                        $('#goods_code').val(formData.goodscode).attr('disabled', 'disabled');
+                        $('#goods_name_eng').val(formData.goodsname_eng).attr('disabled', 'disabled');
+                        $('#goods_type').val(goodsTypeName).attr('disabled', 'disabled');
+                        $('#goods_name_th').val(formData.goodsname_th).attr('disabled', 'disabled');
+                        $('#goods_name_th').val(formData.goodsname_th).attr('disabled', 'disabled');
+                    }
+
+//                     if (typeof rec.customer !== 'undefined') {
+                    // Customer type must be true.
+                    if (true) {
+                        $.each(mData, function (index, obj) {
+                            if (_id == obj.customer_id) {
+                                formData = mData[index];
+                            }
+                        });
+
+                        $('#customer_code').val(formData.cust_code).attr('disabled', 'disabled');
+                        $('#customer_name_eng').val(formData.cust_nameeng).attr('disabled', 'disabled');
+                        $('#customer_type').val(formData.customertype_id).attr('disabled', 'disabled');
+                        $('#customer_name_th').val(formData.cust_nameth).attr('disabled', 'disabled');
+                    }
 
                     self.sGrid.jqGrid('setGridParam', {
                         url         : self.getAllT2URL,
@@ -127,21 +144,24 @@ $(function () {
                                         });
 
                                         self.sGrid.jqGrid('setRowData',ids[i],{currency_id: rec.currency[cidx].currcode});
+                                        self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[uidx].unitnameeng});
                                     } else if (self.table.sub == 'goodsunit') {
                                         $.each(rec.unit, function (index, obj) {
                                             if (eachRow.unit_id == obj.unit_id) {
                                                 uidx = index; 
                                             }
                                         });
+
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_instock: eachRow.use_instock == '1' ? 'Not Use' : 'Used' });
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_inorder: eachRow.use_inorder == '1' ? 'Not Use' : 'Used' });
+                                        self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[uidx].unitnameeng});
                                     }
-                                    console.debug(uidx);
-                                    self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[uidx].unitnameeng});
                                     self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? 'Not Use' : 'Used' });
                                 }
-                                self.sGrid.setColProp('unit_id', { editoptions: { value: lookupUnit(data.unit) } });
-                                self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency) } });
+                                if (self.table.main != 'customer') {
+                                    self.sGrid.setColProp('unit_id', { editoptions: { value: lookupUnit(data.unit) } });
+                                    self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency) } });
+                                }
                                 self.sGrid.setColProp('deleteflag',  { editoptions: { value: "1:Not Use;0:Used"} });
                                 self.sGrid.setColProp('use_instock', { editoptions: { value: "1:Not Use;0:Used"} });
                                 self.sGrid.setColProp('use_inorder', { editoptions: { value: "1:Not Use;0:Used"} });
@@ -204,7 +224,8 @@ $(function () {
 });
 
 var pickdates = function (id) {
-    jQuery('#' + id + '_effective_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
+    var column = self.table.main == 'goodsprice' ? '_effective_date' : '_order_date';
+    jQuery('#' + id + column, '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
 }
 
 var lookupUnit = function (data) {
