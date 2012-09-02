@@ -88,7 +88,7 @@ $(function () {
                     console.debug('MODE NOT FOUND!!!');
             }
 
-            if (mode == 'new' && self.table != 'goods') {
+            if (mode == 'new' && self.table != 'goods'  && self.table != 'userprofile') {
                 self.setElementValue(mode);
             } else {
                 $.ajax({
@@ -202,22 +202,48 @@ self.setElementValue = function (mode, data) {
         $.each(self.columns, function (index, column) {
             $('#' + column).removeAttr('readonly');
         });
-
+        elData = data;
         if (typeof data !== 'undefined') {
             $('#text_goodstype_id').remove();
             $('#goodstype_id').show().empty().append(
                 self.options.clone().val(-1).text('-- Please Select --')
             );
 
-            $.each(data.goodstype, function(k, obj) {
-                $('#goodstype_id').append(
-                    self.options.clone()
-                        .val(obj.goodstype_id)
-                        .text(obj.goodstype_th)
-                );
-            });
+            if (typeof data.goodstype != 'undefined') {
+                $.each(data.goodstype, function(k, obj) {
+                    $('#goodstype_id').append(
+                        self.options.clone()
+                            .val(obj.goodstype_id)
+                            .text(obj.goodstype_th)
+                    );
+                });
 
-            $('#goodstype_id').val(data.goodstype_id);
+                $('#goodstype_id').val(data.goodstype_id);
+            }
+            
+            if (typeof data.usergroup != 'undefined') {
+                $.each(data.usergroup, function(k, obj) {
+                    $('#usergroup').append(
+                        self.options.clone()
+                            .val(obj.usergroup_id)
+                            .text(obj.usergroup_eng)
+                    );
+                });
+
+                $('#usergroup').val(data.usergroup_id);
+            }
+            
+            if (typeof data.employeetype != 'undefined') {
+                $.each(data.employeetype, function(k, obj) {
+                    $('#employeetype').append(
+                        self.options.clone()
+                            .val(obj.employeetype_id)
+                            .text(obj.emptype_eng)
+                    );
+                });
+
+                $('#employeetype').val(data.usergroup_id);
+            }
         }
 
     } else {
