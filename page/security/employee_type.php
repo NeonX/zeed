@@ -43,7 +43,7 @@
                 <input id="emptype_eng" name="emptype_eng" type="text" />
             </p>
             <p>
-                <label for="emptype_th">Emp. Type Name (ENG): </label>
+                <label for="emptype_th">Emp. Type Name (TH): </label>
                 <input id="emptype_th" name="emptype_th" type="text" />
             </p>
             <p>
