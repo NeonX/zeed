@@ -9,19 +9,25 @@
     self.table = 'userprofile';
     self.caption = 'Employee &amp; User List:';
     self.columns = [
-        'userprofile_id', 'usergroup_id','employeetype_id', 'emp_code', 'user_name',
-        'empname_eng', 'deleteflag', 'action'
+        'userprofile_id', 'usergroup_id', 'employeetype_id', 'emp_code', 'empname_eng', 
+        'user_name', 'password', 'empname_th', 'phone_no', 'workstatus', 'deleteflag', 'action'
     ];
     self.colNames = [
-        'User Profile ID', 'User Group ID', 'Employee Type ID', 'Employee Code', 'User Name', 'Employee Name (ENG)', 'Status', 'Action'
+        'User Profile ID', 'User Group ID', 'Employee Type ID', 'Employee Code', 
+        'Employee Name (ENG)', 'User Nmae', 'Password', 'Emp. Name (TH)', 'Phone No', 
+        'Work Status', 'Status', 'Action'
     ];
     self.colModel = [
         {name: 'userprofile_id', index:'userprofile_id', hidden: true},
         {name: 'usergroup_id', index: 'usergroup_id', hidden: true},
         {name: 'employeetype_id', index: 'employeetype_id', hidden: true},
-         {name: 'emp_code', index: 'emp_code', width: 160, align: 'center'},
-        {name: 'user_name', index: 'user_name', width: 165, align: 'center'},
+        {name: 'emp_code', index: 'emp_code', width: 160, align: 'center'},
         {name: 'empname_eng', index: 'empname_eng', width: 165, align: 'center'},
+        {name: 'user_name', index: 'user_name', width: 165, align: 'center'},
+        {name: 'password', index: 'password', hidden: true},
+        {name: 'empname_th', index: 'empname_th', hidden: true},
+        {name: 'phone_no', index: 'phone_no', hidden: true},
+        {name: 'workstatus', index: 'workstatus', hidden: true},
         {name: 'deleteflag', index: 'deleteflag', width: 60, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
@@ -71,12 +77,12 @@ input.editable {
                 <input id="empname_eng" name="empname_eng" type="text" />
             </p>
             <p>
-                <label for="phone_no">Phone No (TH): </label>
+                <label for="phone_no">Phone No: </label>
                 <input id="phone_no" name="phone_no" type="text" />
             </p>
             <p>
-                <label for="usergroup">User Group: </label>
-                <select id="usergroup" name="usergroup">
+                <label for="usergroup_id">User Group: </label>
+                <select id="usergroup_id" name="usergroup_id">
                     <option value="-1"> -- Please Select -- </option>
                 </select>
             </p>
@@ -87,16 +93,16 @@ input.editable {
         </fieldset>
         <fieldset class="modal-body col2">
             <p>
-                <label for="work_status">Work Status: </label>
-                <input id="work_status" name="work_status" type="text" />
+                <label for="workstatus">Work Status: </label>
+                <input id="workstatus" name="workstatus" type="text" />
             </p>
             <p>
                 <label for="empname_th">Employee Name (TH): </label>
                 <input id="empname_th" name="empname_th" type="text" />
             </p>
             <p>
-                <label for="employeetype">Employee Type: </label>
-                <select id="employeetype" name="employeetype">
+                <label for="employeetype_id">Employee Type: </label>
+                <select id="employeetype_id" name="employeetype_id">
                     <option value="-1"> -- Please Select -- </option>
                 </select>
             </p>
@@ -109,7 +115,7 @@ input.editable {
             <p style="float: right;">
                 <input id="date" name="create_date" type="hidden" value="<?php echo date('Y-m-d'); ?>" />
                 <input id="by" name="create_by" type="hidden" value="1" />
-                <input id="table" name="table" type="hidden" value="unit" />
+                <input id="table" name="table" type="hidden" value="userprofile" />
                 <input id="userprofile_id" name="userprofile_id" type="hidden" value="0" />
                 <input id="mode" name="mode" type="hidden" value="insert" />
 

@@ -223,26 +223,26 @@ self.setElementValue = function (mode, data) {
             
             if (typeof data.usergroup != 'undefined') {
                 $.each(data.usergroup, function(k, obj) {
-                    $('#usergroup').append(
+                    $('#usergroup_id').append(
                         self.options.clone()
                             .val(obj.usergroup_id)
                             .text(obj.usergroup_eng)
                     );
                 });
 
-                $('#usergroup').val(data.usergroup_id);
+                $('#usergroup_id').val(data.usergroup_id);
             }
             
             if (typeof data.employeetype != 'undefined') {
                 $.each(data.employeetype, function(k, obj) {
-                    $('#employeetype').append(
+                    $('#employeetype_id').append(
                         self.options.clone()
                             .val(obj.employeetype_id)
                             .text(obj.emptype_eng)
                     );
                 });
 
-                $('#employeetype').val(data.usergroup_id);
+                $('#employeetype_id').val(data.usergroup_id);
             }
         }
 
