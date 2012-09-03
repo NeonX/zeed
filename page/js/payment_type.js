@@ -1,5 +1,5 @@
 /**
- * javacript file com_type2.js
+ * javacript file perment_type.js
  * Narong Rammanee
  * ranarong@gmail.com
  *
@@ -35,6 +35,7 @@ $(function () {
     self.arrSaveId    = new Array(),
     self.recordAdded  = false;
 
+    // Initialize main grid.
     self.mGrid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
@@ -61,6 +62,7 @@ $(function () {
     })
     .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
 
+    // Show fancybox popup.
     self.anchor.fancybox({
         title: 'Registration process',
         helpers:  {
@@ -72,7 +74,8 @@ $(function () {
                 mode = $(_self.element.innerHTML).get(0).getAttribute('title');
                 buttons = ['save', 'cancel', 'delete', 'recovery'];
 
-            $.each(buttons, function (index, value) {
+            // Show all buttons.
+             $.each(buttons, function (index, value) {
                 $('#' + value).show();
             });
 
@@ -97,8 +100,6 @@ $(function () {
                 url         : self.getByIdT2URL,
                 data        : { table: self.table.sub, id: _id,  columns: self.columns.sub },
                 success     : function (data) {
-                    rec = data;
-
                     $.each(self.mData, function (index, obj) {
                         if (_id == obj.paymenttype_id) {
                             self.formData = self.mData[index];
@@ -110,18 +111,42 @@ $(function () {
                         $('#pmtype_eng').val(null);
                         $('#pmtype_th').val(null);
                         $('#deleteflag').val(null);
-                        $('#record_add').attr('disabled', 'disabled');
+                        $('#record_add').show();
+                    } else if (mode == 'edit') {
+                        $('#paymenttype_id').val(self.formData.paymenttype_id).removeAttr('disabled');
+                        $('#pmtype_code').val(self.formData.pmtype_code).removeAttr('disabled');
+                        $('#pmtype_eng').val(self.formData.pmtype_eng).removeAttr('disabled');
+                        $('#pmtype_th').val(self.formData.pmtype_th).removeAttr('disabled');
+                        $('#deleteflag').val(self.formData.deleteflag).removeAttr('disabled');
+                        $('#record_add').show();
+                        self.sGrid.jqGrid('setGridParam', {
+                            ondblClickRow : function (id) {
+                                self.smode = 'update';
+                                self.sGrid.setColProp('exyear', { editoptions: {} });
+                                self.sGrid.editRow(id);
+                                self.arrSaveId.push(parseInt(id));
+                            }
+                        }).trigger("reloadGrid");
                     } else {
-                        $('#paymenttype_id').val(self.formData.paymenttype_id);
-                        $('#pmtype_code').val(self.formData.pmtype_code);
-                        $('#pmtype_eng').val(self.formData.pmtype_eng);
-                        $('#pmtype_th').val(self.formData.pmtype_th);
-                        $('#deleteflag').val(self.formData.deleteflag);
-                        $('#record_add').removeAttr('disabled');
+                        $('#paymenttype_id').val(self.formData.paymenttype_id).attr('disabled', 'disabled');
+                        $('#pmtype_code').val(self.formData.pmtype_code).attr('disabled', 'disabled');
+                        $('#pmtype_eng').val(self.formData.pmtype_eng).attr('disabled', 'disabled');
+                        $('#pmtype_th').val(self.formData.pmtype_th).attr('disabled', 'disabled');
+                        $('#deleteflag').val(self.formData.deleteflag).attr('disabled', 'disabled');
+                        $('#record_add').hide();
+
+                         self.sGrid.jqGrid('setGridParam', {
+                            ondblClickRow : function (id) {
+                            }
+                        }).trigger("reloadGrid");
+
+                        $.each(buttons, function (index, value) {
+                            $('#' + value).hide();
+                        });
                     }
 
+                    // Set sGrid Parameter
                     self.sGrid.jqGrid('setGridParam', {
-                        url      : self.getAllT2URL,
                         postData : { 
                             columns : function () { return self.columns.sub },
                             id      : function () { return _id },
@@ -129,6 +154,7 @@ $(function () {
                         }
                     }).trigger("reloadGrid");
 
+                    // Initialize sub grid.
                     self.sGrid.jqGrid({
                         url         : self.getAllT2URL,
                         datatype    : 'json',
@@ -157,9 +183,11 @@ $(function () {
                             });
                         },
                         ondblClickRow: function (id) {
-                            self.smode = 'update';
-                            self.sGrid.editRow(id);
-                            self.arrSaveId.push(parseInt(id));
+                            if (mode == 'edit') {
+                                self.smode = 'update';
+                                self.sGrid.editRow(id);
+                                self.arrSaveId.push(parseInt(id));
+                            }
                         },
                         editurl     : self.saveT2URL,
                         rowNum      : 10,
@@ -182,6 +210,7 @@ $(function () {
         }
     });
 
+    // Add row sub grid button clicked.
     $('#record_add').bind('click', function () {
         if (!self.recordAdded) {
             self.smode = 'insert';
@@ -194,15 +223,18 @@ $(function () {
         }
     });
 
+    // Stop event Submit.
     self.form.bind('submit', function () {
         return false;
     });
 
+    // Close fancybox when button Cancle clicked.
     self.form.bind('reset', function () {
         $.fancybox.close();
         return false;
     });
 
+    // Save data when button Save clicked.
     $('#save').bind('click', function () {
         $.ajax({
             type        : 'POST',
@@ -223,9 +255,8 @@ $(function () {
                 mode        : $('#mode').val()
             },
             success     : function (data) {
-//                 var rec = $.parseJSON(data);
-//                 console.debug(rec.lastinsertid);
-//                 $('#paymenttype_id').val(parseInt(rec.lastinsertid));
+                var rec = $.parseJSON(data)
+                $('#0_paymenttype_id').val(rec.lastinsertid);
                 if (self.arrSaveId.length > 0) {
                     $.each(self.arrSaveId, function (index, id) {
                         self.sGrid.jqGrid('saveRow', id);
@@ -235,36 +266,6 @@ $(function () {
             }
         });
 
-
         $.fancybox('บันทีกเรียบร้อยแล้ว');
     });
 });
-
-var lookupUnit = function (data) {
-    var tmp = [], str = '';
-    $.each(data, function (index, obj) {
-        tmp.push(obj.unit_id + ':' + obj.unitnameeng)
-    });
-
-    return tmp.join(';');
-};
-
-var lookupCurrency = function (data) {
-    var tmp = [], str = '';
-    $.each(data, function (index, obj) {
-        tmp.push(obj.paymenttype_id + ':' + obj.pmtype_th)
-    });
-
-    return tmp.join(';');
-};
-
-Array.prototype.swap = function (x,y) {
-    var t = this[x];
-    this[x] = this[y];
-    this[y] = t;
-    return this;
-}
-
-Array.prototype.max = function () {
-    return Math.max.apply(null, this);
-};

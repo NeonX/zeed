@@ -1,5 +1,5 @@
 /**
- * javacript file com_type2.js
+ * javacript file currency.js
  * Narong Rammanee
  * ranarong@gmail.com
  *
@@ -36,6 +36,7 @@ $(function () {
     self.arrSaveId    = [],
     self.recordAdded  = false;
 
+    // Initialize main grid.
     self.mGrid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
@@ -62,6 +63,7 @@ $(function () {
     })
     .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
 
+    // Show fancybox popup.
     self.anchor.fancybox({
         title: 'Registration process',
         helpers:  {
@@ -73,12 +75,13 @@ $(function () {
                 mode = $(_self.element.innerHTML).get(0).getAttribute('title');
                 buttons = ['save', 'cancel', 'delete', 'recovery'];
 
-            // clear arrSaveId
-            self.arrSaveId = [];
-
+            // Show all buttons.
             $.each(buttons, function (index, value) {
                 $('#' + value).show();
             });
+
+            // clear arrSaveId
+            self.arrSaveId = [];
 
              if (mode == 'new') {
                 self.mode.val('insert');
@@ -101,7 +104,6 @@ $(function () {
                 url         : self.getByIdT2URL,
                 data        : { table: self.table.sub, id: _id,  columns: self.columns.sub },
                 success     : function (data) {
-                    rec = data;
                     $.each(self.mData, function (index, obj) {
                         if (_id == obj.currency_id) {
                             self.formData = self.mData[index];
@@ -109,7 +111,7 @@ $(function () {
                     });
 
                     var newArrYear = [];
-                    $.each(rec.record, function(index, obj) {
+                    $.each(data.record, function(index, obj) {
                        newArrYear[index] = obj['exyear'];
                     });
 
@@ -126,7 +128,7 @@ $(function () {
                         $('#deleteflag').val(null);
                         $('#currdescth').val(null);
                         $('#currabbvth').val(null);
-                        $('#record_add').hide();
+                        $('#record_add').show();
                     } else if (mode == 'edit') {
                         $('#currency_id').val(self.formData.currency_id).removeAttr('disabled');
                         $('#currcode').val(self.formData.currcode).removeAttr('disabled');
@@ -136,6 +138,18 @@ $(function () {
                         $('#currdescth').val(self.formData.currdescth).removeAttr('disabled');
                         $('#currabbvth').val(self.formData.currabbvth).removeAttr('disabled');
                         $('#record_add').show();
+                        self.sGrid.jqGrid('setGridParam', {
+                            ondblClickRow : function (id) {
+                                self.smode = 'update';
+                                self.sGrid.setColProp('exyear', { editoptions: {} });
+                                self.sGrid.editRow(id);
+                                self.arrSaveId.push(parseInt(id));
+                            }
+                        }).trigger("reloadGrid");
+
+                        $.each(buttons, function (index, value) {
+                            $('#' + value).show();
+                        });
                     }  else {
                         $('#currency_id').val(self.formData.currency_id).attr('disabled', 'disabled');
                         $('#currcode').val(self.formData.currcode).attr('disabled', 'disabled');
@@ -146,10 +160,18 @@ $(function () {
                         $('#currabbvth').val(self.formData.currabbvth).attr('disabled', 'disabled');
                         $('#record_add').removeAttr('disabled');
                         $('#record_add').hide();
+                        self.sGrid.jqGrid('setGridParam', {
+                            ondblClickRow : function (id) {
+                            }
+                        }).trigger("reloadGrid");
+
+                        $.each(buttons, function (index, value) {
+                            $('#' + value).hide();
+                        });
                     }
 
+                    // Set sGrid Parameter
                     self.sGrid.jqGrid('setGridParam', {
-                        url      : self.getAllT2URL,
                         postData : { 
                             columns : function () { return self.columns.sub },
                             id      : function () { return _id },
@@ -157,6 +179,7 @@ $(function () {
                         }
                     }).trigger("reloadGrid");
 
+                    // Initialize sub grid.
                     self.sGrid.jqGrid({
                         url         : self.getAllT2URL,
                         datatype    : 'json',
@@ -174,10 +197,12 @@ $(function () {
                             });
                         },
                         ondblClickRow: function (id) {
-                            self.smode = 'update';
-                            self.sGrid.setColProp('exyear', { editoptions: {} });
-                            self.sGrid.editRow(id);
-                            self.arrSaveId.push(parseInt(id));
+                            if (mode == 'edit') {
+                                self.smode = 'update';
+                                self.sGrid.setColProp('exyear', { editoptions: {} });
+                                self.sGrid.editRow(id);
+                                self.arrSaveId.push(parseInt(id));
+                            }
                         },
                         editurl     : self.saveT2URL,
                         rowNum      : 10,
@@ -201,6 +226,7 @@ $(function () {
         }
     });
 
+    // Add row sub grid button clicked.
     $('#record_add').bind('click', function () {
         if (!self.recordAdded) {
             self.smode = 'insert';
@@ -214,15 +240,18 @@ $(function () {
         }
     });
 
+    // Stop event Submit.
     self.form.bind('submit', function () {
         return false;
     });
 
+    // Close fancybox when button Cancle clicked.
     self.form.bind('reset', function () {
         $.fancybox.close();
         return false;
     });
 
+    // Save data when button Save clicked.
     $('#save').bind('click', function () {
         $.ajax({
             type        : 'POST',
@@ -243,6 +272,8 @@ $(function () {
                 mode        : $('#mode').val()
             },
             success : function (data) {
+                var rec = $.parseJSON(data)
+                $('#0_currency_id').val(rec.lastinsertid);
                 if (self.arrSaveId.length > 0) {
                     $.each(self.arrSaveId, function (index, id) {
                         self.sGrid.jqGrid('saveRow', id);
@@ -256,31 +287,7 @@ $(function () {
     });
 });
 
-var lookupUnit = function (data) {
-    var tmp = [], str = '';
-    $.each(data, function (index, obj) {
-        tmp.push(obj.unit_id + ':' + obj.unitnameeng)
-    });
-
-    return tmp.join(';');
-};
-
-var lookupCurrency = function (data) {
-    var tmp = [], str = '';
-    $.each(data, function (index, obj) {
-        tmp.push(obj.currency_id + ':' + obj.currabbveng)
-    });
-
-    return tmp.join(';');
-};
-
-Array.prototype.swap = function (x,y) {
-    var t = this[x];
-    this[x] = this[y];
-    this[y] = t;
-    return this;
-}
-
+// Find max from array.
 Array.prototype.max = function () {
     return Math.max.apply(null, this);
 };

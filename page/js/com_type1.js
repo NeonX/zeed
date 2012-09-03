@@ -25,7 +25,8 @@ $(function () {
     self.btnSumit   = $('button:submit'),
     self.file       = $('#file');
     self.fakeFile   = $('#ffile');
-    
+
+    // Initialize grid.
     self.grid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
@@ -45,6 +46,7 @@ $(function () {
     })
     .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
 
+    // Show fancybox popup.
     self.anchor.fancybox({
         title: 'Registration process',
         helpers:  {
@@ -85,7 +87,11 @@ $(function () {
                 break;
 
                 default:
-                    console.debug('MODE NOT FOUND!!!');
+                    if ($.browser.mozilla == true || $.browser.safari == true) {
+                        console.debug('MODE NOT FOUND!!!');
+                    } else {
+                        alert('MODE NOT FOUND!!!');
+                    }
             }
 
             if (mode == 'new' && self.table != 'goods'  && self.table != 'userprofile') {
@@ -108,10 +114,12 @@ $(function () {
         }
     });
 
+    // File field event change.
     self.file.bind('change', function () {
         self.fakeFile.val($(this).val());
     });
 
+    // Submit form
     self.form.bind('submit', function () {
         if (self.table == 'goods') {
             var img_name = self.fakeFile.val().replace(/C:\\fakepath\\/i, '');
@@ -150,23 +158,27 @@ $(function () {
         }
     });
 
+    // Close fancybox when button Cancle clicked.
     self.form.bind('reset', function () {
         $.fancybox.close();
         return false;
     });
 
+    // Upload button clicked.
     self.clickupload = function () {
         $('#file').val();
         return true;
     }
 
+    // Upload ok.
     window.parent.uploadok = function (pathfile) {
         pathfile = '../page/' + pathfile;
         self.picture.empty().append(self.img.clone().attr({ src: pathfile, width: 320, height: 250 }));
         return true ;
     }
 
-     self.del.bind('click', function () {
+    // Delete button cliked.
+    self.del.bind('click', function () {
         $.ajax({
             type        : 'POST',
             cache       : false,
@@ -179,6 +191,7 @@ $(function () {
         });
     });
 
+    // Recovery button cliked.
     self.recovery.bind('click', function () {
         $.ajax({
             type        : 'POST',
@@ -193,6 +206,7 @@ $(function () {
     });
 });
 
+// Set element value.
 self.setElementValue = function (mode, data) {
     var style, text;
     if (mode == 'new') {
@@ -220,7 +234,7 @@ self.setElementValue = function (mode, data) {
 
                 $('#goodstype_id').val(data.goodstype_id);
             }
-            
+
             if (typeof data.usergroup != 'undefined') {
                 $.each(data.usergroup, function(k, obj) {
                     $('#usergroup_id').append(
@@ -232,7 +246,7 @@ self.setElementValue = function (mode, data) {
 
                 $('#usergroup_id').val(data.usergroup_id);
             }
-            
+
             if (typeof data.employeetype != 'undefined') {
                 $.each(data.employeetype, function(k, obj) {
                     $('#employeetype_id').append(
@@ -307,6 +321,7 @@ self.setElementValue = function (mode, data) {
     }
 };
 
+// Clear form
 $.fn.clearForm = function () {
     return this.each(function () {
         var type = this.type, tag = this.tagName.toLowerCase();
@@ -324,6 +339,7 @@ $.fn.clearForm = function () {
     });
 };
 
+// Array swap prototype.
 Array.prototype.swap = function (x,y) {
     var t = this[x];
     this[x] = this[y];

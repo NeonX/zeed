@@ -29,6 +29,7 @@ $(function () {
     self.arrSaveId    = new Array(),
     self.recordAdded  = false;
 
+    // Initialize main grid.
     self.mGrid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
@@ -58,6 +59,7 @@ $(function () {
     })
     .navGrid('#pager', { edit: false, add:false, del: false, search: false, refresh: true });
 
+    // Show fancybox popup.
     self.anchor.fancybox({
         title: 'Registration process',
         helpers:  {
@@ -74,8 +76,6 @@ $(function () {
                 url         : self.getByIdT2URL,
                 data        : { table: self.table.sub, id: _id,  columns: self.columns.sub },
                 success     : function (data) {
-                    rec = data;
-
                     if (self.table.main == 'goods') {
                         $.each(mData, function (index, obj) {
                             if (_id == obj.goods_id) {
@@ -83,7 +83,7 @@ $(function () {
                             }
                         });
 
-                        $.each(rec.goodstype, function (index, obj) {
+                        $.each(data.goodstype, function (index, obj) {
                             if (formData.goodstype_id == obj.goodstype_id) {
                                 goodsTypeName = obj.goodstype_th;
                             }
@@ -107,11 +107,16 @@ $(function () {
                         $('#customer_name_th').val(formData.cust_nameth).attr('disabled', 'disabled');
                     }
 
+                    // Set sGrid Parameter
                     self.sGrid.jqGrid('setGridParam', {
-                        url         : self.getAllT2URL,
-                        postData    : { columns : function () { return self.columns.sub }, id: function () { return _id}, table: function () { return self.table.sub } }
+                        postData : { 
+                            columns : function () { return self.columns.sub },
+                            id      : function () { return _id }, 
+                            table   : function () { return self.table.sub } 
+                        }
                     }).trigger("reloadGrid");
 
+                    // Initialize sub grid.
                     self.sGrid.jqGrid({
                         url         : self.getAllT2URL,
                         datatype    : 'json',
@@ -128,21 +133,21 @@ $(function () {
                                 if (self.smode != 'insert') {
                                     eachRow = self.sGrid.jqGrid('getRowData', ids[i]);
                                     if (self.table.sub == 'goodsprice') {
-                                        $.each(rec.currency, function (index, obj) {
+                                        $.each(data.currency, function (index, obj) {
                                             if (eachRow.currency_id == obj.currency_id) {
                                                 cidx = index; 
                                             }
                                         });
-                                        $.each(rec.unit, function (index, obj) {
+                                        $.each(data.unit, function (index, obj) {
                                             if (eachRow.unit_id == obj.unit_id) {
                                                 uidx = index; 
                                             }
                                         });
 
-                                        self.sGrid.jqGrid('setRowData',ids[i],{currency_id: rec.currency[cidx].currcode});
-                                        self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[uidx].unitnameeng});
+                                        self.sGrid.jqGrid('setRowData',ids[i],{currency_id: data.currency[cidx].currcode});
+                                        self.sGrid.jqGrid('setRowData',ids[i],{unit_id: data.unit[uidx].unitnameeng});
                                     } else if (self.table.sub == 'goodsunit') {
-                                        $.each(rec.unit, function (index, obj) {
+                                        $.each(data.unit, function (index, obj) {
                                             if (eachRow.unit_id == obj.unit_id) {
                                                 uidx = index; 
                                             }
@@ -150,13 +155,13 @@ $(function () {
 
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_instock: eachRow.use_instock == '1' ? 'Not Use' : 'Used' });
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_inorder: eachRow.use_inorder == '1' ? 'Not Use' : 'Used' });
-                                        self.sGrid.jqGrid('setRowData',ids[i],{unit_id: rec.unit[uidx].unitnameeng});
+                                        self.sGrid.jqGrid('setRowData',ids[i],{unit_id: data.unit[uidx].unitnameeng});
                                     }
                                     self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? 'Not Use' : 'Used' });
                                 }
                                 if (self.table.main != 'customer') {
-                                    self.sGrid.setColProp('unit_id', { editoptions: { value: lookupUnit(data.unit) } });
-                                    self.sGrid.setColProp('currency_id', { editoptions: { value: lookupCurrency(data.currency) } });
+                                    self.sGrid.setColProp('unit_id', { editoptions: { value: data.unit.lookup(['unit_id', 'unitnameeng']) } });
+                                    self.sGrid.setColProp('currency_id', { editoptions: { value: data.currency.lookup(['currency_id', 'currcode']) } });
                                 }
                                 self.sGrid.setColProp('deleteflag',  { editoptions: { value: "1:Not Use;0:Used"} });
                                 self.sGrid.setColProp('use_instock', { editoptions: { value: "1:Not Use;0:Used"} });
@@ -194,6 +199,7 @@ $(function () {
         }
     });
 
+    // Add row sub grid button clicked.
     $('#record_add').bind('click', function () {
         if (!self.recordAdded) {
             self.smode = 'insert';
@@ -206,16 +212,18 @@ $(function () {
         }
     });
 
+    // Stop event Submit.
     self.form.bind('submit', function () {
-        console.debug('submit');
         return false;
     });
 
+    // Close fancybox when button Cancle clicked.
     self.form.bind('reset', function () {
         $.fancybox.close();
         return false;
     });
 
+    // Save data when button Save clicked.
     $('#save').bind('click', function () {
         $.each(self.arrSaveId, function (index, value) {
             self.sGrid.jqGrid('saveRow', value);
@@ -224,36 +232,18 @@ $(function () {
     });
 });
 
+// Datepicker field.
 var pickdates = function (id) {
     var column = self.table.main == 'goodsprice' ? '_effective_date' : '_order_date';
     jQuery('#' + id + column, '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
 }
 
-var lookupUnit = function (data) {
-    var tmp = [], str = '';
-    $.each(data, function (index, obj) {
-        tmp.push(obj.unit_id + ':' + obj.unitnameeng);
+// Array lookup.
+Array.prototype.lookup = function (colIndexes) {
+    var tmp = [];
+    $.each(this, function (index, obj) {
+        tmp.push(obj[colIndexes[0]] + ':' + obj[colIndexes[1]]);
     });
 
-    return tmp.join(';').toString();
-};
-
-var lookupCurrency = function (data) {
-    var tmp = [], str = '';
-    $.each(data, function (index, obj) {
-        tmp.push(obj.currency_id + ':' + obj.currcode);
-    });
-
-    return tmp.join(';').toString();
-};
-
-Array.prototype.swap = function (x,y) {
-    var t = this[x];
-    this[x] = this[y];
-    this[y] = t;
-    return this;
-}
-
-Array.prototype.max = function () {
-    return Math.max.apply(null, this);
+    return tmp.join(';');
 };
