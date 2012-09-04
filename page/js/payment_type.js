@@ -106,6 +106,15 @@ $(function () {
                         }
                     });
 
+                    // Set sGrid Parameter
+                    self.sGrid.jqGrid('setGridParam', {
+                        postData : { 
+                            columns : function () { return self.columns.sub },
+                            id      : function () { return _id },
+                            table   : function () { return self.table.sub }
+                        }
+                    }).trigger("reloadGrid");
+
                     if (mode == 'new') {
                         $('#pmtype_code').val(null);
                         $('#pmtype_eng').val(null);
@@ -144,15 +153,6 @@ $(function () {
                             $('#' + value).hide();
                         });
                     }
-
-                    // Set sGrid Parameter
-                    self.sGrid.jqGrid('setGridParam', {
-                        postData : { 
-                            columns : function () { return self.columns.sub },
-                            id      : function () { return _id },
-                            table   : function () { return self.table.sub }
-                        }
-                    }).trigger("reloadGrid");
 
                     // Initialize sub grid.
                     self.sGrid.jqGrid({

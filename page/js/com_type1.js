@@ -6,7 +6,12 @@
  * Latest Release: Aug 2012
  * 
  */
+
+var self = self || {};
+
 $(function () {
+    "use strict";
+
     self.getAllURL  =  '../page/common/getDataAll.php',
     self.getByIdURL =  '../page/common/getDataById.php',
     self.saveURL    =  '../page/common/saveData.php',
@@ -30,7 +35,10 @@ $(function () {
     self.grid.jqGrid({
         url         : self.getAllURL,
         datatype    : 'json',
-        postData    : { columns : function () { return self.columns }, table: function () { return self.table } },
+        postData    : { 
+            columns : function () { return self.columns; },
+            table   : function () { return self.table; }
+        },
         height      : 350,
         colNames    : self.colNames,
         colModel    : self.colModel,
@@ -53,11 +61,9 @@ $(function () {
             title:  null
         },
         beforeLoad: function () {
-            _self = this;
-                var mode;
-                mode = $(_self.element.innerHTML).get(0).getAttribute('title'),
-                buttons = ['save', 'cancel', 'delete', 'recovery'];
-                fmode = mode;
+            var _self = this;
+                var mode = $(_self.element.innerHTML).get(0).getAttribute('title'),
+                    buttons = ['save', 'cancel', 'delete', 'recovery'];
 
             switch (mode) {
                 case 'new':
@@ -124,8 +130,9 @@ $(function () {
         if (self.table == 'goods') {
             var img_name = self.fakeFile.val().replace(/C:\\fakepath\\/i, '');
             if (self.fakeFile.val() != '') {
-                var gpic = [{ name: 'goodspicture', value: img_name }];
-                serialize = $.merge($(this).serializeArray(), gpic);
+                var gpic = [{ name: 'goodspicture', value: img_name }],
+                    serialize = $.merge($(this).serializeArray(), gpic);
+
                 serialize.swap(8, 11);
             } else {
                 serialize = $(this).serializeArray();
@@ -168,14 +175,14 @@ $(function () {
     self.clickupload = function () {
         $('#file').val();
         return true;
-    }
+    };
 
     // Upload ok.
     window.parent.uploadok = function (pathfile) {
         pathfile = '../page/' + pathfile;
         self.picture.empty().append(self.img.clone().attr({ src: pathfile, width: 320, height: 250 }));
         return true ;
-    }
+    };
 
     // Delete button cliked.
     self.del.bind('click', function () {
@@ -208,6 +215,8 @@ $(function () {
 
 // Set element value.
 self.setElementValue = function (mode, data) {
+    "use strict";
+
     var style, text;
     if (mode == 'new') {
         $('#deleteflag').show();
@@ -216,7 +225,7 @@ self.setElementValue = function (mode, data) {
         $.each(self.columns, function (index, column) {
             $('#' + column).removeAttr('readonly');
         });
-        elData = data;
+
         if (typeof data !== 'undefined') {
             $('#text_goodstype_id').remove();
             $('#goodstype_id').show().empty().append(
@@ -303,7 +312,7 @@ self.setElementValue = function (mode, data) {
                         $('<input />').attr({
                             id: 'text_goodstype_id',
                             type: 'text',
-                            value: data.goodstype[parseInt(data['goodstype_id']) - 1 ].goodstype_th,
+                            value: data.goodstype[parseInt(data.goodstype_id, 10) - 1 ].goodstype_th,
                             readonly: 'readonly'
                         }).insertAfter('#goodstype_id');
                     }
@@ -323,6 +332,8 @@ self.setElementValue = function (mode, data) {
 
 // Clear form
 $.fn.clearForm = function () {
+    "use strict";
+
     return this.each(function () {
         var type = this.type, tag = this.tagName.toLowerCase();
         if (tag == 'form') {
@@ -341,6 +352,8 @@ $.fn.clearForm = function () {
 
 // Array swap prototype.
 Array.prototype.swap = function (x,y) {
+    "use strict";
+
     var t = this[x];
     this[x] = this[y];
     this[y] = t;

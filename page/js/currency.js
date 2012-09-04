@@ -110,6 +110,15 @@ $(function () {
                         }
                     });
 
+                    // Set sGrid Parameter
+                    self.sGrid.jqGrid('setGridParam', {
+                        postData : { 
+                            columns : function () { return self.columns.sub },
+                            id      : function () { return _id },
+                            table   : function () { return self.table.sub }
+                        }
+                    }).trigger("reloadGrid");
+
                     var newArrYear = [];
                     $.each(data.record, function(index, obj) {
                        newArrYear[index] = obj['exyear'];
@@ -169,15 +178,6 @@ $(function () {
                             $('#' + value).hide();
                         });
                     }
-
-                    // Set sGrid Parameter
-                    self.sGrid.jqGrid('setGridParam', {
-                        postData : { 
-                            columns : function () { return self.columns.sub },
-                            id      : function () { return _id },
-                            table   : function () { return self.table.sub }
-                        }
-                    }).trigger("reloadGrid");
 
                     // Initialize sub grid.
                     self.sGrid.jqGrid({
@@ -272,7 +272,7 @@ $(function () {
                 mode        : $('#mode').val()
             },
             success : function (data) {
-                var rec = $.parseJSON(data)
+                var rec = $.parseJSON(data);
                 $('#0_currency_id').val(rec.lastinsertid);
                 if (self.arrSaveId.length > 0) {
                     $.each(self.arrSaveId, function (index, id) {

@@ -76,6 +76,16 @@ $(function () {
                 url         : self.getByIdT2URL,
                 data        : { table: self.table.sub, id: _id,  columns: self.columns.sub },
                 success     : function (data) {
+
+                    // Set sGrid Parameter
+                    self.sGrid.jqGrid('setGridParam', {
+                        postData : { 
+                            columns : function () { return self.columns.sub },
+                            id      : function () { return _id }, 
+                            table   : function () { return self.table.sub } 
+                        }
+                    }).trigger("reloadGrid");
+
                     if (self.table.main == 'goods') {
                         $.each(mData, function (index, obj) {
                             if (_id == obj.goods_id) {
@@ -107,20 +117,15 @@ $(function () {
                         $('#customer_name_th').val(formData.cust_nameth).attr('disabled', 'disabled');
                     }
 
-                    // Set sGrid Parameter
-                    self.sGrid.jqGrid('setGridParam', {
-                        postData : { 
-                            columns : function () { return self.columns.sub },
-                            id      : function () { return _id }, 
-                            table   : function () { return self.table.sub } 
-                        }
-                    }).trigger("reloadGrid");
-
                     // Initialize sub grid.
                     self.sGrid.jqGrid({
                         url         : self.getAllT2URL,
                         datatype    : 'json',
-                        postData    : { columns : function () { return self.columns.sub }, id: function () { return _id}, table: function () { return self.table.sub } },
+                        postData    : { 
+                            columns : function () { return self.columns.sub },
+                            id      : function () { return _id},
+                            table   : function () { return self.table.sub }
+                        },
                         height      : 250,
                         colNames    : self.colNames.sub,
                         colModel    : self.colModel.sub,
