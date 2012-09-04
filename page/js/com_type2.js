@@ -133,7 +133,8 @@ $(function () {
                         gridComplete: function () {
                             var ids = self.sGrid.jqGrid('getDataIDs'),
                                 cidx,
-                                uidx;
+                                uidx,
+                                custidx;
                             for (var i=0;i < ids.length;i++) {
 
                                 if (self.smode != 'insert') {
@@ -163,6 +164,26 @@ $(function () {
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_inorder: eachRow.use_inorder == '1' ? 'Not Use' : 'Used' });
                                         self.sGrid.jqGrid('setRowData',ids[i],{unit_id: data.unit[uidx].unitnameeng});
                                     }  else if (self.table.sub == 'goodspromotion') {
+
+                                        $.each(data.currency, function (index, obj) {
+                                            if (eachRow.currency_id == obj.currency_id) {
+                                                cidx = index; 
+                                            }
+                                        });
+                                        $.each(data.unit, function (index, obj) {
+                                            if (eachRow.unit_id == obj.unit_id) {
+                                                uidx = index; 
+                                            }
+                                        });
+                                        $.each(data.customer, function (index, obj) {
+                                            if (eachRow.customer_id == obj.customer_id) {
+                                                custidx = index; 
+                                            }
+                                        });
+                                        
+                                        self.sGrid.jqGrid('setRowData',ids[i],{customer_id: data.customer[custidx].cust_nameeng});
+                                        self.sGrid.jqGrid('setRowData',ids[i],{currency_id: data.currency[cidx].currcode});
+                                        self.sGrid.jqGrid('setRowData',ids[i],{unit_id: data.unit[uidx].unitnameeng});
                                         self.sGrid.setColProp('customer_id', { editoptions: { value: data.customer.lookup(['customer_id', 'cust_nameeng']) } });
                                     }
                                     self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? 'Not Use' : 'Used' });
