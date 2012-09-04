@@ -77,6 +77,7 @@ $(function () {
                 data        : { table: self.table.sub, id: _id,  columns: self.columns.sub },
                 success     : function (data) {
 
+                    rec = data;
                     // Set sGrid Parameter
                     self.sGrid.jqGrid('setGridParam', {
                         postData : { 
@@ -163,11 +164,15 @@ $(function () {
                                         self.sGrid.jqGrid('setRowData',ids[i],{unit_id: data.unit[uidx].unitnameeng});
                                     }
                                     self.sGrid.jqGrid('setRowData',ids[i],{deleteflag: eachRow.deleteflag == '1' ? 'Not Use' : 'Used' });
+                                } else if (self.table.sub == 'goodspromotion') {
+                                    self.sGrid.setColProp('customer_id', { editoptions: { value: data.customer.lookup(['customer_id', 'cust_nameeng']) } });
                                 }
+                                
                                 if (self.table.main != 'customer') {
                                     self.sGrid.setColProp('unit_id', { editoptions: { value: data.unit.lookup(['unit_id', 'unitnameeng']) } });
                                     self.sGrid.setColProp('currency_id', { editoptions: { value: data.currency.lookup(['currency_id', 'currcode']) } });
                                 }
+                                                                
                                 self.sGrid.setColProp('deleteflag',  { editoptions: { value: "1:Not Use;0:Used"} });
                                 self.sGrid.setColProp('use_instock', { editoptions: { value: "1:Not Use;0:Used"} });
                                 self.sGrid.setColProp('use_inorder', { editoptions: { value: "1:Not Use;0:Used"} });

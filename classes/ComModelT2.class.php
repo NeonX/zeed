@@ -51,12 +51,17 @@ class ComModelT2 extends DBConnection {
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
                     'unit_id' => array('unit_id', 'unitcode', 'unitnameeng'),
-                    'currency_id'  => array('currency_id', 'currcode')
+                    'currency_id'  => array('currency_id', 'currcode'),
+                    'customer_id'  => array('customer_id', 'cust_nameeng')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
                 $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
                 $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
+                if($table == 'goodspromotion'){
+                $result->customer = self::getChildAllById('customer', $fk['customer_id'], $id);
+                }
+                
                 break;
             case 'goods':
                 $fk = array(
