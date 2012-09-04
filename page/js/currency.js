@@ -272,8 +272,7 @@ $(function () {
                 mode        : $('#mode').val()
             },
             success : function (data) {
-                var rec = $.parseJSON(data);
-                $('#0_currency_id').val(rec.lastinsertid);
+                $('#0_currency_id').val(data.lastinsertid);
                 if (self.arrSaveId.length > 0) {
                     $.each(self.arrSaveId, function (index, id) {
                         self.sGrid.jqGrid('saveRow', id);
