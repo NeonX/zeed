@@ -164,7 +164,6 @@ $(function () {
                                         self.sGrid.jqGrid('setRowData',ids[i],{use_inorder: eachRow.use_inorder == '1' ? 'Not Use' : 'Used' });
                                         self.sGrid.jqGrid('setRowData',ids[i],{unit_id: data.unit[uidx].unitnameeng});
                                     }  else if (self.table.sub == 'goodspromotion') {
-
                                         $.each(data.currency, function (index, obj) {
                                             if (eachRow.currency_id == obj.currency_id) {
                                                 cidx = index; 
@@ -180,7 +179,7 @@ $(function () {
                                                 custidx = index; 
                                             }
                                         });
-                                        
+
                                         self.sGrid.jqGrid('setRowData',ids[i],{customer_id: data.customer[custidx].cust_nameeng});
                                         self.sGrid.jqGrid('setRowData',ids[i],{currency_id: data.currency[cidx].currcode});
                                         self.sGrid.jqGrid('setRowData',ids[i],{unit_id: data.unit[uidx].unitnameeng});
@@ -265,8 +264,14 @@ $(function () {
 
 // Datepicker field.
 var pickdates = function (id) {
-    var column = self.table.main == 'goodsprice' ? '_effective_date' : '_order_date';
-    jQuery('#' + id + column, '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
+    if (self.table.sub == 'goodsprice') {
+        jQuery('#' + id + '_effective_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
+    } else if (self.table.sub == 'customerbonus') {
+        jQuery('#' + id + '_order_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
+    } else if (self.table.sub == 'customerbonus') {
+        jQuery('#' + id + '_effective_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
+        jQuery('#' + id + '_expired_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
+    }
 }
 
 // Array lookup.
