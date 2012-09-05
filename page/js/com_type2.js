@@ -268,7 +268,7 @@ var pickdates = function (id) {
         jQuery('#' + id + '_effective_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
     } else if (self.table.sub == 'customerbonus') {
         jQuery('#' + id + '_order_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
-    } else if (self.table.sub == 'customerbonus') {
+    } else if (self.table.sub == 'goodspromotion') {
         jQuery('#' + id + '_effective_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
         jQuery('#' + id + '_expired_date', '#list-' + self.table.sub).datepicker({dateFormat:'yy-mm-dd'});
     }
