@@ -30,9 +30,9 @@ class ComModelT2 extends DBConnection {
             $cId = 'currency_id';
         } else if ($table == 'paymentstatus') {
             $cId = 'paymenttype_id';
-        }  else if ($table == 'customerbonus') {
+        } else if ($table == 'customerbonus' || $table == 'customerreward') {
             $cId = 'customer_id';
-        }
+        } 
 
         $sql = "SELECT * FROM {$fTable} WHERE {$cId} = :id";
 
@@ -90,7 +90,7 @@ class ComModelT2 extends DBConnection {
             $cId = 'currency_id';
         } else if ($table == 'paymentstatus') {
             $cId = 'paymenttype_id';
-        }  else if ($table == 'customerbonus') {
+        }  else if ($table == 'customerbonus' || $table == 'customerreward') {
             $cId = 'customer_id';
         }
 
@@ -248,7 +248,10 @@ class ComModelT2 extends DBConnection {
                         if ($value == 'effective_date') {
                             $stmt->bindValue($index, isset($post[$value]) ? $post[$value] : null);
                             $myparams['update'][$index] = $post[$value];
-                        } else if ($value == 'lastupdate_date') {
+                        }else if ($value == 'expired_date') {
+                            $stmt->bindValue($index, isset($post[$value]) ? $post[$value] : null);
+                            $myparams['update'][$index] = $post[$value];
+                        }else if ($value == 'lastupdate_date') {
                             $stmt->bindValue($index, date('Y-m-d'));
                             $myparams['update'][$index] = date('Y-m-d');
                         } else if ($value == 'lastupdate_by') {
