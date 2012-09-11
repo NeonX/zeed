@@ -20,7 +20,7 @@ class ComModelT2 extends DBConnection {
 
     public function getDataById($table, $columns, $id) {
         $result = new stdClass();
-
+        
         $id = (int) $id;
         $colId = $table . $this->colId;
         $fTable = $this->prefix . $table;
@@ -32,6 +32,10 @@ class ComModelT2 extends DBConnection {
             $cId = 'paymenttype_id';
         } else if ($table == 'customerbonus' || $table == 'customerreward') {
             $cId = 'customer_id';
+        } else if ($table == 'sendstatus') {
+            $cId = 'sendingtype_id';
+        } else if ($table == 'zipcode') {
+            $cId = 'province_id';
         } 
 
         $sql = "SELECT * FROM {$fTable} WHERE {$cId} = :id";
@@ -46,21 +50,27 @@ class ComModelT2 extends DBConnection {
 
         switch ($table) {
             case 'goodsprice':
+            case 'goodsprize':
             case 'goodspromotion':
+            case 'customerreward':
+            case 'sendstatus':
+            case 'zipcode':
             case 'goodsunit':
                 $fk = array(
                     'goodstype_id' => array('goodstype_id', 'goodstype_eng', 'goodstype_th'),
                     'unit_id' => array('unit_id', 'unitcode', 'unitnameeng'),
                     'currency_id'  => array('currency_id', 'currcode'),
-                    'customer_id'  => array('customer_id', 'cust_nameeng')
+                    'customer_id'  => array('customer_id', 'cust_nameeng', 'customertype_id'),
+                    'customertype_id'  => array('customertype_id', 'custtype_eng', 'custtype_th')
                 );
 
                 $result->goodstype = self::getChildAllById('goodstype', $fk['goodstype_id'], $id);
                 $result->unit = self::getChildAllById('unit', $fk['unit_id'], $id);
                 $result->currency = self::getChildAllById('currency', $fk['currency_id'], $id);
-                if($table == 'goodspromotion'){
-                $result->customer = self::getChildAllById('customer', $fk['customer_id'], $id);
-                }
+                if($table == 'goodspromotion' || $table == 'customerreward'){
+                    $result->customer = self::getChildAllById('customer', $fk['customer_id'], $id);
+                    $result->customertype = self::getChildAllById('customertype', $fk['customertype_id'], $id);
+                }     
                 
                 break;
             case 'goods':
@@ -92,6 +102,10 @@ class ComModelT2 extends DBConnection {
             $cId = 'paymenttype_id';
         }  else if ($table == 'customerbonus' || $table == 'customerreward') {
             $cId = 'customer_id';
+        }  else if ($table == 'sendstatus') {
+            $cId = 'sendingtype_id';
+        } else if ($table == 'zipcode') {
+            $cId = 'province_id';
         }
 
         $sql = "SELECT *, '' AS action FROM {$this->prefix}{$table} WHERE 1=1 AND {$cId} = {$id}";

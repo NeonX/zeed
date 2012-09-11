@@ -36,13 +36,9 @@
         <fieldset class="modal-header">
             <h3 class="modal-title">S021 : PROVINCE</h1>
         </fieldset>
-        <fieldset class="modal-body">
+        <fieldset class="modal-body">            
             <p>
-                <label for="zone_id">zone Code: </label>
-                <input id="zone_id" name="zone_id" type="text" />
-            </p>
-            <p>
-                <label for="province_no">Province No: </label>
+                <label for="province_no">Province Code: </label>
                 <input id="province_no" name="province_no" type="text" />
             </p>
             <p>
@@ -52,6 +48,10 @@
             <p>
                 <label for="province_th">Province (TH): </label>
                 <input id="province_th" name="province_th" type="text" />
+            </p>
+            <p>
+                <label for="zone_id">zone: </label>
+                <input id="zone_id" name="zone_id" type="text" />
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>

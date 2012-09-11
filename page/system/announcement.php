@@ -18,14 +18,20 @@
     ];
     self.colModel = [
         {name: 'announce_id', index:'announce_id', hidden: true},
-        {name: 'announce_no', index: 'announce_no', width: 100, align: 'center'},
-        {name: 'announce_head', index: 'announce_head', width: 200, align: 'center'},
-        {name: 'announce_detail', index: 'announce_detail', width: 130, align: 'center'},
-        {name: 'start_date', index: 'start_date', hidden: true},
-        {name: 'end_date', index: 'end_date', hidden: true},
-        {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},
+        {name: 'announce_no', index: 'announce_no', width: 80, align: 'center'},
+        {name: 'announce_head', index: 'announce_head', width: 130},
+        {name: 'announce_detail', index: 'announce_detail', width: 130},
+        {name: 'start_date', index: 'start_date', width: 80,  sorttype:"date", align: 'center'},
+        {name: 'end_date', index: 'end_date', width: 80,  sorttype:"date", align: 'center'},
+        {name: 'deleteflag', index: 'deleteflag', width: 53, align: 'center'},
         {name: 'action',index: 'action', width:80, align: 'center'}
     ];
+    
+    $(function () {
+        $('#start_date').datepicker({dateFormat:'yy-mm-dd'});
+        $('#end_date').datepicker({dateFormat:'yy-mm-dd'});
+    });
+    
 </script>
 <script type="text/javascript" src="../page/js/com_type1.js?_=<?php echo time(); ?>"></script>
 
@@ -39,12 +45,26 @@
         </fieldset>
         <fieldset class="modal-body">
             <p>
-                <label for="announce_no">Announce Code: </label>
+                <label for="announce_no">Announce No: </label>
                 <input id="announce_no" name="announce_no" type="text" />
             </p>
             <p>
                 <label for="announce_head">Announce Header: </label>
                 <input id="announce_head" name="announce_head" type="text" />
+            </p>
+
+
+            <p>
+                <label for="start_date">Start Date: </label>
+                <input id="start_date" name="start_date" type="text" />
+            </p>
+            <p>
+                <label for="end_date">End Date: </label>
+                <input id="end_date" name="end_date" type="text" />
+            </p>
+            <p>
+                <label for="announce_by">Announce By: </label>
+                <input id="announce_by" name="announce_by" type="text" />
             </p>
             <p>
                 <label for="deleteflag">Use Status: </label>

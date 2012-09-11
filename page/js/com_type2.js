@@ -111,11 +111,38 @@ $(function () {
                                 formData = mData[index];
                             }
                         });
+                        
+                        $.each(data.customertype, function (index, obj) {
+                            if (formData.customertype_id == obj.customertype_id) {
+                                  customerTypeName = obj.custtype_th;
+                            }
+                        });
 
                         $('#customer_code').val(formData.cust_code).attr('disabled', 'disabled');
                         $('#customer_name_eng').val(formData.cust_nameeng).attr('disabled', 'disabled');
-                        $('#customer_type').val(formData.customertype_id).attr('disabled', 'disabled');
+                        $('#customer_type').val(customerTypeName).attr('disabled', 'disabled');
                         $('#customer_name_th').val(formData.cust_nameth).attr('disabled', 'disabled');
+                    } else if (self.table.main == 'sendingtype') {
+                        $.each(mData, function (index, obj) {
+                            if (_id == obj.sendingtype_id) {
+                                formData = mData[index];
+                            }
+                        });
+                        
+                        $('#SendTypeCode').val(formData.sendtype_code);
+                        $('#SendTypeEng').val(formData.sendtype_eng);
+                        $('#SendTypeTh').val(formData.sendtype_th);
+                    } else if (self.table.main == 'province') {
+                        $.each(mData, function (index, obj) {
+                            if (_id == obj.province_id) {
+                                formData = mData[index];
+                            }
+                        });
+                        
+                        $('#provinceNo').val(formData.province_no).attr('disabled', 'disabled');
+                        $('#zoneId').val(formData.zone_id).attr('disabled', 'disabled');
+                        $('#provinceEng').val(formData.province_eng).attr('disabled', 'disabled');
+                        $('#provinceTh').val(formData.province_th).attr('disabled', 'disabled');
                     }
 
                     // Initialize sub grid.

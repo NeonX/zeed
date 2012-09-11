@@ -18,8 +18,8 @@
     ];
     self.colModel = [
         {name: 'paymentterm_id', index:'paymentterm_id', hidden: true},
-        {name: 'pmterm_code', index: 'pmterm_code', width: 100, align: 'center'},
-        {name: 'pmterm_eng', index: 'pmterm_eng', width: 200, align: 'center'},
+        {name: 'pmterm_code', index: 'pmterm_code', width: 123, align: 'center'},
+        {name: 'pmterm_eng', index: 'pmterm_eng', width: 180, align: 'center'},
         {name: 'pmterm_th', index: 'pmterm_th', hidden: true},
         {name: 'pmterm_day', index: 'pmterm_day', width: 130, align: 'center'},        
         {name: 'deleteflag', index: 'deleteflag', width: 130, align: 'center'},

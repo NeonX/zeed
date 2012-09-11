@@ -48,13 +48,13 @@ if ($ref) {
 
         self.colNames = {
             main: [
-                'Province ID', 'Zone ID', 'Province No', 'Province Name (ENG)', 'Province Name (TH)', 
+                'Province ID', 'Zone ID', 'Province Code', 'Province Name (ENG)', 'Province Name (TH)', 
                 'Status', 'Action'
             ], 
             sub: [
                 'Zip Code ID', 'Province ID','District', 'Sub District', 'Village No',
-                'Ems Time', 'Ems Fee', 'Ems Currencyid', 'Norm Time', 'Norm Fee',
-                'Norm Currencyid', 'Status', 'Table', 'Mode', 'Action'
+                'Est Day', 'Charge', 'Cur', 'Est Day', 'Charge', 'Cur',
+                'Status', 'Table', 'Mode'
             ]
         };
         
@@ -69,7 +69,7 @@ if ($ref) {
                 {name: 'action',index: 'action', width:80, align: 'center'}
             ],
             sub: [
-                {name: 'zipcode_id', index:'zipcode_id', hidden: true},
+                {name: 'zipcode_id', index:'zipcode_id', width: 65, align: 'center'},
                 {name: 'province_id', index:'province_id', editable: true, hidden: true,
                     editoptions: {
                         dataInit: function(element) {
@@ -78,16 +78,16 @@ if ($ref) {
                     }
                 },
                                 
-                {name: 'district', index:'district', width: 145, editable: true, align: 'center'},
-                {name: 'subdistrict', index: 'subdistrict', width: 145, editable: true, align: 'center' },
-                {name: 'village_no', index: 'village_no', width: 145, editable: true, align: 'center' },
-                {name: 'ems_time', index:'ems_time', width: 145, editable: true, align: 'center'},
-                {name: 'ems_fee', index:'ems_fee', width: 145, editable: true, align: 'center'},
-                {name: 'ems_currencyid', index:'ems_currencyid', width: 145, editable: true, align: 'center'},
-                {name: 'norm_time', index:'norm_time', width: 145, editable: true, align: 'center'},
-                {name: 'norm_fee', index:'norm_fee', width: 145, editable: true, align: 'center'},
-                {name: 'norm_currencyid', index:'norm_currencyid', width: 145, editable: true, align: 'center'},
-                {name: 'deleteflag', index: 'deleteflag', width: 100, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
+                {name: 'district', index:'district', width: 110, editable: true},
+                {name: 'subdistrict', index: 'subdistrict', width: 110, editable: true},
+                {name: 'village_no', index: 'village_no', width: 107, editable: true},
+                {name: 'ems_time', index:'ems_time', width: 50, editable: true, align: 'right'},
+                {name: 'ems_fee', index:'ems_fee', width: 50, editable: true, align: 'right'},
+                {name: 'ems_currencyid', index:'ems_currencyid', width: 50, editable: true, align: 'center'},
+                {name: 'norm_time', index:'norm_time', width: 50, editable: true, align: 'right'},
+                {name: 'norm_fee', index:'norm_fee', width: 50, editable: true, align: 'right'},
+                {name: 'norm_currencyid', index:'norm_currencyid', width: 50, editable: true, align: 'center'},
+                {name: 'deleteflag', index: 'deleteflag', width: 70, align: 'center', editable: true, edittype:"select", editoptions: {value: "0:Use;1:Not use"}},
                 {name: 'table', index:'table', editable: true, hidden: true,
                     editoptions: {
                         dataInit: function(element) {
@@ -101,8 +101,9 @@ if ($ref) {
                             $(element).val(self.smode);
                         }
                     }
-                },
-                {name: 'action',index: 'action', width:90, align: 'center'}
+                }
+                //                ,
+                //                {name: 'action',index: 'action', width:90, align: 'center'}
             ]
         };
     });
@@ -146,21 +147,21 @@ if ($ref) {
         <fieldset class="modal-body col1">
             <p>
                 <label for="province_no">Province Code: </label>
-                <input id="province_no" name="province_no" type="text" />
+                <input id="provinceNo" name="province_no" type="text" />
             </p>
             <p>
                 <label for="province_eng">Province Name (ENG): </label>
-                <input id="province_eng" name="province_eng" type="text" />
+                <input id="provinceEng" name="province_eng" type="text" />
             </p>
         </fieldset>
         <fieldset class="modal-body col2">
             <p>
                 <label for="zone_id">Zone: </label>
-                <input id="zone_id" name="zone_id" type="text" />
+                <input id="zoneId" name="zone_id" type="text" />
             </p>
             <p>
                 <label for="province_th">Province Name (TH): </label>
-                <input id="province_th" name="province_th" type="text" />
+                <input id="provinceTh" name="province_th" type="text" />
             </p>
         </fieldset>
         <fieldset class="modal-body grid">
